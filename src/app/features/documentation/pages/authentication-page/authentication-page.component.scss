@@ -1,0 +1,559 @@
+// authentication-page.component.scss
+@import '../_doc-page.scss';
+
+.key-display {
+  @include flex-between;
+  padding: $spacing-4;
+  background: $code-bg-light;
+  border: 1px solid $code-border-light;
+  border-radius: $radius-md;
+  margin-top: $spacing-3;
+
+  .dark & {
+    background: $code-bg-dark;
+    border-color: $code-border-dark;
+  }
+
+  code {
+    font-family: $font-mono;
+    font-size: $text-sm;
+    color: #000000;
+    flex: 1;
+    word-break: break-all;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__copy {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid $border-gray;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      border-color: $dark-border;
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $primary-blue;
+      color: white;
+      border-color: $primary-blue;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+  }
+}
+
+.key-format {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: $spacing-6 0;
+  padding: $spacing-6;
+  background: $background-gray;
+  border-radius: $radius-lg;
+  overflow-x: auto;
+
+  .dark & {
+    background: $dark-surface-elevated;
+  }
+
+  &__part {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-4;
+    flex: 1;
+    min-width: 150px;
+
+    code {
+      font-size: $text-lg;
+      font-weight: $font-bold;
+      color: $primary-blue;
+      font-family: $font-mono;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+
+    p {
+      font-size: $text-sm;
+      color: $text-secondary;
+      text-align: center;
+
+      .dark & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+
+  &__label {
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-tertiary;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+  }
+
+  &__separator {
+    @include flex-center;
+    font-size: $text-2xl;
+    font-weight: $font-bold;
+    color: $border-gray;
+    padding: 0 $spacing-2;
+
+    .dark & {
+      color: $dark-border;
+    }
+  }
+}
+
+.language-examples {
+  @include flex-column;
+  gap: $spacing-6;
+  margin-top: $spacing-4;
+}
+
+.language-example {
+  h4 {
+    @include flex-start;
+    gap: $spacing-2;
+    margin: 0 0 $spacing-3 0 !important;
+    color: #000000;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $primary-blue;
+      stroke-width: 2;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+}
+
+.best-practices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-6;
+  margin-top: $spacing-6;
+}
+
+.practice-card {
+  border: 2px solid;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  &__header {
+    @include flex-start;
+    gap: $spacing-3;
+    margin-bottom: $spacing-4;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2.5;
+    }
+
+    h4 {
+      margin: 0 !important;
+      font-size: $text-xl;
+    }
+  }
+
+  ul {
+    padding-left: $spacing-6;
+    margin: 0;
+
+    li {
+      margin-bottom: $spacing-3;
+      line-height: $leading-relaxed;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &--do {
+    border-color: $success;
+    background: $success-light;
+
+    .dark & {
+      background: rgba($success, 0.1);
+    }
+
+    .practice-card__header {
+      color: $success-dark;
+
+      .dark & {
+        color: $success-light;
+      }
+
+      svg {
+        color: $success;
+      }
+    }
+
+    ul li {
+      color: $success-dark;
+
+      .dark & {
+        color: $success-light;
+      }
+    }
+  }
+
+  &--dont {
+    border-color: $error;
+    background: $error-light;
+
+    .dark & {
+      background: rgba($error, 0.1);
+    }
+
+    .practice-card__header {
+      color: $error-dark;
+
+      .dark & {
+        color: $error-light;
+      }
+
+      svg {
+        color: $error;
+      }
+    }
+
+    ul li {
+      color: $error-dark;
+
+      .dark & {
+        color: $error-light;
+      }
+    }
+  }
+}
+
+.env-examples {
+  @include flex-column;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.env-example {
+  h4 {
+    margin: 0 0 $spacing-2 0 !important;
+    font-size: $text-base;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-vertical {
+  animation: fadeInUp 0.4s ease-out backwards;
+
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+.practice-card {
+  animation: fadeInUp 0.4s ease-out backwards;
+
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+}
+
+.key-format__part {
+  animation: fadeInUp 0.3s ease-out backwards;
+
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.15}s;
+    }
+  }
+}
+
+// Focus states for accessibility
+.key-display__copy:focus-visible {
+  @include focus-ring;
+}
+
+.next-step-card:focus-visible {
+  @include focus-ring;
+}
+
+// Dashboard links section
+.dashboard-links {
+  margin-bottom: $spacing-8;
+
+  h3 {
+    margin-bottom: $spacing-4 !important;
+  }
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-4;
+}
+
+.dashboard-card {
+  @include flex-start;
+  gap: $spacing-4;
+  padding: $spacing-5;
+  background: $background-white;
+  border: 2px solid $border-gray;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  .dark & {
+    background: $dark-surface;
+    border-color: $dark-border;
+  }
+
+  &:hover {
+    border-color: $primary-blue;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary-blue, 0.15);
+
+    .dark & {
+      border-color: $primary-blue-light;
+      box-shadow: 0 4px 12px rgba($primary-blue-light, 0.1);
+    }
+
+    > svg {
+      color: $primary-blue;
+      transform: translateX(2px);
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+
+  &__flag {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  &__info {
+    flex: 1;
+
+    h4 {
+      margin: 0 0 $spacing-1 0 !important;
+      font-size: $text-lg;
+      color: #000000;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+
+    code {
+      font-size: $text-sm;
+      color: $text-secondary;
+      font-family: $font-mono;
+
+      .dark & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+
+  > svg {
+    width: 20px;
+    height: 20px;
+    color: $text-tertiary;
+    stroke-width: 2;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+  }
+}
+
+// API Key screenshot section
+.api-key-screenshot {
+  margin-top: $spacing-4;
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: $background-gray;
+
+  .dark & {
+    border-color: $dark-border;
+    background: $dark-surface-elevated;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 0 auto;
+    border-bottom: 1px solid $border-gray;
+
+    .dark & {
+      border-bottom-color: $dark-border;
+    }
+  }
+
+  .screenshot-caption {
+    @include flex-center;
+    gap: $spacing-2;
+    padding: $spacing-3 $spacing-4;
+    font-size: $text-sm;
+    color: $text-secondary;
+    margin: 0;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Webhook configuration section
+.webhook-setup {
+  margin: $spacing-6 0;
+}
+
+.webhook-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.webhook-field {
+  padding: $spacing-5;
+  background: $background-gray;
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+
+  .dark & {
+    background: $dark-surface-elevated;
+    border-color: $dark-border;
+  }
+
+  &__header {
+    @include flex-start;
+    gap: $spacing-3;
+    margin-bottom: $spacing-3;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+    }
+
+    h4 {
+      margin: 0 !important;
+      font-size: $text-base;
+      color: #000000;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+  }
+
+  // PayIn field
+  &:first-child {
+    .webhook-field__header svg {
+      color: $success;
+    }
+  }
+
+  // PayOut field
+  &:last-child {
+    .webhook-field__header svg {
+      color: $primary-blue;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $text-secondary;
+    margin: 0 0 $spacing-3 0;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  code {
+    display: block;
+    font-size: $text-sm;
+    font-family: $font-mono;
+    color: $primary-blue;
+    padding: $spacing-3;
+    background: $code-bg-light;
+    border-radius: $radius-md;
+    word-break: break-all;
+
+    .dark & {
+      color: $primary-blue-light;
+      background: $code-bg-dark;
+    }
+  }
+}

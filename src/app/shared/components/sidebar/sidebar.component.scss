@@ -1,0 +1,329 @@
+// sidebar.component.scss
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.sidebar {
+  position: fixed;
+  top: $navbar-height;
+  left: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background: $background-white;
+  border-right: 1px solid $border-gray;
+  overflow: hidden;
+  z-index: $z-fixed - 10;
+  transition: transform $transition-base;
+
+  .dark & {
+    background: $dark-surface;
+    border-right-color: $dark-border;
+  }
+
+  @include mobile {
+    transform: translateX(-100%);
+    box-shadow: $shadow-xl;
+
+    .dark & {
+      box-shadow: $shadow-dark-lg;
+    }
+
+    &--open {
+      transform: translateX(0);
+    }
+  }
+
+  // ========== HEADER (Mobile) ==========
+  &__header {
+    @include flex-between;
+    padding: $spacing-4;
+    border-bottom: 1px solid $border-gray;
+
+    .dark & {
+      border-bottom-color: $dark-border;
+    }
+  }
+
+  &__title {
+    font-size: $text-lg;
+    font-weight: $font-semibold;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__close-btn {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $background-gray;
+      color: #000000;
+
+      .dark & {
+        background: $dark-surface-elevated;
+        color: $dark-text-primary;
+      }
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+  }
+
+  // ========== CONTENT ==========
+  &__content {
+    height: 100%;
+    overflow-y: auto;
+    padding: $spacing-6 0;
+    @include custom-scrollbar(6px, $border-gray);
+
+    .dark & {
+      @include custom-scrollbar-dark(6px);
+    }
+
+    @include mobile {
+      height: calc(100% - 60px); // Restar header
+    }
+  }
+
+  // ========== NAVIGATION ==========
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+  }
+
+  &__section {
+    padding: 0 $spacing-4;
+  }
+
+  &__section-title {
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-tertiary;
+    margin-bottom: $spacing-3;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+  }
+
+  &__section-header {
+    @include flex-between;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    margin-bottom: $spacing-2;
+
+    &:hover {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+
+    &--expanded {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+  }
+
+  &__section-info {
+    @include flex-start;
+    gap: $spacing-3;
+    flex: 1;
+  }
+
+  &__chevron {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+    color: $text-tertiary;
+    transition: transform $transition-fast;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  // ========== LIST ==========
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    color: $text-secondary;
+    text-decoration: none;
+    border-radius: $radius-md;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    transition: all $transition-fast;
+    cursor: pointer;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $background-gray;
+      color: #000000; // REGLA: Negro en hover
+
+      .dark & {
+        background: $dark-surface-elevated;
+        color: $dark-text-primary;
+      }
+    }
+
+    &.active {
+      background: $primary-blue-lighter;
+      color: $primary-blue;
+      font-weight: $font-semibold;
+      position: relative;
+
+      .dark & {
+        background: rgba($primary-blue, 0.15);
+        color: $primary-blue-light;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: $primary-blue;
+        border-radius: 0 $radius-sm $radius-sm 0;
+
+        .dark & {
+          background: $primary-blue-light;
+        }
+      }
+    }
+  }
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  // ========== ENDPOINT ITEMS ==========
+  &__endpoint-item {
+    @include flex-start;
+    width: 100%;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: transparent;
+    border: none;
+    text-align: left;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+
+    &.active {
+      background: $primary-blue-lighter;
+      position: relative;
+
+      .dark & {
+        background: rgba($primary-blue, 0.15);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: $primary-blue;
+        border-radius: 0 $radius-sm $radius-sm 0;
+
+        .dark & {
+          background: $primary-blue-light;
+        }
+      }
+
+      .sidebar__endpoint-name {
+        color: $primary-blue;
+        font-weight: $font-semibold;
+
+        .dark & {
+          color: $primary-blue-light;
+        }
+      }
+    }
+  }
+
+  &__endpoint-name {
+    flex: 1;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  // ========== OVERLAY (Mobile) ==========
+  &__overlay {
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-fixed - 20;
+    @include fade-in;
+  }
+}

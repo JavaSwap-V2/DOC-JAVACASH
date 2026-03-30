@@ -1,0 +1,17 @@
+<!-- docs-layout.component.html -->
+<div class="docs-layout">
+  <app-navbar (menuToggle)="onMenuToggle()"></app-navbar>
+  
+  <div class="docs-layout__body">
+    <app-sidebar 
+      [isOpen]="sidebarOpen"
+      (close)="onSidebarClose()">
+    </app-sidebar>
+    
+    <main class="docs-layout__content">
+      <div class="docs-layout__container">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

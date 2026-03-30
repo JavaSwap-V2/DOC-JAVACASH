@@ -1,0 +1,64 @@
+# ===============================
+# Angular / Node
+# ===============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===============================
+# Angular build output
+# ===============================
+dist/
+out-tsc/
+tmp/
+
+# ===============================
+# Environment files
+# ===============================
+src/environments/*.local.ts
+src/environments/*.dev.ts
+src/environments/*.prod.ts
+
+# ===============================
+# IDEs & Editors
+# ===============================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ===============================
+# OS files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Coverage / Testing
+# ===============================
+coverage/
+.nyc_output/
+
+# ===============================
+# Cache
+# ===============================
+.cache/
+.angular/
+.eslintcache
+
+# ===============================
+# Logs
+# ===============================
+logs/
+*.log
+
+# ===============================
+# Optional / Local configs
+# ===============================
+.env
+.env.*

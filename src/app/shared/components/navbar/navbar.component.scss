@@ -1,0 +1,342 @@
+// navbar.component.scss
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  height: $navbar-height;
+  background: $background-white;
+  border-bottom: 1px solid $border-gray;
+  backdrop-filter: blur(8px);
+  
+  .dark & {
+    background: rgba($dark-surface, 0.95);
+    border-bottom-color: $dark-border;
+  }
+
+  &__container {
+    @include flex-between;
+    height: 100%;
+    max-width: 100%;
+    padding: 0 $spacing-6;
+    gap: $spacing-4;
+
+    @include mobile {
+      padding: 0 $spacing-4;
+    }
+  }
+
+  // ========== BRAND ==========
+  &__brand {
+    @include flex-start;
+    gap: $spacing-3;
+    flex-shrink: 0;
+  }
+
+  &__menu-btn {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    color: #000000; // REGLA: Negro en modo claro
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    &:hover {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+  }
+
+  &__logo {
+    @include flex-center;
+    gap: $spacing-3;
+    text-decoration: none;
+  }
+
+  &__logo-icon {
+    height: 32px;
+    width: auto;
+  }
+
+  &__title {
+    font-size: $text-lg;
+    font-weight: $font-semibold;
+    color: #000000; // REGLA: Negro en modo claro
+    
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  // ========== NAVIGATION ==========
+  &__nav {
+    @include flex-center;
+    gap: $spacing-2;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &__link {
+    padding: $spacing-2 $spacing-4;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    color: $text-secondary;
+    text-decoration: none;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    position: relative;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      color: #000000; // REGLA: Negro en hover (modo claro)
+      background: $background-gray;
+
+      .dark & {
+        color: $dark-text-primary;
+        background: $dark-surface-elevated;
+      }
+    }
+
+    &.active {
+      color: $primary-blue;
+      background: $primary-blue-lighter;
+
+      .dark & {
+        color: $primary-blue-light;
+        background: rgba($primary-blue, 0.15);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: $primary-blue;
+
+        .dark & {
+          background: $primary-blue-light;
+        }
+      }
+    }
+  }
+
+  // ========== ACTIONS ==========
+  &__actions {
+    @include flex-center;
+    gap: $spacing-2;
+    flex-shrink: 0;
+  }
+
+  &__action-btn {
+    @include flex-center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    background: transparent;
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    font-size: $text-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      border-color: $dark-border;
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $background-gray;
+      color: #000000; // REGLA: Negro en hover
+      border-color: $primary-blue;
+
+      .dark & {
+        background: $dark-surface-elevated;
+        color: $dark-text-primary;
+      }
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+
+      &.icon-sm {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  &__search-btn {
+    min-width: 120px;
+    justify-content: space-between;
+
+    @include mobile {
+      min-width: auto;
+      padding: $spacing-2;
+    }
+  }
+
+  &__search-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__kbd {
+    padding: 2px 6px;
+    background: $background-gray;
+    border: 1px solid $border-gray;
+    border-radius: $radius-sm;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $text-tertiary;
+
+    .dark & {
+      background: $dark-surface;
+      border-color: $dark-border;
+      color: $dark-text-tertiary;
+    }
+  }
+
+  // ========== COUNTRY SELECTOR ==========
+  &__country-selector {
+    position: relative;
+  }
+
+  &__country-btn {
+    @include flex-center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    background: transparent;
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+    color: #000000; // REGLA: Negro
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      border-color: $dark-border;
+      color: $dark-text-primary;
+    }
+
+    &:hover,
+    &.active {
+      background: $background-gray;
+      border-color: $primary-blue;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+  }
+
+  &__country-flag {
+    font-size: $text-lg;
+  }
+
+  &__country-name {
+    white-space: nowrap;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + $spacing-2);
+    right: 0;
+    min-width: 220px;
+    background: $surface-elevated;
+    border: 1px solid $border-gray;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    padding: $spacing-2;
+    @include fade-in;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      border-color: $dark-border;
+      box-shadow: $shadow-dark-lg;
+    }
+  }
+
+  &__dropdown-item {
+    @include flex-start;
+    width: 100%;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    text-align: left;
+
+    &:hover {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-hover;
+      }
+    }
+
+    &.active {
+      background: $primary-blue-lighter;
+
+      .dark & {
+        background: rgba($primary-blue, 0.15);
+      }
+    }
+  }
+
+  &__dropdown-content {
+    @include flex-column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  &__dropdown-title {
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__dropdown-subtitle {
+    font-size: $text-xs;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}

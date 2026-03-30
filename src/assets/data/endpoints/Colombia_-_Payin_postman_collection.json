@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "col-payin-001",
+		"name": "Colombia - Payin",
+		"description": "# TuPay Payin\n\nEste endpoint permite generar un **Payin** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30722009"
+	},
+	"item": [
+		{
+			"name": "payIn",
+			"item": [
+				{
+					"name": "Registrar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [""],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payin", "register"]
+						},
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | COP | Codigo de la moneda | si |\n| `amount` | **String** | 50000 | Cantidad de dinero por la que se generará la tasa | si |\n| `CustomId` | **number** | 123 | customized identifier | no |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 3001234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@email.com](https://mailto:prueba@email.com) | Correo electrónico del comprador | si |\n| `userIdentificationNumber` | **String** | 1234567890 | Número de documento del comprador | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | si |\n\nImportante: la respueta de 201 Created devuelve la variable checkoutUrl esta es el link del Checkout"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-co.tupay.finance/api/payin/register",
+									"protocol": "https",
+									"host": ["api-co", "tupay", "finance"],
+									"path": ["api", "payin", "register"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"status\": \"pending\",\n        \"reference\": \"50001001\",\n        \"checkoutUrl\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"customId\": \"1\"\n    }\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/register",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "register"]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
+						},
+						{
+							"name": "Malformed Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"currency\": \"COP\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/register",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "register"]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar por referencia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [""],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/get-reference/50001001",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payin", "get-reference", "50001001"]
+						},
+						"description": "Endpoint para obtener un payin por referencia"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/get-reference/50001001",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "get-reference", "50001001"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/get-reference/50001001",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "get-reference", "50001001"]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Error obtaining payin.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar por cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [""],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/custom-id/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payin", "custom-id", "1"]
+						},
+						"description": "Endpoint para obtener un payin por custom id"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/custom-id/1",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "custom-id", "1"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/custom-id/1",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "custom-id", "1"]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"payin not found for this custom id\",\n    \"code\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [""],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/user-payin",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payin", "user-payin"]
+						},
+						"description": "Enpoint para obtener todos los payin"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/user-payin",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "payin", "user-payin"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n            \"reference\": \"50001001\",\n            \"currency\": \"COP\",\n            \"amount\": \"50000.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"3001234567\",\n            \"userEmail\": \"example@email.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"1234567890\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 1,\n            \"providerId\": null,\n            \"customId\": \"1\",\n            \"countryId\": 3,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"50000.00\",\n            \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n            \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n            \"provider_id\": null,\n            \"user_id\": 1,\n            \"country_id\": 3\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "El `/payin` endpoints registra tus pagos PayIn"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{x-api-key}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api-co.tupay.finance"
+		},
+		{
+			"key": "x-api-key",
+			"value": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		}
+	]
+}

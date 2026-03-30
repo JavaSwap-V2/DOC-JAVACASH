@@ -1,0 +1,886 @@
+<!-- authentication-page.component.html -->
+<article class="doc-page">
+  <header class="doc-header">
+    <h1>Autenticación</h1>
+    <p class="doc-lead">
+      Aprende cómo autenticar tus peticiones a la API de JavaCash utilizando API Keys 
+      de forma segura y eficiente.
+    </p>
+  </header>
+
+  <section class="doc-section">
+    <h2>Métodos de Autenticación</h2>
+    <p>
+      JavaCash API utiliza <strong>API Keys</strong> para autenticar todas las peticiones. 
+      Tu API Key identifica tu cuenta y te da acceso a los recursos de la API.
+    </p>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>¡Mantén tu API Key segura!</h4>
+        <p>
+          Tu API Key tiene acceso completo a tu cuenta. Nunca la compartas públicamente 
+          en repositorios, código del lado del cliente, o cualquier lugar donde pueda 
+          ser expuesta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Obtener tu API Key</h2>
+
+    <div class="dashboard-links">
+      <h3>Dashboards</h3>
+      <div class="dashboard-cards">
+        <a href="https://argentina.javacash.finance/" target="_blank" rel="noopener" class="dashboard-card">
+          <div class="dashboard-card__flag">🇦🇷</div>
+          <div class="dashboard-card__info">
+            <h4>Argentina</h4>
+            <code>argentina.javacash.finance</code>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <a href="https://staging.javacash.finance/" target="_blank" rel="noopener" class="dashboard-card">
+          <div class="dashboard-card__flag">🧪</div>
+          <div class="dashboard-card__info">
+            <h4>Sandbox</h4>
+            <code>staging.javacash.finance</code>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">1</div>
+        <div class="step-vertical__content">
+          <h3>Accede al Dashboard</h3>
+          <p>
+            Inicia sesión en el dashboard correspondiente a tu país de operación.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>Ve a tu Perfil</h3>
+          <p>
+            Haz clic en tu avatar en la esquina superior derecha para abrir el menú de usuario.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>Copia tu API Key</h3>
+          <p>
+            En el menú verás tu <strong>API Key</strong>. Usa los botones para ver, copiar
+            o regenerar tu clave de acceso.
+          </p>
+          <div class="api-key-screenshot">
+            <img
+              src="assets/images/api-key-location.png"
+              alt="Ubicación de la API Key en el perfil de usuario"
+              loading="lazy">
+            <p class="screenshot-caption">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Tu API Key se encuentra en el menú desplegable de tu perfil
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Formato de API Key</h2>
+    <p>Las API Keys de JavaCash siguen este formato:</p>
+    
+    <div class="key-format">
+      <div class="key-format__part">
+        <span class="key-format__label">Prefijo</span>
+        <code>sk_</code>
+        <p>Identifica que es una Secret Key</p>
+      </div>
+      <div class="key-format__separator">_</div>
+      <div class="key-format__part">
+        <span class="key-format__label">Entorno</span>
+        <code>live</code>
+        <p>Producción (live) o Pruebas (test)</p>
+      </div>
+      <div class="key-format__separator">_</div>
+      <div class="key-format__part">
+        <span class="key-format__label">Identificador</span>
+        <code>abc123...</code>
+        <p>Identificador único de 32 caracteres</p>
+      </div>
+    </div>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Prefijo</th>
+          <th>Uso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Producción</td>
+          <td><code></code></td>
+          <td>Transacciones reales con dinero real</td>
+        </tr>
+        <tr>
+          <td>Pruebas</td>
+          <td><code>sk_test_</code></td>
+          <td>Pruebas sin cargo real</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="doc-section">
+    <h2>Usar tu API Key</h2>
+    <p>
+      Incluye tu API Key en el header <code>x-api-key</code> de cada petición HTTP:
+    </p>
+
+    <app-code-block
+      [code]="exampleHeader"
+      language="curl"
+      title="Ejemplo con cURL">
+    </app-code-block>
+
+    <h3>Ejemplos por Lenguaje</h3>
+
+    <div class="language-examples">
+      <div class="language-example">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          Node.js / JavaScript
+        </h4>
+        <app-code-block
+          [code]="nodeExample"
+          language="javascript">
+        </app-code-block>
+      </div>
+
+      <div class="language-example">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Python
+        </h4>
+        <app-code-block
+          [code]="pythonExample"
+          language="python">
+        </app-code-block>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Mejores Prácticas de Seguridad</h2>
+    
+    <div class="best-practices">
+      <div class="practice-card practice-card--do">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h4>Hacer ✓</h4>
+        </div>
+        <ul>
+          <li>Usa variables de entorno para almacenar tu API Key</li>
+          <li>Rota tus API Keys periódicamente</li>
+          <li>Usa diferentes keys para desarrollo y producción</li>
+          <li>Implementa rate limiting en tu aplicación</li>
+          <li>Monitorea el uso de tu API Key en el dashboard</li>
+        </ul>
+      </div>
+
+      <div class="practice-card practice-card--dont">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <h4>No Hacer ✗</h4>
+        </div>
+        <ul>
+          <li>Nunca hagas commit de API Keys en Git</li>
+          <li>No incluyas API Keys en código del frontend</li>
+          <li>No compartas tu API Key por email o chat</li>
+          <li>No uses la misma key en múltiples proyectos</li>
+          <li>No dejes API Keys en archivos de log</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Variables de Entorno</h2>
+    <p>La forma más segura de manejar API Keys es usando variables de entorno:</p>
+
+    <div class="env-examples">
+      <div class="env-example">
+        <h4>.env (Node.js)</h4>
+        <app-code-block
+          code="JAVACASH_API_KEY=abc123xyz456def789ghi012jkl345
+JAVACASH_BASE_URL=https://api-ar.javacash.finance"
+          language="bash">
+        </app-code-block>
+      </div>
+
+      <div class="env-example">
+        <h4>Usar en código</h4>
+        <app-code-block
+          code="const apiKey = process.env.JAVACASH_API_KEY;
+const baseUrl = process.env.JAVACASH_BASE_URL;"
+          language="javascript">
+        </app-code-block>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Errores de Autenticación</h2>
+    <p>
+      Si tu API Key es inválida o falta, recibirás un error <code>401 Unauthorized</code>:
+    </p>
+
+    <app-code-block
+      [code]="errorExample"
+      language="javascript"
+      title="Error 401 - No autorizado">
+    </app-code-block>
+
+    <h3>Causas Comunes</h3>
+    <ul>
+      <li>API Key incorrecta o mal copiada</li>
+      <li>Header <code>x-api-key</code> faltante</li>
+      <li>API Key deshabilitada o revocada</li>
+      <li>Usando key de pruebas en producción (o viceversa)</li>
+    </ul>
+  </section>
+
+  <section class="doc-section">
+    <h2>Renovar o Revocar API Keys</h2>
+    <p>
+      Si sospechas que tu API Key fue comprometida, puedes revocarla inmediatamente 
+      desde el dashboard:
+    </p>
+
+    <div class="info-box info-box--error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <h4>API Key Comprometida</h4>
+        <p>
+          Si tu API Key fue expuesta públicamente, revócala inmediatamente desde 
+          el dashboard y genera una nueva. Las peticiones con la key antigua 
+          serán rechazadas al instante.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Configuración de Webhooks</h2>
+    <p>
+      Los webhooks te permiten recibir notificaciones en tiempo real cuando ocurren eventos
+      en tus transacciones. Configúralos directamente desde el dashboard.
+    </p>
+
+    <div class="webhook-setup">
+      <div class="steps-vertical">
+        <div class="step-vertical">
+          <div class="step-vertical__number">1</div>
+          <div class="step-vertical__content">
+            <h3>Accede a Integraciones</h3>
+            <p>
+              En el dashboard, haz clic en <strong>"Integraciones"</strong> en el menú de tu perfil.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-vertical">
+          <div class="step-vertical__number">2</div>
+          <div class="step-vertical__content">
+            <h3>Configura tus URLs</h3>
+            <p>
+              Encontrarás dos campos para configurar webhooks:
+            </p>
+            <div class="webhook-fields">
+              <div class="webhook-field">
+                <div class="webhook-field__header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="8 12 12 16 16 12"></polyline>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                  </svg>
+                  <h4>URL de Webhook para PayIn</h4>
+                </div>
+                <p>Recibe notificaciones de pagos entrantes (depósitos)</p>
+                <code>https://tu-servidor.com/webhooks/payin</code>
+              </div>
+              <div class="webhook-field">
+                <div class="webhook-field__header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="16 12 12 8 8 12"></polyline>
+                    <line x1="12" y1="16" x2="12" y2="8"></line>
+                  </svg>
+                  <h4>URL de Webhook para PayOut</h4>
+                </div>
+                <p>Recibe notificaciones de pagos salientes (retiros)</p>
+                <code>https://tu-servidor.com/webhooks/payout</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-vertical">
+          <div class="step-vertical__number">3</div>
+          <div class="step-vertical__content">
+            <h3>Guarda la configuración</h3>
+            <p>
+              Haz clic en guardar y tu servidor comenzará a recibir notificaciones
+              automáticamente cuando cambien los estados de tus transacciones.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Requisitos del Webhook</h4>
+        <p>
+          Tu servidor debe responder con un código HTTP <code>200</code> para confirmar
+          la recepción. Si falla, JavaCash reintentará el envío varias veces.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Webhook PayIn -->
+  <section class="doc-section">
+    <h2>Webhook de PayIn (Pago Entrante)</h2>
+    <p>
+      Cada vez que se crea o actualiza una transacción de pago entrante (PayIn),
+      JavaCash enviará una notificación a la URL que hayas configurado con la siguiente estructura:
+    </p>
+
+    <app-code-block
+      [code]="payInWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayIn">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-in"</code> para pagos entrantes</td>
+        </tr>
+        <tr>
+          <td><code>transactionId</code></td>
+          <td>string</td>
+          <td>Identificador único de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>string</td>
+          <td>Identificador del usuario asociado</td>
+        </tr>
+        <tr>
+          <td><code>amount</code></td>
+          <td>number</td>
+          <td>Monto solicitado de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>string</td>
+          <td>Estado actual de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>Fecha y hora en formato ISO 8601</td>
+        </tr>
+        <tr>
+          <td><code>customId</code></td>
+          <td>string</td>
+          <td>Identificador personalizado que enviaste al crear la transacción</td>
+        </tr>
+        <tr>
+          <td><code>amountReceived</code></td>
+          <td>number</td>
+          <td>Monto efectivamente recibido</td>
+        </tr>
+        <tr>
+          <td><code>notes</code></td>
+          <td>string</td>
+          <td>Información adicional (puede estar vacío)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Webhook PayOut -->
+  <section class="doc-section">
+    <h2>Webhook de PayOut (Pago Saliente)</h2>
+    <p>
+      Cuando se crea o actualiza una transacción de pago saliente (PayOut),
+      recibirás una notificación con la siguiente estructura:
+    </p>
+
+    <app-code-block
+      [code]="payOutWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayOut">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-out"</code> para pagos salientes</td>
+        </tr>
+        <tr>
+          <td><code>transactionId</code></td>
+          <td>string</td>
+          <td>Identificador único de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>string</td>
+          <td>Identificador del usuario asociado</td>
+        </tr>
+        <tr>
+          <td><code>reference</code></td>
+          <td>string</td>
+          <td>Referencia de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>amount</code></td>
+          <td>number</td>
+          <td>Monto de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>string</td>
+          <td>Estado actual de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>Fecha y hora en formato ISO 8601</td>
+        </tr>
+        <tr>
+          <td><code>customId</code></td>
+          <td>string</td>
+          <td>Identificador personalizado que enviaste al crear la transacción</td>
+        </tr>
+        <tr>
+          <td><code>observation</code></td>
+          <td>string</td>
+          <td>Observaciones adicionales (puede estar vacío)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Webhook PayOut Masivo -->
+  <section class="doc-section">
+    <h2>Webhook de PayOut Masivo</h2>
+    <p>
+      Cuando se procesan pagos salientes de forma masiva, recibirás una única notificación
+      que contiene el resumen de todas las transacciones del lote:
+    </p>
+
+    <app-code-block
+      [code]="payOutBulkWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayOut Masivo">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-outs"</code> para lotes masivos</td>
+        </tr>
+        <tr>
+          <td><code>totalTransactions</code></td>
+          <td>number</td>
+          <td>Cantidad total de transacciones en el lote</td>
+        </tr>
+        <tr>
+          <td><code>transactions</code></td>
+          <td>array</td>
+          <td>Lista de transacciones individuales con su estado</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Nota sobre PayOut Masivo</h4>
+        <p>
+          Cada transacción dentro del arreglo <code>transactions</code> contiene los campos
+          <code>transactionId</code>, <code>reference</code>, <code>amount</code> y <code>status</code>.
+          Revisa el estado individual de cada transacción ya que pueden variar dentro del mismo lote.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estados de PayIn -->
+  <section class="doc-section">
+    <h2>Estados de Transacción - PayIn</h2>
+    <p>
+      Las transacciones de pago entrante (PayIn) pasan por los siguientes estados.
+      Recibirás un webhook cada vez que el estado cambie.
+    </p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>pending</code></td>
+          <td>La transacción fue creada y está esperando el pago del cliente</td>
+        </tr>
+        <tr>
+          <td><code>approved</code></td>
+          <td>El pago fue detectado y está siendo verificado</td>
+        </tr>
+        <tr>
+          <td><code>paid</code></td>
+          <td>El pago fue confirmado exitosamente</td>
+        </tr>
+        <tr>
+          <td><code>rejected</code></td>
+          <td>La transacción fue rechazada</td>
+        </tr>
+        <tr>
+          <td><code>cancelled</code></td>
+          <td>La transacción fue cancelada</td>
+        </tr>
+        <tr>
+          <td><code>expired</code></td>
+          <td>La transacción expiró por falta de pago</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Flujo Normal</h3>
+    <p>
+      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>paid</code>
+    </p>
+
+    <div class="info-box info-box--success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <h4>Estado final exitoso</h4>
+        <p>
+          El estado <code>paid</code> indica que el pago fue completado correctamente.
+          Usa este estado para confirmar la operación en tu sistema.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estados de PayOut -->
+  <section class="doc-section">
+    <h2>Estados de Transacción - PayOut</h2>
+    <p>
+      Las transacciones de pago saliente (PayOut) pasan por los siguientes estados.
+      Recibirás un webhook cada vez que el estado cambie.
+    </p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>pending</code></td>
+          <td>La transacción fue creada y está en espera de aprobación</td>
+        </tr>
+        <tr>
+          <td><code>approved</code></td>
+          <td>La transacción fue aprobada y será procesada</td>
+        </tr>
+        <tr>
+          <td><code>processing</code></td>
+          <td>La transacción está siendo procesada</td>
+        </tr>
+        <tr>
+          <td><code>paid</code></td>
+          <td>El pago fue enviado al destinatario</td>
+        </tr>
+        <tr>
+          <td><code>completed</code></td>
+          <td>La transacción fue completada exitosamente</td>
+        </tr>
+        <tr>
+          <td><code>rejected</code></td>
+          <td>La transacción fue rechazada</td>
+        </tr>
+        <tr>
+          <td><code>failed</code></td>
+          <td>La transacción falló durante el procesamiento</td>
+        </tr>
+        <tr>
+          <td><code>cancelled</code></td>
+          <td>La transacción fue cancelada</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Flujo Normal</h3>
+    <p>
+      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>processing</code> &rarr; <code>paid</code> &rarr; <code>completed</code>
+    </p>
+
+    <div class="info-box info-box--success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <h4>Estado final exitoso</h4>
+        <p>
+          El estado <code>completed</code> indica que el pago saliente fue completado correctamente.
+          Usa este estado para confirmar la operación en tu sistema.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verificación de Firma -->
+  <section class="doc-section">
+    <h2>Verificación de Firma (Seguridad)</h2>
+    <p>
+      Cada webhook enviado por JavaCash incluye una firma digital HMAC-SHA256 para que puedas
+      verificar que la notificación es auténtica. Es altamente recomendable que valides
+      esta firma en cada webhook que recibas.
+    </p>
+
+    <h3>Headers de Seguridad</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>X-JavaCash-Signature</code></td>
+          <td>Firma HMAC-SHA256 del contenido del webhook</td>
+        </tr>
+        <tr>
+          <td><code>X-JavaCash-Timestamp</code></td>
+          <td>Marca de tiempo del momento en que se envió el webhook</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>Importante</h4>
+        <p>
+          La firma se genera concatenando el timestamp y el cuerpo del webhook separados por un punto:
+          <code>timestamp.payload</code>. Utiliza tu <strong>Secret Key</strong> como clave para el HMAC.
+        </p>
+      </div>
+    </div>
+
+    <h3>Verificación en Node.js</h3>
+    <app-code-block
+      [code]="webhookVerifyNodeExample"
+      language="javascript"
+      title="Verificación HMAC-SHA256 en Node.js">
+    </app-code-block>
+
+    <h3>Verificación en Python</h3>
+    <app-code-block
+      [code]="webhookVerifyPythonExample"
+      language="python"
+      title="Verificación HMAC-SHA256 en Python">
+    </app-code-block>
+
+    <h3>Verificación en PHP</h3>
+    <app-code-block
+      [code]="webhookVerifyPhpExample"
+      language="php"
+      title="Verificación HMAC-SHA256 en PHP">
+    </app-code-block>
+  </section>
+
+  <!-- Recomendaciones -->
+  <section class="doc-section">
+    <h2>Recomendaciones</h2>
+
+    <div class="best-practices">
+      <div class="practice-card practice-card--do">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h4>Buenas Prácticas</h4>
+        </div>
+        <ul>
+          <li>Responde siempre con HTTP <code>200</code> lo antes posible</li>
+          <li>Valida la firma HMAC-SHA256 en cada webhook recibido</li>
+          <li>Implementa idempotencia usando el <code>transactionId</code></li>
+          <li>Procesa los webhooks de forma asíncrona</li>
+          <li>Registra todos los webhooks recibidos para auditoría</li>
+        </ul>
+      </div>
+
+      <div class="practice-card practice-card--dont">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <h4>Evitar</h4>
+        </div>
+        <ul>
+          <li>No realices procesos largos antes de responder al webhook</li>
+          <li>No ignores la verificación de firma</li>
+          <li>No asumas que los webhooks llegarán en orden</li>
+          <li>No proceses el mismo webhook más de una vez sin idempotencia</li>
+          <li>No expongas tu Secret Key en código del cliente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Reintentos Automáticos</h4>
+        <p>
+          Si tu servidor no responde con un código <code>200</code>, JavaCash reintentará el envío
+          del webhook automáticamente. Asegúrate de que tu lógica soporte recibir el mismo
+          webhook más de una vez (idempotencia).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Próximos Pasos</h2>
+    <div class="next-steps">
+      <a routerLink="/arg/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Explorar Endpoints</h4>
+          <p>Ve la referencia completa de la API</p>
+        </div>
+      </a>
+
+      <a routerLink="/gateway/errors" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div>
+          <h4>Manejo de Errores</h4>
+          <p>Aprende a manejar errores de la API</p>
+        </div>
+      </a>
+    </div>
+  </section>
+</article>

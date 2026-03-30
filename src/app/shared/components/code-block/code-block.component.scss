@@ -1,0 +1,329 @@
+// code-block.component.scss
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+:host {
+  display: block;
+}
+
+.code-block {
+  position: relative;
+  border-radius: $radius-md;
+  overflow: hidden;
+  border: 1px solid $code-border-light;
+  background: $code-bg-light;
+  font-family: $font-mono;
+
+  .dark & {
+    border-color: $code-border-dark;
+    background: $code-bg-dark;
+  }
+
+  // Header
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid $code-border-light;
+
+    .dark & {
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom-color: $code-border-dark;
+    }
+  }
+
+  &__language {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    font-size: $text-xs;
+    font-weight: $font-medium;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__language-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: $radius-full;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  &__title {
+    flex: 1;
+    font-size: $text-sm;
+    color: #000000;
+    font-weight: $font-medium;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__copy-btn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    background: transparent;
+    border: 1px solid $border-gray;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    font-size: $text-xs;
+    font-weight: $font-medium;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      border-color: $dark-border;
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $background-gray;
+      color: $text-primary;
+      border-color: $primary-blue;
+
+      .dark & {
+        background: $dark-surface-elevated;
+        color: $dark-text-primary;
+      }
+    }
+
+    &--copied {
+      background: $success-light;
+      color: $success-dark;
+      border-color: $success;
+
+      .dark & {
+        background: rgba($success, 0.15);
+        color: $success-light;
+        border-color: $success;
+      }
+    }
+
+    .icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2;
+    }
+  }
+
+  &__copy-text {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  // Content Area
+  &__content {
+    overflow-x: auto;
+    @include custom-scrollbar(6px, $border-gray);
+
+    .dark & {
+      @include custom-scrollbar-dark(6px);
+    }
+  }
+
+  &__pre {
+    margin: 0;
+    padding: $spacing-4;
+    overflow-x: auto;
+    font-size: $text-sm;
+    line-height: $leading-relaxed;
+    color: $code-text-light;
+
+    .dark & {
+      color: $code-text-dark;
+    }
+
+    code {
+      font-family: $font-mono;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      display: block;
+      color: inherit;
+    }
+  }
+
+  // With Line Numbers
+  &__with-lines {
+    display: flex;
+  }
+
+  &__line-numbers {
+    flex-shrink: 0;
+    padding: $spacing-4 0;
+    padding-left: $spacing-4;
+    padding-right: $spacing-3;
+    background: rgba(0, 0, 0, 0.02);
+    border-right: 1px solid $code-border-light;
+    user-select: none;
+
+    .dark & {
+      background: rgba(0, 0, 0, 0.2);
+      border-right-color: $code-border-dark;
+    }
+  }
+
+  &__line-number {
+    font-size: $text-sm;
+    line-height: $leading-relaxed;
+    color: $text-tertiary;
+    text-align: right;
+    min-width: 24px;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+
+    &--highlighted {
+      color: $primary-blue;
+      font-weight: $font-semibold;
+      background: rgba($primary-blue, 0.1);
+      margin-left: -#{$spacing-2};
+      padding-left: $spacing-2;
+      margin-right: -#{$spacing-2};
+      padding-right: $spacing-2;
+
+      .dark & {
+        color: $primary-blue-light;
+        background: rgba($primary-blue, 0.15);
+      }
+    }
+  }
+
+  // Max Height with Scroll
+  &[style*="max-height"] {
+    .code-block__content {
+      max-height: inherit;
+      overflow-y: auto;
+    }
+  }
+}
+
+// Syntax Highlighting (usando Prism.js theme)
+// Light Mode
+.code-block {
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: $code-comment-light;
+  }
+
+  .token.punctuation {
+    color: #555;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: $code-number-light;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: $code-string-light;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: #a67f59;
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: $code-keyword-light;
+  }
+
+  .token.function,
+  .token.class-name {
+    color: #DD4A68;
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #e90;
+  }
+}
+
+// Dark Mode Syntax
+.dark .code-block {
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: $code-comment-dark;
+  }
+
+  .token.punctuation {
+    color: #8B949E;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: $code-number-dark;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: $code-string-dark;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: #FFA657;
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: $code-keyword-dark;
+  }
+
+  .token.function,
+  .token.class-name {
+    color: #F97583;
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #FFAB70;
+  }
+}

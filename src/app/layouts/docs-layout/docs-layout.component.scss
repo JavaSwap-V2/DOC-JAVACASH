@@ -1,0 +1,40 @@
+// docs-layout.component.scss
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.docs-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__body {
+    flex: 1;
+    display: flex;
+    margin-top: $navbar-height;
+  }
+
+  &__content {
+    flex: 1;
+    margin-left: $sidebar-width;
+    min-height: calc(100vh - #{$navbar-height});
+    background: $background-white;
+
+    .dark & {
+      background: $dark-background;
+    }
+
+    @include mobile {
+      margin-left: 0;
+    }
+  }
+
+  &__container {
+    max-width: $max-content-width;
+    margin: 0 auto;
+    padding: $spacing-8 $spacing-6;
+
+    @include mobile {
+      padding: $spacing-6 $spacing-4;
+    }
+  }
+}

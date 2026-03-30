@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "6cdc9bf2-24ab-4f41-a4fe-274f8001b78f",
+		"name": "Republica Dominicana - PayOut",
+		"description": "# TuPay PayOut\n\nEste endpoint permite generar un **Payout** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30722009",
+		"_collection_link": "https://www.postman.com/test66-1099/tupay/collection/qbudyc5/republica-dominicana-payout?action=share&source=collection_link&creator=30722009"
+	},
+	"item": [
+		{
+			"name": "payOut",
+			"item": [
+				{
+					"name": "Registrar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"DOP\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payout/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payout",
+								"register"
+							]
+						},
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | customized identifier | no |\n| `currency` | **String** | DOP | type of currency | si |\n| `amount` | **String** | 100 | transaction payment amount | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 123456789 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@emil.com](https://mailto:prueba@emil.com) | Correo electrónico del comprador | si |\n| `userBank` | **String** | bank name | Bank name | si |\n| `userTypeAccount` | **String** | SAVING or CURRENT | type of bank account | si |\n| `userNumAccount` | **String** | 123456789 | Account number |  |\n| `userIdentificationNumber` | **String** | 123456789 | Document number | si |\n| `dueDate` | **String** | 2027/12/30 | Expiration date | si |"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"DOP\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payout/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payout",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": 37,\n    \"success\": true,\n    \"message\": \"payout successfully created\",\n    \"code\": 200,\n    \"reference\": \"88534138\",\n    \"customId\": \"1\",\n    \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\"\n}"
+						},
+						{
+							"name": "Malformed Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"10\",\n  \"userBank\": \"DOP\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payout/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payout",
+										"register"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar por referencia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payout/get-reference/58426951",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payout",
+								"get-reference",
+								"58426951"
+							]
+						},
+						"description": "Endpoint para obtener un payout por referencia"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payout/get-reference/58426951",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payout",
+										"get-reference",
+										"58426951"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 38,\n        \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n        \"reference\": \"58426951\",\n        \"currency\": \"DOP\",\n        \"amount\": \"10.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payout\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"123456789\",\n        \"userEmail\": \"jhondoe@gmail.com\",\n        \"userBank\": \"DOP\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"checking\",\n        \"userNumAccount\": \"123456789\",\n        \"userIdentificationNumber\": \"123456789\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 5,\n        \"providerId\": 2,\n        \"customId\": \"1\",\n        \"countryId\": 1,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n        \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n        \"provider_id\": 2,\n        \"user_id\": 5,\n        \"country_id\": 1\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payout/get-reference/58426951",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payout",
+										"get-reference",
+										"58426951"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"payout not found for this reference.\",\n    \"code\": 404,\n    \"reference\": \"58426951\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payout/user-payouts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payout",
+								"user-payouts"
+							]
+						},
+						"description": "Enpoint para obtener todos los payouts"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payout/user-payouts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payout",
+										"user-payouts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 38,\n            \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n            \"reference\": \"58426951\",\n            \"currency\": \"DOP\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"123456789\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"DOP\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"123456789\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n            \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 37,\n            \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\",\n            \"reference\": \"88534138\",\n            \"currency\": \"DOP\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"123456789\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"DOP\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"123456789\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:37:47.363Z\",\n            \"updatedAt\": \"2025-11-27T11:37:47.363Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "El `/payout` endpoints registra tus Payouts"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{x-api-key}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api-rd.tupay.finance"
+		},
+		{
+			"key": "x-api-key",
+			"value": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		}
+	]
+}

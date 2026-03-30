@@ -1,0 +1,53 @@
+<!-- code-block.component.html -->
+<div class="code-block" [style.max-height]="maxHeight">
+  <!-- Header -->
+  <div class="code-block__header">
+    <div class="code-block__language">
+      <span class="code-block__language-icon"></span>
+      {{ getLanguageDisplay() }}
+    </div>
+    
+    <div class="code-block__title" *ngIf="title">
+      {{ title }}
+    </div>
+
+    <button 
+      class="code-block__copy-btn"
+      [class.code-block__copy-btn--copied]="isCopied"
+      (click)="copyToClipboard()"
+      [attr.aria-label]="isCopied ? 'Copiado' : 'Copiar código'">
+      <svg *ngIf="!isCopied" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg *ngIf="isCopied" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span class="code-block__copy-text">
+        {{ isCopied ? 'Copiado' : 'Copiar' }}
+      </span>
+    </button>
+  </div>
+
+  <!-- Code Content -->
+  <div class="code-block__content">
+    <pre class="code-block__pre" *ngIf="!showLineNumbers"><code 
+      #codeElement
+      [class]="'language-' + language">{{ code }}</code></pre>
+
+    <!-- With Line Numbers -->
+    <div class="code-block__with-lines" *ngIf="showLineNumbers">
+      <div class="code-block__line-numbers">
+        <div 
+          *ngFor="let line of lines; let i = index"
+          class="code-block__line-number"
+          [class.code-block__line-number--highlighted]="isLineHighlighted(i + 1)">
+          {{ i + 1 }}
+        </div>
+      </div>
+      <pre class="code-block__pre"><code 
+        #codeElement
+        [class]="'language-' + language">{{ code }}</code></pre>
+    </div>
+  </div>
+</div>

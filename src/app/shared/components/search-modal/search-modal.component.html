@@ -1,0 +1,119 @@
+<!-- search-modal.component.html -->
+<div class="search-modal" (click)="onBackdropClick($event)">
+  <div class="search-modal__container">
+    <!-- Search Input -->
+    <div class="search-modal__header">
+      <svg class="search-modal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        type="text"
+        class="search-modal__input"
+        placeholder="Buscar endpoints, documentación..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput($event)"
+        autofocus>
+      <kbd class="search-modal__kbd">ESC</kbd>
+    </div>
+
+    <!-- Results -->
+    <div class="search-modal__body" *ngIf="searchQuery.length >= 2">
+      <!-- Loading -->
+      <div class="search-modal__loading" *ngIf="loading">
+        <div class="spinner-small"></div>
+        <span>Buscando...</span>
+      </div>
+
+      <!-- Results List -->
+      <div class="search-results" *ngIf="!loading && results.length > 0">
+        <div class="search-results__header">
+          <span>{{ results.length }} resultado(s)</span>
+        </div>
+        <div
+          *ngFor="let result of results; let i = index"
+          class="search-result"
+          [class.search-result--selected]="i === selectedIndex"
+          (click)="selectResult(result)"
+          (mouseenter)="selectedIndex = i">
+          
+          <div class="search-result__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+
+          <div class="search-result__content">
+            <div class="search-result__header">
+              <app-badge 
+                *ngIf="result.method" 
+                [method]="result.method" 
+                variant="method" 
+                size="sm">
+              </app-badge>
+              <span class="search-result__title" [innerHTML]="highlightMatch(result.title)"></span>
+            </div>
+            <p class="search-result__description" [innerHTML]="highlightMatch(result.description)"></p>
+            <span class="search-result__path">{{ result.path }}</span>
+          </div>
+
+          <div class="search-result__action">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="search-modal__empty" *ngIf="!loading && results.length === 0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <p>No se encontraron resultados para "{{ searchQuery }}"</p>
+      </div>
+    </div>
+
+    <!-- Recent Searches -->
+    <div class="search-modal__body" *ngIf="searchQuery.length < 2 && recentSearches.length > 0">
+      <div class="recent-searches">
+        <div class="recent-searches__header">
+          <span>Búsquedas recientes</span>
+          <button class="recent-searches__clear" (click)="clearRecentSearches()">
+            Limpiar
+          </button>
+        </div>
+        <button
+          *ngFor="let query of recentSearches"
+          class="recent-search"
+          (click)="selectRecentSearch(query)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>{{ query }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="search-modal__footer">
+      <div class="search-modal__shortcuts">
+        <div class="shortcut">
+          <kbd>↑</kbd><kbd>↓</kbd>
+          <span>Navegar</span>
+        </div>
+        <div class="shortcut">
+          <kbd>Enter</kbd>
+          <span>Seleccionar</span>
+        </div>
+        <div class="shortcut">
+          <kbd>ESC</kbd>
+          <span>Cerrar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

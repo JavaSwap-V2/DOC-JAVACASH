@@ -1,0 +1,111 @@
+<!-- sidebar.component.html -->
+<aside class="sidebar" [class.sidebar--open]="isOpen">
+  <!-- Header con botón de cerrar (mobile) -->
+  <div class="sidebar__header hide-desktop">
+    <h3 class="sidebar__title">Navegación</h3>
+    <button class="sidebar__close-btn" (click)="closeSidebar()" aria-label="Cerrar menú">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Contenido scrollable -->
+  <div class="sidebar__content">
+    <!-- Navegación principal -->
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <h4 class="sidebar__section-title">Documentación</h4>
+        <ul class="sidebar__list">
+          <li *ngFor="let item of navigationItems">
+            <a 
+              [routerLink]="item.path" 
+              routerLinkActive="active"
+              class="sidebar__item">
+              <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <!-- Iconos simplificados según tipo -->
+                <ng-container [ngSwitch]="item.icon">
+                  <g *ngSwitchCase="'book'">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </g>
+                  <g *ngSwitchCase="'key'">
+                    <circle cx="7" cy="17" r="3"></circle>
+                    <path d="M15.09 5.41 21 11.32"></path>
+                    <path d="m10.39 10.71 3.54 3.54"></path>
+                    <path d="m15.09 5.41-3.54 3.54"></path>
+                    <path d="M19 14h2v2"></path>
+                  </g>
+                  <g *ngSwitchCase="'alert-circle'">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </g>
+                </ng-container>
+              </svg>
+              <span class="sidebar__label">{{ item.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Grupos de Endpoints -->
+      <div class="sidebar__section" *ngFor="let group of endpointGroups$ | async">
+        <button 
+          class="sidebar__section-header"
+          (click)="toggleGroup(group.name)"
+          [class.sidebar__section-header--expanded]="isGroupExpanded(group.name)">
+          <div class="sidebar__section-info">
+            <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <!-- Icono según categoría -->
+              <g *ngIf="group.name === 'PayIn'">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="8 12 12 16 16 12"></polyline>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+              </g>
+              <g *ngIf="group.name === 'PayOut'">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="16 12 12 8 8 12"></polyline>
+                <line x1="12" y1="16" x2="12" y2="8"></line>
+              </g>
+            </svg>
+            <h4 class="sidebar__section-title">{{ group.name }}</h4>
+          </div>
+          <svg 
+            class="sidebar__chevron" 
+            [class.sidebar__chevron--rotated]="isGroupExpanded(group.name)"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <!-- Lista de endpoints -->
+        <ul class="sidebar__list" *ngIf="isGroupExpanded(group.name)">
+          <li *ngFor="let endpoint of group.endpoints">
+            <button 
+              class="sidebar__endpoint-item"
+              [class.active]="isEndpointActive(endpoint)"
+              (click)="navigateToEndpoint(endpoint)">
+              <app-badge 
+                [method]="endpoint.method" 
+                variant="method" 
+                size="sm">
+              </app-badge>
+              <span class="sidebar__endpoint-name">{{ endpoint.name }}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</aside>
+
+<!-- Overlay para mobile -->
+<div 
+  class="sidebar__overlay hide-desktop" 
+  *ngIf="isOpen"
+  (click)="closeSidebar()">
+</div>

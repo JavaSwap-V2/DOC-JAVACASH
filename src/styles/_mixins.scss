@@ -1,0 +1,458 @@
+// _mixins.scss
+// ===========================================
+// Mixins Reutilizables - JavaCash API Docs
+// ===========================================
+
+@import 'variables';
+
+// ========== RESPONSIVE BREAKPOINTS ==========
+@mixin mobile {
+  @media (max-width: #{$tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $tablet) and (max-width: #{$desktop - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media (min-width: $wide) {
+    @content;
+  }
+}
+
+// Mobile First
+@mixin min-width($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Desktop First
+@mixin max-width($breakpoint) {
+  @media (max-width: $breakpoint - 1px) {
+    @content;
+  }
+}
+
+// ========== FLEXBOX UTILITIES ==========
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// ========== TRUNCATE TEXT ==========
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ========== CUSTOM SCROLLBAR ==========
+@mixin custom-scrollbar($size: 8px, $thumb-color: $border-gray, $track-color: transparent) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $radius-full;
+    
+    &:hover {
+      background: darken($thumb-color, 10%);
+    }
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+}
+
+// Dark mode scrollbar
+@mixin custom-scrollbar-dark($size: 8px) {
+  @include custom-scrollbar($size, $dark-border-light, transparent);
+}
+
+// ========== BUTTON VARIANTS ==========
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-2 $spacing-4;
+  border: none;
+  border-radius: $radius-md;
+  font-family: $font-primary;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  line-height: $leading-normal;
+  cursor: pointer;
+  transition: all $transition-base;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $primary-blue;
+  color: white;
+  
+  &:hover:not(:disabled) {
+    background: $primary-blue-dark;
+  }
+  
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: $background-gray;
+  color: $text-primary;
+  
+  &:hover:not(:disabled) {
+    background: darken($background-gray, 5%);
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background: transparent;
+  color: $primary-blue;
+  border: 1px solid $primary-blue;
+  
+  &:hover:not(:disabled) {
+    background: $primary-blue-lighter;
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: $text-secondary;
+  
+  &:hover:not(:disabled) {
+    background: $background-gray;
+    color: $text-primary;
+  }
+}
+
+// ========== CARD STYLES ==========
+@mixin card {
+  background: $surface-elevated;
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+  box-shadow: $shadow-sm;
+  transition: all $transition-base;
+}
+
+@mixin card-hover {
+  @include card;
+  
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+@mixin card-dark {
+  background: $dark-surface;
+  border-color: $dark-border;
+  box-shadow: $shadow-dark-sm;
+}
+
+// ========== BADGE STYLES ==========
+@mixin badge-base {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $radius-sm;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+@mixin badge-method($bg-color, $text-color) {
+  @include badge-base;
+  background: $bg-color;
+  color: $text-color;
+  font-family: $font-mono;
+  padding: $spacing-1 $spacing-3;
+}
+
+// ========== FOCUS STYLES ==========
+@mixin focus-ring($color: $primary-blue) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  
+  &:focus-visible {
+    outline-color: $color;
+    outline-offset: 2px;
+  }
+}
+
+@mixin focus-ring-inset($color: $primary-blue) {
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px $color;
+  }
+}
+
+// ========== GRADIENT BACKGROUNDS ==========
+@mixin gradient-primary {
+  background: linear-gradient(135deg, $primary-blue 0%, $accent-cyan 100%);
+}
+
+@mixin gradient-accent {
+  background: linear-gradient(135deg, $accent-cyan 0%, $accent-green 100%);
+}
+
+@mixin gradient-mesh {
+  background: 
+    radial-gradient(at 0% 0%, rgba($primary-blue, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba($accent-cyan, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba($accent-green, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba($primary-blue, 0.2) 0px, transparent 50%);
+}
+
+// ========== CODE BLOCK STYLING ==========
+@mixin code-block {
+  background: $code-bg-light;
+  border: 1px solid $code-border-light;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  overflow-x: auto;
+  font-family: $font-mono;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  @include custom-scrollbar(6px, $border-gray);
+  
+  code {
+    color: $code-text-light;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+
+@mixin code-block-dark {
+  background: $code-bg-dark;
+  border-color: $code-border-dark;
+  @include custom-scrollbar-dark(6px);
+  
+  code {
+    color: $code-text-dark;
+  }
+}
+
+@mixin inline-code {
+  background: $code-bg-light;
+  color: $code-text-light;
+  padding: 2px 6px;
+  border-radius: $radius-sm;
+  font-family: $font-mono;
+  font-size: 0.9em;
+}
+
+// ========== ANIMATION UTILITIES ==========
+@mixin fade-in($duration: $transition-base) {
+  animation: fadeIn $duration ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@mixin slide-in-from-left($duration: $transition-base) {
+  animation: slideInFromLeft $duration ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@mixin slide-in-from-right($duration: $transition-base) {
+  animation: slideInFromRight $duration ease-out;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@mixin scale-in($duration: $transition-fast) {
+  animation: scaleIn $duration ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// ========== SKELETON LOADING ==========
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    $background-gray 0%,
+    $background-gray-medium 50%,
+    $background-gray 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ========== DARK MODE UTILITIES ==========
+@mixin dark-mode {
+  :host-context(.dark) & {
+    @content;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :host-context(.auto) & {
+      @content;
+    }
+  }
+}
+
+@mixin light-mode {
+  :host-context(.light) & {
+    @content;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    :host-context(.auto) & {
+      @content;
+    }
+  }
+}
+
+// ========== SPACING UTILITIES ==========
+@mixin spacing($property, $size) {
+  #{$property}: map-get((
+    0: $spacing-0,
+    1: $spacing-1,
+    2: $spacing-2,
+    3: $spacing-3,
+    4: $spacing-4,
+    5: $spacing-5,
+    6: $spacing-6,
+    8: $spacing-8,
+    10: $spacing-10,
+    12: $spacing-12,
+    16: $spacing-16,
+    20: $spacing-20,
+    24: $spacing-24
+  ), $size);
+}
+
+// ========== GLASS MORPHISM ==========
+@mixin glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@mixin glass-dark {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+// ========== VISUALLY HIDDEN (Accessibility) ==========
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

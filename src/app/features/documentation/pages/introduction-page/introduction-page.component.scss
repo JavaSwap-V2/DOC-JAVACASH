@@ -1,0 +1,213 @@
+// introduction-page.component.scss
+@import '../_doc-page.scss';
+
+// Version & Status Badges
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+  margin-bottom: $spacing-3;
+}
+
+.version-badge {
+  @include badge-base;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  @include badge-base;
+
+  &--stable {
+    background: rgba($success, 0.1);
+    color: $success-dark;
+
+    .dark & {
+      background: rgba($success, 0.2);
+      color: $success-light;
+    }
+  }
+
+  &--beta {
+    background: rgba($warning, 0.1);
+    color: $warning-dark;
+
+    .dark & {
+      background: rgba($warning, 0.2);
+      color: $warning-light;
+    }
+  }
+}
+
+// Purple feature icon
+.feature-icon--purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+
+  .dark & {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+  }
+}
+
+// SDK Tabs Section
+.sdk-tabs {
+  @include flex-column;
+  gap: $spacing-6;
+  margin-top: $spacing-6;
+}
+
+.sdk-tab-content {
+  @include card;
+  animation: fadeInUp 0.3s ease-out;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin: 0 0 $spacing-4 0 !important;
+    font-size: $text-lg;
+    font-weight: $font-semibold;
+    color: $text-primary;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $primary-blue;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+}
+
+// Support Grid
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-6;
+}
+
+.support-item {
+  @include card;
+  @include flex-column;
+  align-items: center;
+  text-align: center;
+  gap: $spacing-3;
+  padding: $spacing-6;
+  transition: all $transition-base;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+
+    .dark & {
+      box-shadow: $shadow-dark-md;
+    }
+  }
+
+  &__icon {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background: $primary-blue-lighter;
+    border-radius: $radius-full;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $primary-blue;
+      stroke-width: 2;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+
+  h4 {
+    margin: 0;
+    font-size: $text-base;
+    font-weight: $font-semibold;
+    color: $text-primary;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Feature grid animation
+.feature-item {
+  animation: fadeInUp 0.4s ease-out backwards;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Next steps animation
+.next-step-card {
+  animation: fadeInUp 0.4s ease-out backwards;
+
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Focus states for accessibility
+.next-step-card:focus-visible {
+  @include focus-ring;
+}
+
+.support-item:focus-visible {
+  @include focus-ring;
+}

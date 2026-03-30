@@ -1,0 +1,124 @@
+// badge.component.scss
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-mono;
+  font-weight: $font-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: $radius-sm;
+  transition: all $transition-fast;
+
+  // Sizes
+  &-sm {
+    padding: 2px 8px;
+    font-size: $text-xs;
+    line-height: 1.2;
+  }
+
+  &-md {
+    padding: 4px 10px;
+    font-size: $text-xs;
+    line-height: 1.3;
+  }
+
+  // HTTP Method Variants
+  &-method-get {
+    background: $method-get-bg;
+    color: $success-dark;
+
+    .dark & {
+      background: rgba($success, 0.15);
+      color: $success-light;
+    }
+  }
+
+  &-method-post {
+    background: $method-post-bg;
+    color: $method-post;
+
+    .dark & {
+      background: rgba($method-post, 0.15);
+      color: $info-light;
+    }
+  }
+
+  &-method-put {
+    background: $method-put-bg;
+    color: $warning-dark;
+
+    .dark & {
+      background: rgba($warning, 0.15);
+      color: $warning-light;
+    }
+  }
+
+  &-method-delete {
+    background: $method-delete-bg;
+    color: $error-dark;
+
+    .dark & {
+      background: rgba($error, 0.15);
+      color: $error-light;
+    }
+  }
+
+  &-method-patch {
+    background: $method-patch-bg;
+    color: $method-patch;
+
+    .dark & {
+      background: rgba($method-patch, 0.15);
+      color: lighten($method-patch, 20%);
+    }
+  }
+
+  // Status Code Variants
+  &-success {
+    background: $success-light;
+    color: $success-dark;
+
+    .dark & {
+      background: rgba($success, 0.15);
+      color: $success-light;
+    }
+  }
+
+  &-warning {
+    background: $warning-light;
+    color: $warning-dark;
+
+    .dark & {
+      background: rgba($warning, 0.15);
+      color: $warning-light;
+    }
+  }
+
+  &-error {
+    background: $error-light;
+    color: $error-dark;
+
+    .dark & {
+      background: rgba($error, 0.15);
+      color: $error-light;
+    }
+  }
+
+  // Tag Variant
+  &-tag {
+    background: $background-gray;
+    color: $text-secondary;
+    font-family: $font-primary;
+    text-transform: none;
+    letter-spacing: normal;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      color: $dark-text-secondary;
+    }
+  }
+}

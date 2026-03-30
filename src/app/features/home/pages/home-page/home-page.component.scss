@@ -1,0 +1,412 @@
+// home-page.component.scss
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.home-page {
+  min-height: 100vh;
+}
+
+// ========== HERO SECTION ==========
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-12;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-20 $spacing-6;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    padding: $spacing-12 $spacing-4;
+    gap: $spacing-8;
+  }
+
+  &__content {
+    @include flex-column;
+    gap: $spacing-6;
+  }
+
+  &__badge {
+    @include flex-center;
+    gap: $spacing-2;
+    width: fit-content;
+    padding: $spacing-2 $spacing-4;
+    background: $primary-blue-lighter;
+    border-radius: $radius-full;
+    color: $primary-blue;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+      color: $primary-blue-light;
+    }
+  }
+
+  &__badge-icon {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+  }
+
+  &__title {
+    font-size: $text-5xl;
+    font-weight: $font-bold;
+    line-height: $leading-tight;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    @include mobile {
+      font-size: $text-4xl;
+    }
+  }
+
+  &__title-accent {
+    display: block;
+    @include gradient-primary;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__description {
+    font-size: $text-lg;
+    line-height: $leading-relaxed;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+  }
+
+  &__code {
+    @include mobile {
+      order: -1;
+    }
+  }
+}
+
+// ========== BUTTONS ==========
+.btn {
+  @include button-base;
+  gap: $spacing-2;
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+  }
+
+  &-primary {
+    @include button-primary;
+  }
+
+  &-secondary {
+    @include button-secondary;
+  }
+
+  &-lg {
+    padding: $spacing-4 $spacing-6;
+    font-size: $text-base;
+  }
+}
+
+// ========== SECTIONS ==========
+.section-title {
+  font-size: $text-3xl;
+  font-weight: $font-bold;
+  text-align: center;
+  margin-bottom: $spacing-4;
+  color: #000000; // REGLA: Negro
+
+  .dark & {
+    color: $dark-text-primary;
+  }
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: $text-lg;
+  color: $text-secondary;
+  margin-bottom: $spacing-8;
+
+  .dark & {
+    color: $dark-text-secondary;
+  }
+}
+
+// ========== FEATURES ==========
+.features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-20 $spacing-6;
+  background: $background-gray;
+
+  .dark & {
+    background: $dark-surface;
+  }
+
+  @include mobile {
+    padding: $spacing-12 $spacing-4;
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-6;
+}
+
+.feature-card {
+  @include card;
+  @include flex-column;
+  gap: $spacing-4;
+  text-align: center;
+  transition: all $transition-base;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+
+    .dark & {
+      box-shadow: $shadow-dark-lg;
+    }
+  }
+
+  &__icon {
+    @include flex-center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto;
+    background: $primary-blue-lighter;
+    border-radius: $radius-xl;
+    color: $primary-blue;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+      color: $primary-blue-light;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 2;
+    }
+  }
+
+  &__title {
+    font-size: $text-xl;
+    font-weight: $font-semibold;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__description {
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// ========== QUICK START ==========
+.quick-start {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-20 $spacing-6;
+
+  @include mobile {
+    padding: $spacing-12 $spacing-4;
+  }
+
+  &__cta {
+    @include flex-center;
+    margin-top: $spacing-8;
+  }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-6;
+  margin-bottom: $spacing-8;
+}
+
+.step-card {
+  @include card;
+  display: flex;
+  gap: $spacing-4;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__number {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: $primary-blue;
+    color: white;
+    font-size: $text-xl;
+    font-weight: $font-bold;
+    border-radius: $radius-full;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: $text-lg;
+    font-weight: $font-semibold;
+    margin-bottom: $spacing-2;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__description {
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// ========== COUNTRIES ==========
+.countries {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-20 $spacing-6;
+  background: $background-gray;
+
+  .dark & {
+    background: $dark-surface;
+  }
+
+  @include mobile {
+    padding: $spacing-12 $spacing-4;
+  }
+}
+
+.country-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.country-card {
+  @include card;
+  @include flex-column;
+  align-items: center;
+  gap: $spacing-4;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: $primary-blue;
+    transform: scaleX(0);
+    transition: transform $transition-base;
+  }
+
+  &:hover {
+    border-color: $primary-blue;
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+
+    .dark & {
+      box-shadow: $shadow-dark-lg;
+    }
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .country-card__arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &__flag {
+    font-size: 64px;
+  }
+
+  &__name {
+    font-size: $text-2xl;
+    font-weight: $font-bold;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__currency {
+    color: $text-secondary;
+    font-size: $text-base;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__arrow {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: $primary-blue-lighter;
+    border-radius: $radius-full;
+    color: $primary-blue;
+    transition: transform $transition-base;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+      color: $primary-blue-light;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+  }
+}

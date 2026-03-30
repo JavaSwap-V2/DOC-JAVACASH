@@ -1,0 +1,519 @@
+{
+	"info": {
+		"_postman_id": "c008d1f7-4819-43a8-ace7-b57d2c707ebc",
+		"name": "Republica Dominicana - Payin",
+		"description": "# TuPay Payin\n\nEste endpoint permite generar un **Payin** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30722009",
+		"_collection_link": "https://www.postman.com/test66-1099/tupay/collection/9p9fwh1/republica-dominicana-payin?action=share&source=collection_link&creator=30722009"
+	},
+	"item": [
+		{
+			"name": "payIn",
+			"item": [
+				{
+					"name": "Registrar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payin",
+								"register"
+							]
+						},
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | DOP | Codigo de la moneda | si |\n| `amount` | **String** | 100 | Cantidad de dinero por la que se generará la tasa | si |\n| `CustomId` | **number** | 123 | customized identifier | no |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 123456789 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@emil.com](https://mailto:prueba@emil.com) | Correo electrónico del comprador | si |\n| `userIdentificationNumber` | **String** | 123456789 | Número de documento del comprador | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | si |\n\nImportante: la respueta de 201 Created devuelve la variable checkoutUrl esta es el link del Checkout"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://rd.tupay.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"DOP\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\"\n    }\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
+						},
+						{
+							"name": "Malformed Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"currency\": \"DOP\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"register"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar por referencia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/get-reference/14563031",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payin",
+								"get-reference",
+								"14563031"
+							]
+						},
+						"description": "Endpoint para obtener un payin por referencia"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/get-reference/14563031",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"get-reference",
+										"14563031"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 12,\n        \"uuid\": \"1b5eefac-25ca-4013-973c-bf9095507ca5\",\n        \"reference\": \"14563031\",\n        \"currency\": \"DOP\",\n        \"amount\": \"100.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"diego prueba\",\n        \"userPhone\": \"3015114604\",\n        \"userEmail\": \"ddigofd+3@gmail.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"300000\",\n        \"status\": \"paid\",\n        \"observation\": null,\n        \"userId\": 3,\n        \"providerId\": null,\n        \"customId\": \"3\",\n        \"countryId\": 1,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"100.00\",\n        \"createdAt\": \"2025-11-21T20:52:10.038Z\",\n        \"updatedAt\": \"2025-11-21T20:52:20.248Z\",\n        \"provider_id\": null,\n        \"user_id\": 3,\n        \"country_id\": 1\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/get-reference/14563031",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"get-reference",
+										"14563031"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Error obtaining payin.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar por cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/custom-id/3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payin",
+								"custom-id",
+								"3"
+							]
+						},
+						"description": "Endpoint para obtener un payin por custom id"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/custom-id/3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"custom-id",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 8,\n        \"uuid\": \"5c6be55d-240d-43fc-b4d5-9f906bf7e234\",\n        \"reference\": \"14306950\",\n        \"currency\": \"DOP\",\n        \"amount\": \"100.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"diego test\",\n        \"userPhone\": \"502646546154\",\n        \"userEmail\": \"ddiegofd@gmail.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1010101010\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 3,\n        \"providerId\": null,\n        \"customId\": \"3\",\n        \"countryId\": 1,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2025-11-21T14:47:35.097Z\",\n        \"updatedAt\": \"2025-11-21T14:47:35.097Z\",\n        \"provider_id\": null,\n        \"user_id\": 3,\n        \"country_id\": 1\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/custom-id/3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"custom-id",
+										"3"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"payin not found for this custom id\",\n    \"code\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/user-payin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payin",
+								"user-payin"
+							]
+						},
+						"description": "Enpoint para obtener todos los payin"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/payin/user-payin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payin",
+										"user-payin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 13,\n            \"uuid\": \"9f10655f-2c57-494f-a60a-ecdc3da16869\",\n            \"reference\": \"69489607\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"3\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"100.00\",\n            \"createdAt\": \"2025-11-21T20:52:12.598Z\",\n            \"updatedAt\": \"2025-11-21T20:52:21.514Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 12,\n            \"uuid\": \"1b5eefac-25ca-4013-973c-bf9095507ca5\",\n            \"reference\": \"14563031\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"3\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"100.00\",\n            \"createdAt\": \"2025-11-21T20:52:10.038Z\",\n            \"updatedAt\": \"2025-11-21T20:52:20.248Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 11,\n            \"uuid\": \"528adf6d-f589-406f-91f8-a4a6ebab06ef\",\n            \"reference\": \"88889042\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"3\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"100.00\",\n            \"createdAt\": \"2025-11-21T20:52:07.456Z\",\n            \"updatedAt\": \"2025-11-21T20:52:18.990Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 10,\n            \"uuid\": \"b2c00864-c186-4a75-84e2-a0c4c1fb31ef\",\n            \"reference\": \"59159465\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"3\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"100.00\",\n            \"createdAt\": \"2025-11-21T20:52:04.567Z\",\n            \"updatedAt\": \"2025-11-21T20:52:17.711Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 9,\n            \"uuid\": \"5618261e-d4b9-4669-a633-897fb65336f7\",\n            \"reference\": \"80147322\",\n            \"currency\": \"DOP\",\n            \"amount\": \"152.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"123\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"152.00\",\n            \"createdAt\": \"2025-11-21T20:31:08.638Z\",\n            \"updatedAt\": \"2025-11-21T20:31:32.407Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 8,\n            \"uuid\": \"5c6be55d-240d-43fc-b4d5-9f906bf7e234\",\n            \"reference\": \"14306950\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego test\",\n            \"userPhone\": \"502646546154\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"1010101010\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"3\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-21T14:47:35.097Z\",\n            \"updatedAt\": \"2025-11-21T14:47:35.097Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 7,\n            \"uuid\": \"c07c9df2-92db-4d0d-867d-7b644d09d97b\",\n            \"reference\": \"38108427\",\n            \"currency\": \"DOP\",\n            \"amount\": \"100.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"DIEGO PRUEBAS\",\n            \"userPhone\": \"300000000\",\n            \"userEmail\": \"ddiegofd@yahoo.com\",\n            \"userBank\": \"null\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"null\",\n            \"userIdentificationNumber\": \"1152201832\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": 2,\n            \"customId\": null,\n            \"countryId\": null,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-21T13:30:37.157Z\",\n            \"updatedAt\": \"2025-11-21T14:01:37.126Z\",\n            \"provider_id\": 2,\n            \"user_id\": 3,\n            \"country_id\": null\n        },\n        {\n            \"id\": 4,\n            \"uuid\": \"cc016655-929f-46b1-9677-46928da10b70\",\n            \"reference\": \"75716375\",\n            \"currency\": \"DOP\",\n            \"amount\": \"152.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"123\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"152.00\",\n            \"createdAt\": \"2025-11-19T16:00:42.060Z\",\n            \"updatedAt\": \"2025-11-19T16:00:53.825Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 3,\n            \"uuid\": \"c521c5ac-b1e7-4c9e-ade6-03ad3a589206\",\n            \"reference\": \"92374369\",\n            \"currency\": \"DOP\",\n            \"amount\": \"152.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"123\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"152.00\",\n            \"createdAt\": \"2025-11-19T15:59:41.867Z\",\n            \"updatedAt\": \"2025-11-19T15:59:54.994Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 2,\n            \"uuid\": \"aaea14f8-ea54-4c90-95a0-5a0902344173\",\n            \"reference\": \"50888844\",\n            \"currency\": \"DOP\",\n            \"amount\": \"152.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"diego prueba\",\n            \"userPhone\": \"3015114604\",\n            \"userEmail\": \"loremipsum@gmail.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"300000\",\n            \"status\": \"paid\",\n            \"observation\": null,\n            \"userId\": 3,\n            \"providerId\": null,\n            \"customId\": \"123\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"152.00\",\n            \"createdAt\": \"2025-11-19T15:47:05.656Z\",\n            \"updatedAt\": \"2025-11-19T15:58:14.707Z\",\n            \"provider_id\": null,\n            \"user_id\": 3,\n            \"country_id\": 1\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "El `/payin` endpoints registra tus pagos PayIn"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{x-api-key}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api-rd.tupay.finance"
+		},
+		{
+			"key": "x-api-key",
+			"value": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		}
+	]
+}

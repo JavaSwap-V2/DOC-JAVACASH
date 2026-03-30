@@ -1,0 +1,107 @@
+<!-- try-it-out.component.html -->
+<div class="try-it-out" *ngIf="endpoint">
+  <button 
+    class="try-it-out__toggle"
+    (click)="toggleExpand()"
+    [class.try-it-out__toggle--expanded]="isExpanded">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+    <span>Try It Out</span>
+    <svg class="try-it-out__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div class="try-it-out__content" *ngIf="isExpanded">
+    <!-- API Key Input -->
+    <div class="try-it-out__section">
+      <label class="try-it-out__label" for="apiKey">
+        API Key
+        <span class="try-it-out__required">*</span>
+      </label>
+      <div class="try-it-out__input-group">
+        <input
+          id="apiKey"
+          type="password"
+          class="try-it-out__input"
+          [(ngModel)]="apiKey"
+          placeholder="abc123xyz456..."
+          [class.try-it-out__input--error]="error && !apiKey">
+        <button 
+          class="try-it-out__btn try-it-out__btn--secondary"
+          (click)="clearApiKey()"
+          *ngIf="apiKey">
+          Limpiar
+        </button>
+      </div>
+      <p class="try-it-out__help">
+        Tu API Key se guarda localmente y nunca se comparte.
+      </p>
+    </div>
+
+    <!-- Request Body (si aplica) -->
+    <div class="try-it-out__section" *ngIf="endpoint.method !== 'GET' && endpoint.requestBody">
+      <label class="try-it-out__label" for="requestBody">
+        Request Body
+      </label>
+      <textarea
+        id="requestBody"
+        class="try-it-out__textarea"
+        [(ngModel)]="requestBody"
+        rows="10"
+        placeholder='{ "key": "value" }'>
+      </textarea>
+    </div>
+
+    <!-- Send Button -->
+    <div class="try-it-out__actions">
+      <button
+        class="try-it-out__btn try-it-out__btn--primary"
+        (click)="sendRequest()"
+        [disabled]="loading">
+        <svg *ngIf="!loading" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        <span class="spinner" *ngIf="loading"></span>
+        <span>{{ loading ? 'Enviando...' : 'Send Request' }}</span>
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    <div class="try-it-out__error" *ngIf="error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Response -->
+    <div class="try-it-out__response" *ngIf="response">
+      <div class="try-it-out__response-header">
+        <h4>Response</h4>
+        <div class="try-it-out__response-meta">
+          <span 
+            class="try-it-out__status"
+            [class.try-it-out__status--success]="getStatusClass() === 'success'"
+            [class.try-it-out__status--warning]="getStatusClass() === 'warning'"
+            [class.try-it-out__status--error]="getStatusClass() === 'error'">
+            {{ response.status }} {{ response.statusText }}
+          </span>
+          <span class="try-it-out__time">{{ response.time }}ms</span>
+        </div>
+      </div>
+
+      <div class="try-it-out__response-body">
+        <app-code-block
+          [code]="response.body | json"
+          language="javascript"
+          title="Response Body">
+        </app-code-block>
+      </div>
+    </div>
+  </div>
+</div>

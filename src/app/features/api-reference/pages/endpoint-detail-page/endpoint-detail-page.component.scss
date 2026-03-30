@@ -1,0 +1,422 @@
+// endpoint-detail-page.component.scss
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.endpoint-detail {
+  max-width: 900px;
+  @include flex-column;
+  gap: $spacing-12;
+}
+
+// ========== HEADER ==========
+.endpoint-header {
+  @include flex-column;
+  gap: $spacing-4;
+  padding-bottom: $spacing-6;
+  border-bottom: 2px solid $border-gray;
+
+  .dark & {
+    border-bottom-color: $dark-border;
+  }
+
+  &__main {
+    @include flex-start;
+    gap: $spacing-4;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: $text-3xl;
+    font-weight: $font-bold;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__description {
+    font-size: $text-lg;
+    line-height: $leading-relaxed;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// ========== SECTIONS ==========
+.endpoint-section {
+  @include flex-column;
+  gap: $spacing-4;
+}
+
+.section-title {
+  font-size: $text-2xl;
+  font-weight: $font-semibold;
+  color: #000000; // REGLA: Negro
+  margin-bottom: $spacing-2;
+
+  .dark & {
+    color: $dark-text-primary;
+  }
+}
+
+.section-description {
+  color: $text-secondary;
+  line-height: $leading-relaxed;
+
+  .dark & {
+    color: $dark-text-secondary;
+  }
+}
+
+// ========== URL BOX ==========
+.url-box {
+  @include flex-start;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  background: $code-bg-light;
+  border: 1px solid $code-border-light;
+  border-radius: $radius-md;
+
+  .dark & {
+    background: $code-bg-dark;
+    border-color: $code-border-dark;
+  }
+
+  &__url {
+    flex: 1;
+    font-family: $font-mono;
+    font-size: $text-sm;
+    color: #000000; // REGLA: Negro
+    word-break: break-all;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__copy {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid $border-gray;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    .dark & {
+      border-color: $dark-border;
+      color: $dark-text-secondary;
+    }
+
+    &:hover {
+      background: $background-white;
+      color: $primary-blue;
+      border-color: $primary-blue;
+
+      .dark & {
+        background: $dark-surface-elevated;
+        color: $primary-blue-light;
+      }
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+  }
+}
+
+// ========== PARAMS TABLE ==========
+.params-table {
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  .dark & {
+    border-color: $dark-border;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 2fr;
+    gap: $spacing-4;
+    padding: $spacing-3 $spacing-4;
+    background: $background-gray;
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    color: $text-secondary;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      color: $dark-text-secondary;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 2fr;
+    gap: $spacing-4;
+    padding: $spacing-4;
+    border-top: 1px solid $border-gray;
+
+    .dark & {
+      border-top-color: $dark-border;
+    }
+
+    &:first-child {
+      border-top: none;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: $spacing-2;
+    }
+  }
+
+  &__col {
+    font-size: $text-sm;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+
+    code {
+      font-size: $text-sm;
+    }
+  }
+}
+
+.badge-required {
+  @include badge-base;
+  background: $success-light;
+  color: $success-dark;
+
+  .dark & {
+    background: rgba($success, 0.15);
+    color: $success-light;
+  }
+}
+
+.badge-optional {
+  @include badge-base;
+  background: $background-gray;
+  color: $text-tertiary;
+
+  .dark & {
+    background: $dark-surface-elevated;
+    color: $dark-text-tertiary;
+  }
+}
+
+// ========== TABS ==========
+.language-tabs,
+.response-tabs {
+  display: flex;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.language-tab {
+  padding: $spacing-2 $spacing-4;
+  background: transparent;
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  .dark & {
+    border-color: $dark-border;
+    color: $dark-text-secondary;
+  }
+
+  &:hover {
+    background: $background-gray;
+    color: #000000;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      color: $dark-text-primary;
+    }
+  }
+
+  &.active {
+    background: $primary-blue;
+    border-color: $primary-blue;
+    color: white;
+
+    .dark & {
+      background: $primary-blue;
+      border-color: $primary-blue;
+    }
+  }
+}
+
+.response-tab {
+  @include flex-start;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-4;
+  background: transparent;
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  .dark & {
+    border-color: $dark-border;
+  }
+
+  &:hover {
+    background: $background-gray;
+
+    .dark & {
+      background: $dark-surface-elevated;
+    }
+  }
+
+  &.active {
+    border-width: 2px;
+  }
+
+  &.success {
+    &.active {
+      border-color: $success;
+      background: $success-light;
+
+      .dark & {
+        background: rgba($success, 0.15);
+      }
+    }
+  }
+
+  &.error {
+    &.active {
+      border-color: $error;
+      background: $error-light;
+
+      .dark & {
+        background: rgba($error, 0.15);
+      }
+    }
+  }
+
+  &__status {
+    font-family: $font-mono;
+    font-size: $text-sm;
+    font-weight: $font-bold;
+    color: #000000;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__text {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+.response-content {
+  @include flex-column;
+  gap: $spacing-4;
+}
+
+.response-description {
+  padding: $spacing-4;
+  background: $background-gray;
+  border-left: 4px solid $primary-blue;
+  border-radius: $radius-md;
+  color: $text-secondary;
+
+  .dark & {
+    background: $dark-surface-elevated;
+    color: $dark-text-secondary;
+  }
+}
+
+// ========== LOADING STATE ==========
+.loading-state {
+  @include flex-column-center;
+  gap: $spacing-4;
+  padding: $spacing-20;
+  color: $text-secondary;
+
+  .dark & {
+    color: $dark-text-secondary;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid $border-gray;
+  border-top-color: $primary-blue;
+  border-radius: $radius-full;
+  animation: spin 1s linear infinite;
+
+  .dark & {
+    border-color: $dark-border;
+    border-top-color: $primary-blue-light;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ========== EMPTY STATE ==========
+.empty-state {
+  @include flex-column-center;
+  gap: $spacing-4;
+  padding: $spacing-20;
+  text-align: center;
+
+  svg {
+    width: 64px;
+    height: 64px;
+    color: $text-tertiary;
+    stroke-width: 2;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+  }
+
+  h3 {
+    font-size: $text-2xl;
+    font-weight: $font-semibold;
+    color: #000000;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  p {
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
