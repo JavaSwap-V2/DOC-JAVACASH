@@ -16,7 +16,7 @@ export class IntroductionPageComponent {
     "userName": "John Doe",
     "userEmail": "john@example.com",
     "userPhone": "12345678",
-    "userIdentificationNumber": "123456789",
+    "userIdentificationNumber": "20-12345678-9",
     "dueDate": "2025/12/31"
   }'`;
 
@@ -49,7 +49,7 @@ const payin = await javacash.payin.create({
   userName: 'John Doe',
   userEmail: 'john@example.com',
   userPhone: '12345678',
-  userIdentificationNumber: '123456789',
+  userIdentificationNumber: '20-12345678-9', // CUIT/CUIL del usuario
   dueDate: '2025/12/31'
 });
 
@@ -69,7 +69,7 @@ payin = javacash.payin.create(
     user_name='John Doe',
     user_email='john@example.com',
     user_phone='12345678',
-    user_identification_number='123456789',
+    user_identification_number='20-12345678-9',  # CUIT/CUIL del usuario
     due_date='2025/12/31'
 )
 
@@ -90,7 +90,7 @@ $payin = $javacash->payin->create([
     'userName' => 'John Doe',
     'userEmail' => 'john@example.com',
     'userPhone' => '12345678',
-    'userIdentificationNumber' => '123456789',
+    'userIdentificationNumber' => '20-12345678-9', // CUIT/CUIL del usuario
     'dueDate' => '2025/12/31'
 ]);
 

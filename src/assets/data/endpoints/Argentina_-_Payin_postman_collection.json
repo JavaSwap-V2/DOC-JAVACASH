@@ -36,7 +36,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}"
+							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"20-12345678-9\",\n  \"dueDate\": \"2027/12/30\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/payin/register",
@@ -64,7 +64,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"20-12345678-9\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -114,7 +114,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"100\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"20-12345678-9\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -162,7 +162,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"currency\": \"DOP\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"currency\": \"DOP\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"20-12345678-9\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
