@@ -49,12 +49,21 @@ export interface Parameter {
   location: ParameterLocation;
 }
 
+export interface RequestBodyField {
+  name: string;
+  type: string;
+  example: string;
+  description: string;
+  required: boolean;
+}
+
 export interface RequestBody {
   contentType: string;
   description?: string;
   schema: any;
   example?: any;
   required: boolean;
+  fields?: RequestBodyField[];
 }
 
 export interface ApiResponse {

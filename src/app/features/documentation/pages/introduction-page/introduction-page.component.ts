@@ -16,7 +16,7 @@ export class IntroductionPageComponent {
     "userName": "John Doe",
     "userEmail": "john@example.com",
     "userPhone": "12345678",
-    "userIdentificationNumber": "20-12345678-9",
+    "userIdentificationNumber": "20123456789",
     "dueDate": "2025/12/31"
   }'`;
 
