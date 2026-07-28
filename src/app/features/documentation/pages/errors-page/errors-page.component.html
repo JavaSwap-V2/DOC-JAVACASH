@@ -305,7 +305,7 @@
         </div>
       </a>
 
-      <a routerLink="/arg/api" class="next-step-card">
+      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>

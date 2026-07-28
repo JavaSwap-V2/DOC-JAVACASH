@@ -1,11 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c3e102ad-b92a-45d1-be38-c64149afedeb",
+		"_postman_id": "2b2ef5f7-b314-5654-b6d7-7c8b8c793c2c",
 		"name": "Guatemala - PayOut",
-		"description": "# TuPay PayOut\n\nEste endpoint permite generar un **Payout** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"description": "# JavaCash PayOut\n\nEste endpoint permite generar un **Payout** utilizando la plataforma **JavaCash**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30722009",
-		"_collection_link": "https://www.postman.com/test66-1099/tupay/collection/wrp2cux/guatemala-payout?action=share&source=collection_link&creator=30722009"
+		"_exporter_id": "30722009"
 	},
 	"item": [
 		{
@@ -36,7 +35,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"customId\": 1,\n  \"currency\": \"GTQ\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"DOP\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}"
+							"raw": "{\n \"customId\": 1,\n  \"currency\": \"GTQ\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"51234567\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Industrial\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"1234567890101\",\n  \"dueDate\": \"2027/12/30\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/payout/register",
@@ -49,7 +48,7 @@
 								"register"
 							]
 						},
-						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | customized identifier | no |\n| `currency` | **String** | GTQ | type of currency | si |\n| `amount` | **String** | 100 | transaction payment amount | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 123456789 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@emil.com](https://mailto:prueba@emil.com) | Correo electrónico del comprador | si |\n| `userBank` | **String** | bank name | Bank name | si |\n| `userTypeAccount` | **String** | SAVING or CURRENT | type of bank account | si |\n| `userNumAccount` | **String** | 123456789 | Account number |  |\n| `userIdentificationNumber` | **String** | 123456789 | Document number | si |\n| `dueDate` | **String** | 2027/12/30 | Expiration date | si |"
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | Identificador personalizado | si |\n| `currency` | **String** | GTQ | Codigo de la moneda | si |\n| `amount` | **String** | 100 | Monto de la transaccion | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 51234567 | Numero de telefono del comprador, evite añadir el prefijo del pais y el signo mas (+) | si |\n| `userEmail` | **String** | [prueba@email.com](mailto:prueba@email.com) | Correo electronico del comprador | si |\n| `userBank` | **String** | Banco Industrial | Nombre del banco | si |\n| `userTypeAccount` | **String** | savings | Tipo de cuenta bancaria: `savings` (Cuenta de Ahorro) o `checking` (Cuenta Monetaria) | si |\n| `userNumAccount` | **String** | 123456789 | Numero de cuenta bancaria | si |\n| `userIdentificationNumber` | **String** | 1234567890101 | DPI (CUI) de 13 digitos o NIT, sin guiones | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento | si |"
 					},
 					"response": [
 						{
@@ -64,7 +63,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n \"customId\": 1,\n  \"currency\": \"GTQ\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"123456789\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"GTQ\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}",
+									"raw": "{\n \"customId\": 1,\n  \"currency\": \"GTQ\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"51234567\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Industrial\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"1234567890101\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -112,7 +111,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n \"customId\": 1,\n  \"currency\": \"DOP\",\n  \"amount\": \"10\",\n  \"userBank\": \"DOP\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"123456789\",\n  \"dueDate\": \"2023/12/30\"\n}",
+									"raw": "{\n \"customId\": 1,\n  \"currency\": \"GTQ\",\n  \"amount\": \"10\",\n  \"userBank\": \"Banco Industrial\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"1234567890101\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -216,7 +215,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 38,\n        \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n        \"reference\": \"58426951\",\n        \"currency\": \"GTQ\",\n        \"amount\": \"10.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payout\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"123456789\",\n        \"userEmail\": \"jhondoe@gmail.com\",\n        \"userBank\": \"GTQ\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"checking\",\n        \"userNumAccount\": \"123456789\",\n        \"userIdentificationNumber\": \"123456789\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 5,\n        \"providerId\": 2,\n        \"customId\": \"1\",\n        \"countryId\": 1,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n        \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n        \"provider_id\": 2,\n        \"user_id\": 5,\n        \"country_id\": 1\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 38,\n        \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n        \"reference\": \"58426951\",\n        \"currency\": \"GTQ\",\n        \"amount\": \"10.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payout\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"51234567\",\n        \"userEmail\": \"jhon.doe@email.com\",\n        \"userBank\": \"Banco Industrial\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"checking\",\n        \"userNumAccount\": \"123456789\",\n        \"userIdentificationNumber\": \"1234567890101\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 5,\n        \"providerId\": 2,\n        \"customId\": \"1\",\n        \"countryId\": 1,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n        \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n        \"provider_id\": 2,\n        \"user_id\": 5,\n        \"country_id\": 1\n    }\n}"
 						},
 						{
 							"name": "Not Found",
@@ -314,7 +313,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 38,\n            \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n            \"reference\": \"58426951\",\n            \"currency\": \"GTQ\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"123456789\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"GTQ\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"123456789\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n            \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 37,\n            \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\",\n            \"reference\": \"88534138\",\n            \"currency\": \"GTQ\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"123456789\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"GTQ\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"123456789\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:37:47.363Z\",\n            \"updatedAt\": \"2025-11-27T11:37:47.363Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        }\n    ]\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 38,\n            \"uuid\": \"50a48398-6644-4136-bd79-21a037797aec\",\n            \"reference\": \"58426951\",\n            \"currency\": \"GTQ\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"51234567\",\n            \"userEmail\": \"jhon.doe@email.com\",\n            \"userBank\": \"Banco Industrial\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"1234567890101\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:41:47.020Z\",\n            \"updatedAt\": \"2025-11-27T11:41:47.020Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        },\n        {\n            \"id\": 37,\n            \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\",\n            \"reference\": \"88534138\",\n            \"currency\": \"GTQ\",\n            \"amount\": \"10.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"51234567\",\n            \"userEmail\": \"jhon.doe@email.com\",\n            \"userBank\": \"Banco Industrial\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"checking\",\n            \"userNumAccount\": \"123456789\",\n            \"userIdentificationNumber\": \"1234567890101\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 5,\n            \"providerId\": 2,\n            \"customId\": \"1\",\n            \"countryId\": 1,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2025-11-27T11:37:47.363Z\",\n            \"updatedAt\": \"2025-11-27T11:37:47.363Z\",\n            \"provider_id\": 2,\n            \"user_id\": 5,\n            \"country_id\": 1\n        }\n    ]\n}"
 						}
 					]
 				}
@@ -362,7 +361,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "https://api-gt-v2.tupay.finance"
+			"value": "https://api-gt.javacash.finance"
 		},
 		{
 			"key": "x-api-key",

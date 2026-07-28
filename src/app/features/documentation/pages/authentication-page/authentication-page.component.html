@@ -38,11 +38,16 @@
     <div class="dashboard-links">
       <h3>Dashboards</h3>
       <div class="dashboard-cards">
-        <a href="https://argentina.javacash.finance/" target="_blank" rel="noopener" class="dashboard-card">
-          <div class="dashboard-card__flag">🇦🇷</div>
+        <a
+          *ngFor="let country of countries"
+          [href]="country.dashboardUrl"
+          target="_blank"
+          rel="noopener"
+          class="dashboard-card">
+          <div class="dashboard-card__flag">{{ country.flag }}</div>
           <div class="dashboard-card__info">
-            <h4>Argentina</h4>
-            <code>argentina.javacash.finance</code>
+            <h4>{{ country.name }} <em *ngIf="!country.available">(próximamente)</em></h4>
+            <code>{{ country.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -50,11 +55,11 @@
             <line x1="10" y1="14" x2="21" y2="3"></line>
           </svg>
         </a>
-        <a href="https://staging.javacash.finance/" target="_blank" rel="noopener" class="dashboard-card">
+        <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🧪</div>
           <div class="dashboard-card__info">
             <h4>Sandbox</h4>
-            <code>staging.javacash.finance</code>
+            <code>{{ sandbox.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -115,49 +120,33 @@
 
   <section class="doc-section">
     <h2>Formato de API Key</h2>
-    <p>Las API Keys de JavaCash siguen este formato:</p>
-    
-    <div class="key-format">
-      <div class="key-format__part">
-        <span class="key-format__label">Prefijo</span>
-        <code>sk_</code>
-        <p>Identifica que es una Secret Key</p>
-      </div>
-      <div class="key-format__separator">_</div>
-      <div class="key-format__part">
-        <span class="key-format__label">Entorno</span>
-        <code>live</code>
-        <p>Producción (live) o Pruebas (test)</p>
-      </div>
-      <div class="key-format__separator">_</div>
-      <div class="key-format__part">
-        <span class="key-format__label">Identificador</span>
-        <code>abc123...</code>
-        <p>Identificador único de 32 caracteres</p>
+    <p>
+      Una API Key de JavaCash es una cadena hexadecimal de <strong>32 caracteres</strong>,
+      sin prefijo ni separadores:
+    </p>
+
+    <app-code-block
+      [code]="apiKeyExample"
+      language="bash"
+      title="Ejemplo de API Key">
+    </app-code-block>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Una key por ambiente y por país</h4>
+        <p>
+          La API Key no indica el ambiente en su formato. Lo que determina si operas contra
+          producción o Sandbox es la <strong>URL base</strong> que uses, y cada dashboard
+          (por país y el de Sandbox) emite su propia key. Una key de un país no es válida
+          en otro.
+        </p>
       </div>
     </div>
-
-    <table class="doc-table">
-      <thead>
-        <tr>
-          <th>Tipo</th>
-          <th>Prefijo</th>
-          <th>Uso</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Producción</td>
-          <td><code></code></td>
-          <td>Transacciones reales con dinero real</td>
-        </tr>
-        <tr>
-          <td>Pruebas</td>
-          <td><code>sk_test_</code></td>
-          <td>Pruebas sin cargo real</td>
-        </tr>
-      </tbody>
-    </table>
   </section>
 
   <section class="doc-section">
@@ -246,6 +235,11 @@
   <section class="doc-section">
     <h2>Variables de Entorno</h2>
     <p>La forma más segura de manejar API Keys es usando variables de entorno:</p>
+    <p>
+      Ajusta <code>JAVACASH_BASE_URL</code> según el país contra el que operes
+      (consulta la lista de entornos en la
+      <a routerLink="/gateway/introduction">introducción</a>).
+    </p>
 
     <div class="env-examples">
       <div class="env-example">
@@ -859,7 +853,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
   <section class="doc-section">
     <h2>Próximos Pasos</h2>
     <div class="next-steps">
-      <a routerLink="/arg/api" class="next-step-card">
+      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>

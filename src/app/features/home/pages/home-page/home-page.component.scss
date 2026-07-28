@@ -389,6 +389,32 @@
     }
   }
 
+  &__badge {
+    padding: $spacing-1 $spacing-3;
+    border-radius: $radius-full;
+    background: $primary-blue-lighter;
+    color: $primary-blue;
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+      color: $primary-blue-light;
+    }
+  }
+
+  // Paises cuyo ambiente aun no esta publicado: la documentacion se consulta
+  // igual, pero se atenua para no sugerir que ya se puede integrar.
+  &--soon {
+    .country-card__flag,
+    .country-card__name,
+    .country-card__currency {
+      opacity: 0.65;
+    }
+  }
+
   &__arrow {
     @include flex-center;
     width: 40px;

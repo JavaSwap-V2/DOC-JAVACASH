@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import { map, tap, catchError, shareReplay } from 'rxjs/operators';
-import { 
-  Endpoint, 
-  EndpointGroup, 
+import {
+  Endpoint,
+  EndpointGroup,
   PostmanCollection,
-  CountryCode 
+  COUNTRIES,
+  CountryCode
 } from '../models/api.models';
 import { PostmanTransformerService } from './postman-transformer.service';
 
@@ -89,7 +90,11 @@ export class EndpointService {
    * Obtiene ruta de la colección según país y tipo
    */
   private readonly countryNames: Record<CountryCode, string> = {
-    ARG: 'Argentina'
+    ARG: 'Argentina',
+    ECU: 'Ecuador',
+    CHL: 'Chile',
+    GTM: 'Guatemala',
+    PER: 'Peru'
   };
 
   private getCollectionPath(country: CountryCode, type: 'payin' | 'payout'): string {
@@ -163,5 +168,15 @@ export class EndpointService {
    */
   getCurrentCountry(): CountryCode {
     return this.currentCountrySubject.value;
+  }
+
+  /**
+   * Traduce el segmento de país de la URL (`/arg/api/...`) a un CountryCode.
+   * Devuelve undefined si el segmento no corresponde a un país soportado.
+   */
+  resolveCountryCode(slug: string | null | undefined): CountryCode | undefined {
+    if (!slug) return undefined;
+    const code = slug.toUpperCase();
+    return code in COUNTRIES ? (code as CountryCode) : undefined;
   }
 }

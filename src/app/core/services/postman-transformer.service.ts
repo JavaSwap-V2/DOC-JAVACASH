@@ -116,7 +116,11 @@ export class PostmanTransformerService {
    * Extrae la base URL del nombre de la colección
    */
   private readonly countryBaseUrls: Record<string, string> = {
-    argentina: 'https://api-ar.javacash.finance'
+    argentina: 'https://api-ar.javacash.finance',
+    ecuador: 'https://api-ec.javacash.finance',
+    chile: 'https://api-cl.javacash.finance',
+    guatemala: 'https://api-gt.javacash.finance',
+    peru: 'https://api-pe.javacash.finance'
   };
 
   private extractBaseUrl(collectionName: string): string {

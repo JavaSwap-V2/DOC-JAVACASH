@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { COUNTRIES } from '@core/models/api.models';
 
 interface ErrorCode {
   code: number;
@@ -16,6 +17,9 @@ interface ErrorCode {
   encapsulation: ViewEncapsulation.None
 })
 export class ErrorsPageComponent {
+  /** País por defecto de los enlaces a la referencia de la API. */
+  readonly defaultCountry = COUNTRIES.ARG;
+
   errorCodes: ErrorCode[] = [
     {
       code: 400,

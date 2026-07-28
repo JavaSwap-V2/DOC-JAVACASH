@@ -1,4 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { COUNTRIES, COUNTRY_LIST, SANDBOX } from '@core/models/api.models';
+
+/** Quita el protocolo para mostrar solo el host en los enlaces. */
+const host = (url: string) => url.replace(/^https?:\/\//, '');
 
 @Component({
   selector: 'app-introduction-page',
@@ -7,6 +11,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class IntroductionPageComponent {
+  readonly countries = COUNTRY_LIST.map(country => ({
+    ...country,
+    dashboardHost: host(country.dashboardUrl)
+  }));
+
+  readonly sandbox = {
+    ...SANDBOX,
+    dashboardHost: host(SANDBOX.dashboardUrl)
+  };
+
+  /** País por defecto de los ejemplos de código de esta página. */
+  readonly defaultCountry = COUNTRIES.ARG;
+
   quickStartCode = `curl -X POST "https://api-ar.javacash.finance/api/payin/register" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: YOUR_API_KEY" \\

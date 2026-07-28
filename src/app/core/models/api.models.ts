@@ -95,7 +95,28 @@ export interface EndpointGroup {
 // Configuración por País
 // ============================================
 
-export type CountryCode = 'ARG';
+export type CountryCode = 'ARG' | 'ECU' | 'CHL' | 'GTM' | 'PER';
+
+/**
+ * Documento de identidad que la API espera en `userIdentificationNumber`.
+ * Varía por país, por eso se documenta junto al resto de la configuración.
+ */
+export interface CountryIdentification {
+  /** Nombre local del documento (CUIT/CUIL, Cédula, RUT, DPI, DNI...) */
+  label: string;
+  /** Valor de ejemplo, con el mismo formato que acepta la API */
+  example: string;
+  /** Aclaración de formato que se muestra en las tablas de parámetros */
+  hint: string;
+}
+
+/** Terminología bancaria local para el enum `userTypeAccount` de la API. */
+export interface CountryAccountTypes {
+  /** Nombre local de `savings` */
+  savings: string;
+  /** Nombre local de `checking` */
+  checking: string;
+}
 
 export interface Country {
   code: CountryCode;
@@ -104,10 +125,33 @@ export interface Country {
   currency: string;
   currencySymbol: string;
   flag: string;
+  /** URL base de la API de producción */
   baseUrl: string;
+  /** Dashboard de cliente donde se obtiene la API Key */
+  dashboardUrl: string;
   locale: string;
   timezone: string;
+  /**
+   * `false` mientras el ambiente del país no esté publicado.
+   * La documentación se muestra igual, marcada como próximamente.
+   */
+  available: boolean;
+  identification: CountryIdentification;
+  accountTypes: CountryAccountTypes;
+  /** Banco de ejemplo usado en los payloads de PayOut */
+  exampleBank: string;
+  /** Teléfono de ejemplo, sin prefijo de país */
+  examplePhone: string;
 }
+
+/**
+ * Ambiente compartido de Sandbox / Staging: es único para todos los países.
+ */
+export const SANDBOX = {
+  name: 'Sandbox',
+  dashboardUrl: 'https://stagin.javacash.finance',
+  baseUrl: 'https://api-dev.javacash.finance'
+};
 
 export const COUNTRIES: Record<CountryCode, Country> = {
   ARG: {
@@ -118,10 +162,128 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currencySymbol: '$',
     flag: '🇦🇷',
     baseUrl: 'https://api-ar.javacash.finance',
+    dashboardUrl: 'https://argentina.javacash.finance',
     locale: 'es-AR',
-    timezone: 'America/Argentina/Buenos_Aires'
+    timezone: 'America/Argentina/Buenos_Aires',
+    available: true,
+    identification: {
+      label: 'CUIT/CUIL',
+      example: '20123456789',
+      hint: 'CUIT/CUIL del comprador, 11 dígitos sin guiones'
+    },
+    accountTypes: {
+      savings: 'Caja de Ahorro',
+      checking: 'Cuenta Corriente'
+    },
+    exampleBank: 'Banco Galicia',
+    examplePhone: '1123456789'
+  },
+  ECU: {
+    code: 'ECU',
+    name: 'Ecuador',
+    fullName: 'República del Ecuador',
+    currency: 'USD',
+    currencySymbol: '$',
+    flag: '🇪🇨',
+    baseUrl: 'https://api-ec.javacash.finance',
+    dashboardUrl: 'https://ecuador.javacash.finance',
+    locale: 'es-EC',
+    timezone: 'America/Guayaquil',
+    available: true,
+    identification: {
+      label: 'Cédula / RUC',
+      example: '1712345678',
+      hint: 'Cédula de 10 dígitos o RUC de 13 dígitos, sin guiones'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorros',
+      checking: 'Cuenta Corriente'
+    },
+    exampleBank: 'Banco Pichincha',
+    examplePhone: '987654321'
+  },
+  CHL: {
+    code: 'CHL',
+    name: 'Chile',
+    fullName: 'República de Chile',
+    currency: 'CLP',
+    currencySymbol: '$',
+    flag: '🇨🇱',
+    baseUrl: 'https://api-cl.javacash.finance',
+    dashboardUrl: 'https://chile.javacash.finance',
+    locale: 'es-CL',
+    timezone: 'America/Santiago',
+    available: false,
+    identification: {
+      label: 'RUT',
+      example: '121234567',
+      hint: 'RUT del comprador sin puntos ni guion, incluyendo el dígito verificador'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorro',
+      checking: 'Cuenta Corriente / Cuenta Vista'
+    },
+    exampleBank: 'Banco de Chile',
+    examplePhone: '912345678'
+  },
+  GTM: {
+    code: 'GTM',
+    name: 'Guatemala',
+    fullName: 'República de Guatemala',
+    currency: 'GTQ',
+    currencySymbol: 'Q',
+    flag: '🇬🇹',
+    baseUrl: 'https://api-gt.javacash.finance',
+    dashboardUrl: 'https://guatemala.javacash.finance',
+    locale: 'es-GT',
+    timezone: 'America/Guatemala',
+    available: false,
+    identification: {
+      label: 'DPI / NIT',
+      example: '1234567890101',
+      hint: 'DPI (CUI) de 13 dígitos o NIT, sin guiones'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorro',
+      checking: 'Cuenta Monetaria'
+    },
+    exampleBank: 'Banco Industrial',
+    examplePhone: '51234567'
+  },
+  PER: {
+    code: 'PER',
+    name: 'Perú',
+    fullName: 'República del Perú',
+    currency: 'PEN',
+    currencySymbol: 'S/',
+    flag: '🇵🇪',
+    baseUrl: 'https://api-pe.javacash.finance',
+    dashboardUrl: 'https://peru.javacash.finance',
+    locale: 'es-PE',
+    timezone: 'America/Lima',
+    available: false,
+    identification: {
+      label: 'DNI / RUC',
+      example: '12345678',
+      hint: 'DNI de 8 dígitos o RUC de 11 dígitos, sin guiones'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorros',
+      checking: 'Cuenta Corriente'
+    },
+    exampleBank: 'Banco de Crédito del Perú (BCP)',
+    examplePhone: '912345678'
   }
 };
+
+/** Países listados en el orden en que se muestran en la documentación. */
+export const COUNTRY_LIST: Country[] = [
+  COUNTRIES.ARG,
+  COUNTRIES.ECU,
+  COUNTRIES.CHL,
+  COUNTRIES.GTM,
+  COUNTRIES.PER
+];
 
 // ============================================
 // postman.model.ts

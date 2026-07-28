@@ -16,7 +16,7 @@
     <h2 id="what-is">Que es JavaCash API?</h2>
     <p>
       JavaCash API es una interfaz REST que te permite procesar transacciones financieras en
-      Argentina. Con nuestra API puedes:
+      Latinoamérica. Con nuestra API puedes:
     </p>
     <ul role="list">
       <li><strong>Recibir pagos (PayIn):</strong> Genera enlaces de pago seguros para tus clientes</li>
@@ -86,8 +86,12 @@
             Este identificador unico autenticara todas tus peticiones.
           </p>
           <ul>
-            <li><strong>Argentina:</strong> <a href="https://argentina.javacash.finance" target="_blank">argentina.javacash.finance</a></li>
-            <li><strong>Sandbox:</strong> <a href="https://staging.javacash.finance" target="_blank">staging.javacash.finance</a></li>
+            <li *ngFor="let country of countries">
+              <strong>{{ country.name }}:</strong>
+              <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>
+              <em *ngIf="!country.available"> (próximamente)</em>
+            </li>
+            <li><strong>Sandbox:</strong> <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a></li>
           </ul>
         </div>
       </div>
@@ -139,21 +143,85 @@
       <div>
         <h4>API de Producción</h4>
         <ul>
-          <li><strong>Argentina:</strong> <code>https://api-ar.javacash.finance</code></li>
+          <li *ngFor="let country of countries">
+            <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
+            <em *ngIf="!country.available"> (próximamente)</em>
+          </li>
         </ul>
         <br>
         <h4>Dashboard</h4>
         <p>Accede al dashboard para gestionar tus transacciones y obtener tu API Key:</p>
         <ul>
-          <li><strong>Argentina:</strong> <a href="https://argentina.javacash.finance" target="_blank"><code>https://argentina.javacash.finance</code></a></li>
+          <li *ngFor="let country of countries">
+            <strong>{{ country.name }}:</strong>
+            <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
+            <em *ngIf="!country.available"> (próximamente)</em>
+          </li>
         </ul>
         <br>
         <h4>Entorno Sandbox (desarrollo/pruebas)</h4>
+        <p>El Sandbox es único y compartido por todos los países.</p>
         <ul>
-          <li><strong>Dashboard Sandbox:</strong> <a href="https://staging.javacash.finance" target="_blank"><code>https://staging.javacash.finance</code></a></li>
+          <li><strong>API Sandbox:</strong> <code>{{ sandbox.baseUrl }}</code></li>
+          <li>
+            <strong>Dashboard Sandbox:</strong>
+            <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener"><code>{{ sandbox.dashboardUrl }}</code></a>
+          </li>
         </ul>
       </div>
     </div>
+  </section>
+
+  <section class="doc-section" aria-labelledby="country-params">
+    <h2 id="country-params">Parámetros por País</h2>
+    <p>
+      El contrato de la API es el mismo en todos los países. Lo que cambia es el valor que
+      debes enviar en <code>currency</code> y el documento de identidad que espera
+      <code>userIdentificationNumber</code>.
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Moneda y documento de identidad por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col"><code>currency</code></th>
+          <th scope="col">Documento</th>
+          <th scope="col">Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td><code>{{ country.currency }}</code></td>
+          <td>{{ country.identification.label }}</td>
+          <td><code>{{ country.identification.example }}</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Tipos de Cuenta (PayOut)</h3>
+    <p>
+      El campo <code>userTypeAccount</code> siempre acepta los mismos dos valores,
+      <code>savings</code> y <code>checking</code>. El nombre comercial que usa cada país
+      es distinto:
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Nombre local de cada tipo de cuenta por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col"><code>savings</code></th>
+          <th scope="col"><code>checking</code></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td>{{ country.accountTypes.savings }}</td>
+          <td>{{ country.accountTypes.checking }}</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section class="doc-section" aria-labelledby="rate-limits">
@@ -251,7 +319,7 @@
         </div>
       </a>
 
-      <a routerLink="/arg/api" class="next-step-card" aria-describedby="api-desc">
+      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
