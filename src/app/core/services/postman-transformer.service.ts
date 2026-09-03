@@ -16,6 +16,7 @@ import {
   CodeExample,
   Header,
   RequestBody,
+  RequestBodyField,
   HttpMethod
 } from '../models/api.models';
 
@@ -70,7 +71,7 @@ export class PostmanTransformerService {
       description: this.cleanDescription(request.description || item.description || ''),
       category,
       headers: this.transformHeaders(request.header),
-      requestBody: this.transformRequestBody(request.body),
+      requestBody: this.transformRequestBody(request.body, request.description || item.description || ''),
       responses: this.transformResponses(item.response || []),
       examples: this.generateCodeExamples(request, this.extractBaseUrl(collectionName)),
       tags: [category, request.method.toLowerCase()]
@@ -115,7 +116,11 @@ export class PostmanTransformerService {
    * Extrae la base URL del nombre de la colección
    */
   private readonly countryBaseUrls: Record<string, string> = {
-    argentina: 'https://api-ar.javacash.finance'
+    argentina: 'https://api-ar.javacash.finance',
+    ecuador: 'https://api-ec.javacash.finance',
+    chile: 'https://api-cl.javacash.finance',
+    guatemala: 'https://api-gt.javacash.finance',
+    peru: 'https://api-pe.javacash.finance'
   };
 
   private extractBaseUrl(collectionName: string): string {
@@ -168,7 +173,7 @@ export class PostmanTransformerService {
   /**
    * Transforma el cuerpo de la petición
    */
-  private transformRequestBody(body: any): RequestBody | undefined {
+  private transformRequestBody(body: any, description: string): RequestBody | undefined {
     if (!body || !body.raw) return undefined;
 
     let parsedBody: any;
@@ -183,8 +188,41 @@ export class PostmanTransformerService {
       description: 'Cuerpo de la petición en formato JSON',
       schema: parsedBody,
       example: parsedBody,
-      required: true
+      required: true,
+      fields: this.parseFieldsFromDescription(description)
     };
+  }
+
+  /**
+   * Parsea la tabla markdown de campos desde la descripción del endpoint
+   */
+  private parseFieldsFromDescription(description: string): RequestBodyField[] {
+    if (!description) return [];
+
+    const lines = description.split('\n').filter(line => line.trim().startsWith('|'));
+    if (lines.length < 3) return []; // header + separator + at least one row
+
+    // Skip header and separator rows
+    const dataRows = lines.slice(2);
+
+    return dataRows.map(row => {
+      const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell.length > 0);
+      if (cells.length < 4) return null;
+
+      const name = cells[0].replace(/`/g, '');
+      const type = cells[1].replace(/\*\*/g, '');
+      const example = cells[2].replace(/\[.*?\]\(.*?\)/g, (match) => {
+        const text = match.match(/\[(.*?)\]/);
+        return text ? text[1] : match;
+      });
+      const desc = cells[3].replace(/\[.*?\]\(.*?\)/g, (match) => {
+        const text = match.match(/\[(.*?)\]/);
+        return text ? text[1] : match;
+      });
+      const required = cells.length >= 5 ? cells[4].toLowerCase() === 'si' : false;
+
+      return { name, type, example, description: desc, required };
+    }).filter((field): field is RequestBodyField => field !== null);
   }
 
   /**

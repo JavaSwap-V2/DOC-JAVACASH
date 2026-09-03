@@ -1,4 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { COUNTRIES, COUNTRY_LIST, SANDBOX } from '@core/models/api.models';
+
+/** Quita el protocolo para mostrar solo el host en los enlaces. */
+const host = (url: string) => url.replace(/^https?:\/\//, '');
 
 @Component({
   selector: 'app-introduction-page',
@@ -7,6 +11,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class IntroductionPageComponent {
+  readonly countries = COUNTRY_LIST.map(country => ({
+    ...country,
+    dashboardHost: host(country.dashboardUrl)
+  }));
+
+  readonly sandbox = {
+    ...SANDBOX,
+    dashboardHost: host(SANDBOX.dashboardUrl)
+  };
+
+  /** País por defecto de los ejemplos de código de esta página. */
+  readonly defaultCountry = COUNTRIES.ARG;
+
   quickStartCode = `curl -X POST "https://api-ar.javacash.finance/api/payin/register" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: YOUR_API_KEY" \\
@@ -16,7 +33,7 @@ export class IntroductionPageComponent {
     "userName": "John Doe",
     "userEmail": "john@example.com",
     "userPhone": "12345678",
-    "userIdentificationNumber": "123456789",
+    "userIdentificationNumber": "20123456789",
     "dueDate": "2025/12/31"
   }'`;
 
@@ -49,7 +66,7 @@ const payin = await javacash.payin.create({
   userName: 'John Doe',
   userEmail: 'john@example.com',
   userPhone: '12345678',
-  userIdentificationNumber: '123456789',
+  userIdentificationNumber: '20-12345678-9', // CUIT/CUIL del usuario
   dueDate: '2025/12/31'
 });
 
@@ -69,7 +86,7 @@ payin = javacash.payin.create(
     user_name='John Doe',
     user_email='john@example.com',
     user_phone='12345678',
-    user_identification_number='123456789',
+    user_identification_number='20-12345678-9',  # CUIT/CUIL del usuario
     due_date='2025/12/31'
 )
 
@@ -90,7 +107,7 @@ $payin = $javacash->payin->create([
     'userName' => 'John Doe',
     'userEmail' => 'john@example.com',
     'userPhone' => '12345678',
-    'userIdentificationNumber' => '123456789',
+    'userIdentificationNumber' => '20-12345678-9', // CUIT/CUIL del usuario
     'dueDate' => '2025/12/31'
 ]);
 

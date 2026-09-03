@@ -25,11 +25,23 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // El estado de carga lo lleva el servicio: al cambiar de país la colección
+    // se recarga y los endpoints llegan de forma asíncrona.
+    this.endpointService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(loading => this.loading = loading);
+
     this.route.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
-      const endpointId = params['endpointId'];
-      this.loadEndpoint(endpointId);
+      // Un enlace directo a /per/api/... debe mostrar los datos de Perú,
+      // no los del país que estuviera cargado.
+      const country = this.endpointService.resolveCountryCode(params['country']);
+      if (country && country !== this.endpointService.getCurrentCountry()) {
+        this.endpointService.setCurrentCountry(country);
+      }
+
+      this.loadEndpoint(params['endpointId']);
     });
   }
 
@@ -39,13 +51,11 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   }
 
   private loadEndpoint(id: string): void {
-    this.loading = true;
     this.endpointService.getEndpointById(id).pipe(
       takeUntil(this.destroy$)
     ).subscribe(endpoint => {
       this.endpoint = endpoint;
-      this.loading = false;
-      
+
       if (endpoint?.responses && endpoint.responses.length > 0) {
         this.selectedResponseStatus = endpoint.responses[0].status;
       }

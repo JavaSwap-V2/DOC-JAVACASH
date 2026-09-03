@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EndpointService } from '@core/services/endpoint.service';
-import { COUNTRIES, CountryCode } from '@core/models/api.models';
+import { Country, COUNTRY_LIST, CountryCode } from '@core/models/api.models';
 
 @Component({
   selector: 'app-home-page',
@@ -11,6 +11,8 @@ import { COUNTRIES, CountryCode } from '@core/models/api.models';
 })
 export class HomePageComponent implements OnInit {
   
+  countries: Country[] = COUNTRY_LIST;
+
   exampleCode = `const response = await fetch("https://api-ar.javacash.finance/api/payin/register", {
   method: "POST",
   headers: {
@@ -36,8 +38,8 @@ console.log(data);`;
     },
     {
       icon: 'globe',
-      title: 'Argentina',
-      description: 'Operaciones en Argentina con soporte de moneda local (ARS).'
+      title: 'Cobertura regional',
+      description: 'Operaciones en Argentina, Ecuador, Chile, Guatemala y Perú con soporte de moneda local.'
     },
     {
       icon: 'code',
@@ -76,9 +78,9 @@ console.log(data);`;
 
   ngOnInit(): void {}
 
-  navigateToCountryDocs(): void {
-    this.endpointService.setCurrentCountry('ARG');
-    this.router.navigate(['arg', 'api']);
+  navigateToCountryDocs(code: CountryCode = 'ARG'): void {
+    this.endpointService.setCurrentCountry(code);
+    this.router.navigate([code.toLowerCase(), 'api']);
   }
 
   navigateToDocs(): void {
