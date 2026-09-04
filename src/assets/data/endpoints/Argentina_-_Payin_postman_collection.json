@@ -100,7 +100,20 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"ARS\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",\n                \"button_code\": \"<a href=\\\"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\\\" class=\\\"jc-btn\\\" title=\\\"Pagar con Transferencia\\\" alt=\\\"Pagar con Transferencia\\\"><span>Pagar con Transferencia</span></a>\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/mercado_pago\",\n                \"button_code\": \"<a href=\\\"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/mercado_pago\\\" class=\\\"jc-btn\\\" title=\\\"Pagar con Mercado Pago\\\" alt=\\\"Pagar con Mercado Pago\\\"><span>Pagar con Mercado Pago</span></a>\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
+"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"ARS\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [
+            {
+                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",
+                \"name_method\": \"Transferencia\",
+                \"logo\": null
+            },
+            {
+                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/mercado_pago\",
+                \"name_method\": \"Mercado Pago\",
+                \"logo\": null
+            }
+        ]
+    }
+}"
 						},
 						{
 							"name": "Bad Request",
