@@ -1,8 +1,8 @@
-﻿{
+{
 	"info": {
 		"_postman_id": "c303ba3b-5e19-5c16-b510-0b2dd702992e",
 		"name": "Argentina - Payin",
-		"description": "# JavaCash Payin\n\nEste endpoint permite generar un **Payin** utilizando la plataforma **JavaCash**. Su funciÃ³n principal es facilitar la creaciÃ³n de una transacciÃ³n segura y eficiente, donde los usuarios pueden realizar pagos de manera rÃ¡pida y confiable.\n\n## AutorizaciÃ³n\n\nTÃº debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorizaciÃ³n respuesta\n\nSi falta una clave API, estÃ¡ mal formada o no es vÃ¡lida, recibirÃ¡ un cÃ³digo de respuesta HTTP 401 No autorizado.",
+		"description": "# JavaCash Payin\n\nEste endpoint permite generar un **Payin** utilizando la plataforma **JavaCash**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30722009",
 		"_collection_link": "https://www.postman.com/test66-1099/javacash/collection/l9q8988/argentina-payin?action=share&source=collection_link&creator=30722009"
@@ -100,20 +100,7 @@
 								}
 							],
 							"cookie": [],
-"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"ARS\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [
-            {
-                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",
-                \"name_method\": \"Transferencia\",
-                \"logo\": null
-            },
-            {
-                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/mercado_pago\",
-                \"name_method\": \"Mercado Pago\",
-                \"logo\": null
-            }
-        ]
-    }
-}"
+"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"ARS\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",\n                \"name_method\": \"Transferencia\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://argentina.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/mercado_pago\",\n                \"name_method\": \"Mercado Pago\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
 						},
 						{
 							"name": "Bad Request",
@@ -160,7 +147,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacciÃ³n similar en revisiÃ³n. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
+							"body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Malformed Request",
