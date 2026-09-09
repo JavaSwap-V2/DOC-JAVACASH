@@ -102,6 +102,47 @@
   margin-top: $spacing-6;
 }
 
+// Payment Methods table list
+.method-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: $spacing-2 0;
+
+    & + li {
+      border-top: 1px solid rgba(100, 116, 139, 0.15);
+
+      .dark & {
+        border-top-color: rgba(148, 163, 184, 0.15);
+      }
+    }
+  }
+
+  strong {
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    color: $text-primary;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  span {
+    font-size: $text-xs;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
 .support-item {
   @include card;
   @include flex-column;

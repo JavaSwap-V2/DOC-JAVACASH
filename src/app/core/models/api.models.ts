@@ -118,6 +118,22 @@ export interface CountryAccountTypes {
   checking: string;
 }
 
+/**
+ * Método de pago disponible en un país. Estructura editable:
+ * se pueden agregar, quitar o renombrar métodos sin tocar el código.
+ * Refleja la forma que devuelve la API en `data.methods` de la respuesta PayIn.
+ */
+export interface CountryPaymentMethod {
+  /** Slug del método; forma la URL del checkout: /checkout/{id}/{slug} */
+  id: string;
+  /** Nombre comercial que devuelve la API en `name_method` */
+  name_method: string;
+  /** Logo del método (URL) o null */
+  logo: string | null;
+  /** Descripción corta que se muestra en la documentación */
+  description: string;
+}
+
 export interface Country {
   code: CountryCode;
   name: string;
@@ -142,6 +158,8 @@ export interface Country {
   exampleBank: string;
   /** Teléfono de ejemplo, sin prefijo de país */
   examplePhone: string;
+  /** Métodos de pago disponibles en el país (editable) */
+  methods: CountryPaymentMethod[];
 }
 
 /**
@@ -176,7 +194,21 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       checking: 'Cuenta Corriente'
     },
     exampleBank: 'Banco Galicia',
-    examplePhone: '1123456789'
+    examplePhone: '1123456789',
+    methods: [
+      {
+        id: 'transfer',
+        name_method: 'Transferencia',
+        logo: null,
+        description: 'El cliente transfiere el monto desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'mercado_pago',
+        name_method: 'Mercado Pago',
+        logo: null,
+        description: 'El cliente paga con su billetera de Mercado Pago desde el checkout.'
+      }
+    ]
   },
   ECU: {
     code: 'ECU',
@@ -200,7 +232,21 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       checking: 'Cuenta Corriente'
     },
     exampleBank: 'Banco Pichincha',
-    examplePhone: '987654321'
+    examplePhone: '987654321',
+    methods: [
+      {
+        id: 'transfer',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'efectivo',
+        name_method: 'Pago en efectivo',
+        logo: null,
+        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+      }
+    ]
   },
   CHL: {
     code: 'CHL',
@@ -224,7 +270,21 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       checking: 'Cuenta Corriente / Cuenta Vista'
     },
     exampleBank: 'Banco de Chile',
-    examplePhone: '912345678'
+    examplePhone: '912345678',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'tarjeta',
+        name_method: 'Tarjeta de débito / crédito',
+        logo: null,
+        description: 'El cliente paga con tarjeta dentro del checkout.'
+      }
+    ]
   },
   GTM: {
     code: 'GTM',
@@ -248,7 +308,21 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       checking: 'Cuenta Monetaria'
     },
     exampleBank: 'Banco Industrial',
-    examplePhone: '51234567'
+    examplePhone: '51234567',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'efectivo',
+        name_method: 'Pago en efectivo',
+        logo: null,
+        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+      }
+    ]
   },
   PER: {
     code: 'PER',
@@ -272,7 +346,21 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       checking: 'Cuenta Corriente'
     },
     exampleBank: 'Banco de Crédito del Perú (BCP)',
-    examplePhone: '912345678'
+    examplePhone: '912345678',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'billetera',
+        name_method: 'Billetera digital',
+        logo: null,
+        description: 'El cliente paga desde su billetera digital dentro del checkout.'
+      }
+    ]
   }
 };
 

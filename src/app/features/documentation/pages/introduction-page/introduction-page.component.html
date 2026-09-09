@@ -224,6 +224,38 @@
     </table>
   </section>
 
+  <section class="doc-section" aria-labelledby="payment-methods">
+    <h2 id="payment-methods">Métodos de Pago por País</h2>
+    <p>
+      El contrato de la API es el mismo en todos los países; lo que cambia es el
+      medio que el cliente usa para pagar. La lista siguiente se edita en la
+      configuración de cada país (<code>methods</code>), sin tocar el código de
+      los componentes.
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Metodos de pago por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col">Métodos de Pago</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td>
+            <ul class="method-list">
+              <li *ngFor="let method of country.methods">
+                <strong>{{ method.name_method }}</strong>
+                <span>{{ method.description }}</span>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
   <section class="doc-section" aria-labelledby="rate-limits">
     <h2 id="rate-limits">Rate Limits</h2>
     <p>
@@ -319,7 +351,7 @@
         </div>
       </a>
 
-      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
+      <a [routerLink]="['/', selectedCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>

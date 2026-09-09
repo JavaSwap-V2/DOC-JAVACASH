@@ -1,8 +1,34 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { COUNTRIES, COUNTRY_LIST, SANDBOX } from '@core/models/api.models';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { COUNTRIES, COUNTRY_LIST, SANDBOX, Country, CountryCode } from '@core/models/api.models';
+import { EndpointService } from '@core/services/endpoint.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Quita el protocolo para mostrar solo el host en los enlaces. */
 const host = (url: string) => url.replace(/^https?:\/\//, '');
+
+/** Id de transacción de ejemplo usado en las respuestas. */
+const EXAMPLE_TX_ID = '65baf429-9e41-44c5-bb16-5785aa087160';
+
+const ResponseSample = {
+  success: true,
+  message: 'Transaction successfully created',
+  code: 200,
+  data: {
+    id: EXAMPLE_TX_ID,
+    status: 'pending',
+    reference: '39001303',
+    checkoutUrl: (c: Country) => `${c.dashboardUrl}/checkout/${EXAMPLE_TX_ID}`,
+    currency: (c: Country) => c.currency,
+    amount: '100.00',
+    customId: '1',
+    methods: (c: Country) => c.methods.map(m => ({
+      url: `${c.dashboardUrl}/checkout/${EXAMPLE_TX_ID}/${m.id}`,
+      name_method: m.name_method,
+      logo: m.logo
+    }))
+  }
+};
 
 @Component({
   selector: 'app-introduction-page',
@@ -10,7 +36,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, '');
   styleUrls: ['./introduction-page.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class IntroductionPageComponent {
+export class IntroductionPageComponent implements OnInit, OnDestroy {
   readonly countries = COUNTRY_LIST.map(country => ({
     ...country,
     dashboardHost: host(country.dashboardUrl)
@@ -21,97 +47,129 @@ export class IntroductionPageComponent {
     dashboardHost: host(SANDBOX.dashboardUrl)
   };
 
-  /** País por defecto de los ejemplos de código de esta página. */
-  readonly defaultCountry = COUNTRIES.ARG;
+  /** País seleccionado en el selector (los ejemplos de esta página cambian con él). */
+  selectedCountry: Country = COUNTRIES.ARG;
 
-  quickStartCode = `curl -X POST "https://api-ar.javacash.finance/api/payin/register" \\
+  private destroy$ = new Subject<void>();
+
+  constructor(private endpointService: EndpointService) {}
+
+  ngOnInit(): void {
+    this.endpointService.currentCountry$.pipe(takeUntil(this.destroy$)).subscribe(code => {
+      this.selectedCountry = COUNTRIES[code] ?? COUNTRIES.ARG;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  get quickStartCode(): string {
+    const c = this.selectedCountry;
+    return `curl -X POST "${c.baseUrl}/api/payin/register" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: YOUR_API_KEY" \\
   -d '{
-    "currency": "ARS",
+    "currency": "${c.currency}",
     "amount": "100",
     "userName": "John Doe",
     "userEmail": "john@example.com",
-    "userPhone": "12345678",
-    "userIdentificationNumber": "20123456789",
+    "userPhone": "${c.examplePhone}",
+    "userIdentificationNumber": "${c.identification.example}",
     "dueDate": "2025/12/31"
   }'`;
-
-  responseExample = `{
-  "success": true,
-  "message": "Transaction successfully created",
-  "code": 200,
-  "data": {
-    "id": "65baf429-9e41-44c5-bb16-5785aa087160",
-    "status": "pending",
-    "reference": "39001303",
-    "checkoutUrl": "https://argentina.javacash.finance/checkout/65baf429...",
-    "currency": "ARS",
-    "amount": "100.00",
-    "customId": "1"
   }
-}`;
 
-  nodeExample = `const JavaCash = require('@javacash/sdk');
+  get responseExample(): string {
+    const c = this.selectedCountry;
+    const sample = {
+      success: ResponseSample.success,
+      message: ResponseSample.message,
+      code: ResponseSample.code,
+      data: {
+        id: ResponseSample.data.id,
+        status: ResponseSample.data.status,
+        reference: ResponseSample.data.reference,
+        checkoutUrl: ResponseSample.data.checkoutUrl(c),
+        currency: ResponseSample.data.currency(c),
+        amount: ResponseSample.data.amount,
+        customId: ResponseSample.data.customId,
+        methods: ResponseSample.data.methods(c)
+      }
+    };
+    return JSON.stringify(sample, null, 2);
+  }
+
+  get nodeExample(): string {
+    const c = this.selectedCountry;
+    return `const JavaCash = require('@javacash/sdk');
 
 const javacash = new JavaCash({
   apiKey: process.env.JAVACASH_API_KEY,
-  country: 'ARG'
+  country: '${c.code}'
 });
 
 // Crear un PayIn
 const payin = await javacash.payin.create({
   amount: 100,
-  currency: 'ARS',
+  currency: '${c.currency}',
   userName: 'John Doe',
   userEmail: 'john@example.com',
-  userPhone: '12345678',
-  userIdentificationNumber: '20-12345678-9', // CUIT/CUIL del usuario
+  userPhone: '${c.examplePhone}',
+  userIdentificationNumber: '${c.identification.example}',
   dueDate: '2025/12/31'
 });
 
 console.log(payin.checkoutUrl);`;
+  }
 
-  pythonExample = `from javacash import JavaCash
+  get pythonExample(): string {
+    const c = this.selectedCountry;
+    return `from javacash import JavaCash
 
 javacash = JavaCash(
     api_key=os.environ.get('JAVACASH_API_KEY'),
-    country='ARG'
+    country='${c.code}'
 )
 
 # Crear un PayIn
 payin = javacash.payin.create(
     amount=100,
-    currency='ARS',
+    currency='${c.currency}',
     user_name='John Doe',
     user_email='john@example.com',
-    user_phone='12345678',
-    user_identification_number='20-12345678-9',  # CUIT/CUIL del usuario
+    user_phone='${c.examplePhone}',
+    user_identification_number='${c.identification.example}',
     due_date='2025/12/31'
 )
 
 print(payin.checkout_url)`;
+  }
 
-  phpExample = `<?php
+  get phpExample(): string {
+    const c = this.selectedCountry;
+    return `<?php
 use JavaCash\\JavaCashClient;
 
 $javacash = new JavaCashClient([
     'api_key' => getenv('JAVACASH_API_KEY'),
-    'country' => 'ARG'
+    'country' => '${c.code}'
 ]);
 
 // Crear un PayIn
 $payin = $javacash->payin->create([
     'amount' => 100,
-    'currency' => 'ARS',
+    'currency' => '${c.currency}',
     'userName' => 'John Doe',
     'userEmail' => 'john@example.com',
-    'userPhone' => '12345678',
-    'userIdentificationNumber' => '20-12345678-9', // CUIT/CUIL del usuario
+    'userPhone' => '${c.examplePhone}',
+    'userIdentificationNumber' => '${c.identification.example}',
     'dueDate' => '2025/12/31'
 ]);
 
 echo $payin->checkoutUrl;`;
+  }
 
   webhookExample = `// Configurar webhook para recibir notificaciones
 app.post('/webhook/javacash', (req, res) => {
