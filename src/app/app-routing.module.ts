@@ -7,6 +7,7 @@ import { EndpointDetailPageComponent } from './features/api-reference/pages/endp
 import { IntroductionPageComponent } from './features/documentation/pages/introduction-page/introduction-page.component';
 import { AuthenticationPageComponent } from './features/documentation/pages/authentication-page/authentication-page.component';
 import { ErrorsPageComponent } from './features/documentation/pages/errors-page/errors-page.component';
+import { MethodsGuidePageComponent } from './features/documentation/pages/methods-guide-page/methods-guide-page.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'errors',
         component: ErrorsPageComponent
+      },
+      {
+        path: 'metodos-de-pago',
+        component: MethodsGuidePageComponent
       }
     ]
   },

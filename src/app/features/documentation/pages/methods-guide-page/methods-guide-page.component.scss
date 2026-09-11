@@ -1,0 +1,159 @@
+// methods-guide-page.component.scss
+@import '../_doc-page.scss';
+
+// Version & Status Badges
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+  margin-bottom: $spacing-3;
+}
+
+.version-badge {
+  @include badge-base;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  @include badge-base;
+
+  &--stable {
+    background: rgba($success, 0.1);
+    color: $success-dark;
+
+    .dark & {
+      background: rgba($success, 0.2);
+      color: $success-light;
+    }
+  }
+}
+
+// Language Tabs (patrón compartido con endpoint-detail-page)
+.language-tabs,
+.methods-tabs {
+  display: flex;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.language-tab {
+  padding: $spacing-2 $spacing-4;
+  background: transparent;
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  .dark & {
+    border-color: $dark-border;
+    color: $dark-text-secondary;
+  }
+
+  &:hover {
+    background: $background-gray;
+    color: #000000;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      color: $dark-text-primary;
+    }
+  }
+
+  &.active {
+    background: $primary-blue;
+    border-color: $primary-blue;
+    color: white;
+
+    .dark & {
+      background: $primary-blue;
+      border-color: $primary-blue;
+    }
+  }
+}
+
+// Example wrapper
+.methods-example {
+  @include card;
+  overflow: hidden;
+  animation: fadeInUp 0.3s ease-out;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    gap: $spacing-3;
+    padding: $spacing-4;
+    border-bottom: 1px solid rgba(100, 116, 139, 0.15);
+
+    .dark & {
+      border-bottom-color: rgba(148, 163, 184, 0.15);
+    }
+
+    strong {
+      font-size: $text-base;
+      color: $text-primary;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+
+    span {
+      font-size: $text-xs;
+      color: $text-secondary;
+
+      .dark & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+
+  app-code-block {
+    display: block;
+    border-radius: 0;
+    border-inline: 0;
+    border-bottom: 0;
+
+    .code-block {
+      border-radius: 0;
+    }
+  }
+}
+
+// Notes list
+.notes-list {
+  li {
+    margin-top: $spacing-2;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.next-step-card:focus-visible {
+  @include focus-ring;
+}

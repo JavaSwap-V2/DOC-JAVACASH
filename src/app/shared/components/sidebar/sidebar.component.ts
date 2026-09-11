@@ -22,7 +22,8 @@ export class SidebarComponent implements OnInit {
   navigationItems = [
     { label: 'Introducción', icon: 'book', path: '/gateway/introduction' },
     { label: 'Autenticación', icon: 'key', path: '/gateway/authentication' },
-    { label: 'Errores', icon: 'alert-circle', path: '/gateway/errors' }
+    { label: 'Errores', icon: 'alert-circle', path: '/gateway/errors' },
+    { label: 'Métodos de Pago', icon: 'credit-card', path: '/gateway/metodos-de-pago' }
   ];
 
   constructor(

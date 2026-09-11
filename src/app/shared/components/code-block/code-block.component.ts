@@ -77,7 +77,11 @@ export class CodeBlockComponent implements AfterViewInit {
       java: 'Java',
       go: 'Go',
       ruby: 'Ruby',
-      bash: 'Bash'
+      bash: 'Bash',
+      html: 'HTML',
+      jsx: 'JSX',
+      typescript: 'TypeScript',
+      dart: 'Dart'
     };
     return languageMap[this.language] || this.language;
   }
