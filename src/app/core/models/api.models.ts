@@ -145,6 +145,11 @@ export interface Country {
   baseUrl: string;
   /** Dashboard de cliente donde se obtiene la API Key */
   dashboardUrl: string;
+  /**
+   * Base de las URLs de checkout que devuelve la API en `checkoutUrl` y `methods[].url`.
+   * Si no está definido, la documentación usa `dashboardUrl`.
+   */
+  checkoutUrl?: string;
   locale: string;
   timezone: string;
   /**
@@ -181,6 +186,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     flag: '🇦🇷',
     baseUrl: 'https://api-ar.javacash.finance',
     dashboardUrl: 'https://argentina.javacash.finance',
+    checkoutUrl: 'https://javacash.finance',
     locale: 'es-AR',
     timezone: 'America/Argentina/Buenos_Aires',
     available: true,
@@ -199,14 +205,26 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       {
         id: 'transfer',
         name_method: 'Transferencia',
-        logo: null,
+        logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063566030-logo_banco_verde.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180606Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=12e68bf43a4f64d8ef599369a2a12edc93c4c32c330a756b2fc0e91a0ec95358',
         description: 'El cliente transfiere el monto desde su banca en línea a una cuenta local.'
       },
       {
-        id: 'mercado_pago',
+        id: 'qr',
+        name_method: 'QR CobroDigital',
+        logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063585063-logo_qr_verde.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180625Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ceeb897b1bf472ecc4da7acfd5fffb4aeaef9f3462bbff0e7450b6360baf0cbf',
+        description: 'El cliente escanea el código QR o elige un medio de pago dentro del QR.'
+      },
+      {
+        id: 'rapipago',
+        name_method: 'Rapipago',
+        logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063627933-rapipago%20%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180708Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ef6f9d8b8b847e35f3da21e1436d17e5b06b7501060772772df64ee333d92d86',
+        description: 'El cliente paga en efectivo generando su boleta en la red Rapipago.'
+      },
+      {
+        id: 'mercadopago',
         name_method: 'Mercado Pago',
-        logo: null,
-        description: 'El cliente paga con su billetera de Mercado Pago desde el checkout.'
+        logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063694367-mercadopago.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180815Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=80b454eae43736d52bf74f8afc0dcee16f529751a25c3dddbe8dd093a694ba62',
+        description: 'El cliente paga con su billetera de Mercado Pago dentro del checkout.'
       }
     ]
   },
