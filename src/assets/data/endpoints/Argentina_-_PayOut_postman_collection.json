@@ -36,7 +36,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"1123456789\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}"
+							"raw": "{\n \"customId\": \"1\",\n  \"currency\": \"ARS\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"1123456789\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/payout/register",
@@ -49,7 +49,7 @@
 								"register"
 							]
 						},
-						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | Identificador personalizado | si |\n| `currency` | **String** | ARS | Codigo de la moneda | si |\n| `amount` | **String** | 100 | Monto de la transaccion | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 1123456789 | Numero de telefono del comprador, evite añadir el prefijo del pais y el signo mas (+) | si |\n| `userEmail` | **String** | [prueba@email.com](mailto:prueba@email.com) | Correo electronico del comprador | si |\n| `userBank` | **String** | Banco Galicia | Nombre del banco | si |\n| `userTypeAccount` | **String** | savings | Tipo de cuenta bancaria: `savings` (Caja de Ahorro) o `checking` (Cuenta Corriente) | si |\n| `userNumAccount` | **String** | 123456789 | Numero de cuenta bancaria | si |\n| `userIdentificationNumber` | **String** | 20123456789 | CUIT/CUIL del comprador, 11 digitos sin guiones | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento | si |"
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **String** | \"123\" | Identificador personalizado | si |\n| `currency` | **String** | ARS | Codigo de la moneda | si |\n| `amount` | **String** | 100 | Monto de la transaccion | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 1123456789 | Numero de telefono del comprador, evite añadir el prefijo del pais y el signo mas (+) | si |\n| `userEmail` | **String** | [prueba@email.com](mailto:prueba@email.com) | Correo electronico del comprador | si |\n| `userBank` | **String** | Banco Galicia | Nombre del banco | si |\n| `userTypeAccount` | **String** | savings | Tipo de cuenta bancaria: `savings` (Caja de Ahorro) o `checking` (Cuenta Corriente) | si |\n| `userNumAccount` | **String** | 123456789 | Numero de cuenta bancaria | si |\n| `userIdentificationNumber` | **String** | 20123456789 | CUIT/CUIL del comprador, 11 digitos sin guiones | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento | si |"
 					},
 					"response": [
 						{
@@ -64,7 +64,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"1123456789\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n \"customId\": \"1\",\n  \"currency\": \"ARS\",\n  \"amount\": \"15\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"1123456789\",\n  \"userEmail\": \"jhon.doe@email.com\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -112,7 +112,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n \"customId\": 1,\n  \"currency\": \"ARS\",\n  \"amount\": \"10\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n \"customId\": \"1\",\n  \"currency\": \"ARS\",\n  \"amount\": \"10\",\n  \"userBank\": \"Banco Galicia\",\n  \"userTypeAccount\": \"checking\",\n  \"userNumAccount\": \"123456789\",\n  \"userIdentificationNumber\": \"20123456789\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
