@@ -74,7 +74,7 @@ response = requests.post(
   "amount": 500.00,
   "status": "paid",
   "timestamp": "2024-01-15T10:30:00Z",
-  "customId": "ORDER-001",
+  "customId": "1001",
   "amountReceived": 500.00,
   "notes": ""
 }`;
@@ -87,7 +87,7 @@ response = requests.post(
   "amount": 300.00,
   "status": "completed",
   "timestamp": "2024-01-15T14:00:00Z",
-  "customId": "PAYOUT-001",
+  "customId": "2001",
   "observation": ""
 }`;
 
@@ -119,11 +119,11 @@ response = requests.post(
   // Webhooks capturados en Sandbox; la firma está recalculada con apiKeyExample
   signaturePayInCaptureExample = `POST /su-ruta-webhook HTTP/1.1
 Content-Type: application/json
-Content-Length: 177
-X-JavaCash-Signature: 1df9459f99c5c6d16e1f374d40bbcb4a95085adea9f9558141697dc503dbb95c
-X-JavaCash-Timestamp: 2026-09-16T15:26:48.773Z
+Content-Length: 168
+X-JavaCash-Signature: fdb00b8cca9f967c0cf991756d893a7bfb0c5badacc0efd5e5bbc078cfd89afa
+X-JavaCash-Timestamp: 2026-09-16T15:36:48.411Z
 
-{"type":"pay-in","transactionId":147,"userId":3,"amount":"100.00","status":"pending","timestamp":"2026-09-16T15:26:48.773Z","customId":"FIRMA-DOC-PAYIN-1","amountReceived":null}`;
+{"type":"pay-in","transactionId":149,"userId":3,"amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":null}`;
 
   signaturePayOutCaptureExample = `POST /su-ruta-webhook HTTP/1.1
 Content-Type: application/json
@@ -135,8 +135,8 @@ X-JavaCash-Timestamp: 2026-09-16T15:29:08.774Z
 
   signatureOpensslExample = `API_KEY='4f3c1a9b7e2d5806af14bc39d07e6a52'
 
-# PayIn -> 1df9459f99c5c6d16e1f374d40bbcb4a95085adea9f9558141697dc503dbb95c
-printf '%s' '{"type":"pay-in","transactionId":147,"userId":3,"amount":"100.00","status":"pending","timestamp":"2026-09-16T15:26:48.773Z","customId":"FIRMA-DOC-PAYIN-1","amountReceived":null}' \\
+# PayIn -> fdb00b8cca9f967c0cf991756d893a7bfb0c5badacc0efd5e5bbc078cfd89afa
+printf '%s' '{"type":"pay-in","transactionId":149,"userId":3,"amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":null}' \\
   | openssl dgst -sha256 -hmac "$API_KEY"
 
 # PayOut -> 27f229dc4a38e81819f491c679337dfe4b09dc6c7899cda28a85989340384379

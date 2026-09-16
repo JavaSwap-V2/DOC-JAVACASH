@@ -387,6 +387,11 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           Tu servidor debe responder con un código HTTP <code>200</code> para confirmar
           la recepción. Si falla, JavaCash reintentará el envío varias veces.
         </p>
+        <p>
+          El <code>customId</code> que envías al crear un PayIn o PayOut debe ser <strong>numérico</strong>
+          (solo dígitos, por ejemplo <code>"1001"</code>). Un valor con letras, guiones o espacios puede
+          impedir que recibas la notificación.
+        </p>
       </div>
     </div>
   </section>
@@ -448,7 +453,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <tr>
           <td><code>customId</code></td>
           <td>string</td>
-          <td>Identificador personalizado que enviaste al crear la transacción</td>
+          <td>Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code></td>
         </tr>
         <tr>
           <td><code>amountReceived</code></td>
@@ -526,7 +531,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <tr>
           <td><code>customId</code></td>
           <td>string</td>
-          <td>Identificador personalizado que enviaste al crear la transacción</td>
+          <td>Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code></td>
         </tr>
         <tr>
           <td><code>observation</code></td>
@@ -836,7 +841,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <div class="step-vertical__content">
           <h3>Toma el body tal como llegó</h3>
           <p>
-            El mensaje a firmar es el body completo, sin modificar: los mismos 177 bytes del PayIn
+            El mensaje a firmar es el body completo, sin modificar: los mismos 168 bytes del PayIn
             (146 del PayOut), en el mismo orden, sin espacios agregados y sin el timestamp adelante.
             Coincide con el header <code>Content-Length</code>.
           </p>
