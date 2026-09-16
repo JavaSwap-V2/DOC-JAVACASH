@@ -116,6 +116,33 @@ response = requests.post(
   ]
 }`;
 
+  // Webhooks capturados en Sandbox; la firma está recalculada con apiKeyExample
+  signaturePayInCaptureExample = `POST /su-ruta-webhook HTTP/1.1
+Content-Type: application/json
+Content-Length: 177
+X-JavaCash-Signature: 1df9459f99c5c6d16e1f374d40bbcb4a95085adea9f9558141697dc503dbb95c
+X-JavaCash-Timestamp: 2026-09-16T15:26:48.773Z
+
+{"type":"pay-in","transactionId":147,"userId":3,"amount":"100.00","status":"pending","timestamp":"2026-09-16T15:26:48.773Z","customId":"FIRMA-DOC-PAYIN-1","amountReceived":null}`;
+
+  signaturePayOutCaptureExample = `POST /su-ruta-webhook HTTP/1.1
+Content-Type: application/json
+Content-Length: 146
+X-JavaCash-Signature: 27f229dc4a38e81819f491c679337dfe4b09dc6c7899cda28a85989340384379
+X-JavaCash-Timestamp: 2026-09-16T15:29:08.774Z
+
+{"type":"pay-out","transactionId":148,"userId":3,"amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}`;
+
+  signatureOpensslExample = `API_KEY='4f3c1a9b7e2d5806af14bc39d07e6a52'
+
+# PayIn -> 1df9459f99c5c6d16e1f374d40bbcb4a95085adea9f9558141697dc503dbb95c
+printf '%s' '{"type":"pay-in","transactionId":147,"userId":3,"amount":"100.00","status":"pending","timestamp":"2026-09-16T15:26:48.773Z","customId":"FIRMA-DOC-PAYIN-1","amountReceived":null}' \\
+  | openssl dgst -sha256 -hmac "$API_KEY"
+
+# PayOut -> 27f229dc4a38e81819f491c679337dfe4b09dc6c7899cda28a85989340384379
+printf '%s' '{"type":"pay-out","transactionId":148,"userId":3,"amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}' \\
+  | openssl dgst -sha256 -hmac "$API_KEY"`;
+
   webhookVerifyNodeExample = `const crypto = require('crypto');
 const express = require('express');
 

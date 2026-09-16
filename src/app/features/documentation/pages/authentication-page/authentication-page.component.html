@@ -810,6 +810,114 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
       </div>
     </div>
 
+    <h3>Ejemplo paso a paso</h3>
+    <p>
+      Estos son dos webhooks reales capturados en Sandbox: un PayIn y un PayOut. Para que puedas
+      reproducir el cálculo, la firma se recalculó con la API Key de ejemplo
+      <code>4f3c1a9b7e2d5806af14bc39d07e6a52</code>. Con tu propia API Key el resultado será otro,
+      pero el procedimiento es exactamente el mismo.
+    </p>
+
+    <app-code-block
+      [code]="signaturePayInCaptureExample"
+      language="bash"
+      title="1. Petición recibida (PayIn)">
+    </app-code-block>
+
+    <app-code-block
+      [code]="signaturePayOutCaptureExample"
+      language="bash"
+      title="1. Petición recibida (PayOut)">
+    </app-code-block>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>Toma el body tal como llegó</h3>
+          <p>
+            El mensaje a firmar es el body completo, sin modificar: los mismos 177 bytes del PayIn
+            (146 del PayOut), en el mismo orden, sin espacios agregados y sin el timestamp adelante.
+            Coincide con el header <code>Content-Length</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>Calcula el HMAC-SHA256 con tu API Key</h3>
+          <p>
+            Usa tu API Key como clave y pasa el resultado a hexadecimal.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">4</div>
+        <div class="step-vertical__content">
+          <h3>Compara con <code>X-JavaCash-Signature</code></h3>
+          <p>
+            Si los dos valores son iguales, el webhook es auténtico. Responde <code>200</code> y procésalo.
+            Si no coinciden, responde <code>401</code> y revisa la tabla de problemas frecuentes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Prueba desde la terminal</h3>
+    <p>
+      Antes de programar la validación, puedes comprobar el cálculo con <code>openssl</code>.
+      El resultado debe ser idéntico al header <code>X-JavaCash-Signature</code> del ejemplo:
+    </p>
+
+    <app-code-block
+      [code]="signatureOpensslExample"
+      language="bash"
+      title="Verificar la firma con openssl">
+    </app-code-block>
+
+    <h3>Si la firma no coincide</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Causa</th>
+          <th>Solución</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Se antepone el timestamp al body (<code>timestamp.payload</code>)</td>
+          <td>Firma solo el body. <code>X-JavaCash-Timestamp</code> no forma parte de la firma.</td>
+        </tr>
+        <tr>
+          <td>El body se parsea y se vuelve a serializar antes de firmar</td>
+          <td>
+            Usa el body crudo. Por ejemplo, <code>json.dumps</code> en Python agrega espacios después de
+            <code>,</code> y <code>:</code>, y con eso la firma ya no coincide.
+          </td>
+        </tr>
+        <tr>
+          <td>El framework ya consumió el body</td>
+          <td>
+            Registra un parser crudo en la ruta del webhook, como <code>express.raw()</code> en Express
+            o <code>request.get_data()</code> en Flask.
+          </td>
+        </tr>
+        <tr>
+          <td>Se usa otra clave</td>
+          <td>
+            La clave es la API Key activa de la cuenta que creó la transacción. Cada país y el Sandbox
+            tienen su propia key. Si regeneraste la key, usa la nueva.
+          </td>
+        </tr>
+        <tr>
+          <td>Se compara con otro formato</td>
+          <td>La firma está en hexadecimal y en minúscula, no en Base64.</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h3>Verificación en Node.js</h3>
     <app-code-block
       [code]="webhookVerifyNodeExample"
