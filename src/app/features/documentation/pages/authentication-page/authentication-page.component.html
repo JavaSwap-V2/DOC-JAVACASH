@@ -732,9 +732,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
   <section class="doc-section">
     <h2>Verificación de Firma (Seguridad)</h2>
     <p>
-      Cada webhook enviado por JavaCash incluye una firma digital HMAC-SHA256 para que puedas
-      verificar que la notificación es auténtica. Es altamente recomendable que valides
-      esta firma en cada webhook que recibas.
+      Cada webhook enviado por JavaCash (PayIn, PayOut y PayOut masivo) incluye una firma digital
+      HMAC-SHA256 para que puedas verificar que la notificación es auténtica y no fue modificada.
+      Es altamente recomendable que valides esta firma en cada webhook que recibas.
     </p>
 
     <h3>Headers de Seguridad</h3>
@@ -748,11 +748,42 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
       <tbody>
         <tr>
           <td><code>X-JavaCash-Signature</code></td>
-          <td>Firma HMAC-SHA256 del contenido del webhook</td>
+          <td>
+            Firma HMAC-SHA256 del cuerpo del webhook, en hexadecimal (64 caracteres en minúscula).
+            Presente en todos los webhooks.
+          </td>
         </tr>
         <tr>
           <td><code>X-JavaCash-Timestamp</code></td>
-          <td>Marca de tiempo del momento en que se envió el webhook</td>
+          <td>
+            Informativo: fecha y hora ISO 8601 del envío. <strong>No forma parte de la firma</strong>
+            y puede no estar presente en todas las notificaciones, por lo que tu validación
+            no debe depender de este header.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Cómo se calcula la firma</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Elemento</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Algoritmo</td>
+          <td>HMAC-SHA256, resultado en hexadecimal</td>
+        </tr>
+        <tr>
+          <td>Clave</td>
+          <td>Tu <strong>API Key</strong> activa (la misma que envías en el header <code>x-api-key</code>)</td>
+        </tr>
+        <tr>
+          <td>Mensaje</td>
+          <td>El cuerpo (body) de la petición tal como llega, byte por byte, sin prefijos ni timestamp</td>
         </tr>
       </tbody>
     </table>
@@ -766,8 +797,15 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
       <div>
         <h4>Importante</h4>
         <p>
-          La firma se genera concatenando el timestamp y el cuerpo del webhook separados por un punto:
-          <code>timestamp.payload</code>. Utiliza tu <strong>Secret Key</strong> como clave para el HMAC.
+          Calcula la firma sobre el <strong>body crudo</strong> que recibes, antes de parsear el JSON.
+          Si parseas el JSON y lo vuelves a serializar, el orden de los campos, los espacios o el formato
+          de los números pueden cambiar y la firma no coincidirá. Compara las firmas con una función de
+          tiempo constante.
+        </p>
+        <p>
+          Para protegerte de reenvíos (replay), usa el campo <code>timestamp</code> del cuerpo, que sí está
+          cubierto por la firma, y descarta notificaciones demasiado antiguas. Si tu API Key cambia,
+          los webhooks siguientes se firmarán con la nueva.
         </p>
       </div>
     </div>
@@ -828,7 +866,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <li>No ignores la verificación de firma</li>
           <li>No asumas que los webhooks llegarán en orden</li>
           <li>No proceses el mismo webhook más de una vez sin idempotencia</li>
-          <li>No expongas tu Secret Key en código del cliente</li>
+          <li>No expongas tu API Key en código del cliente</li>
         </ul>
       </div>
     </div>
