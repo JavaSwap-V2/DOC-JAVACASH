@@ -116,28 +116,28 @@ response = requests.post(
   // Webhooks capturados en Sandbox; la firma está recalculada con apiKeyExample
   signaturePayInCaptureExample = `POST /su-ruta-webhook HTTP/1.1
 Content-Type: application/json
-Content-Length: 168
-X-JavaCash-Signature: fdb00b8cca9f967c0cf991756d893a7bfb0c5badacc0efd5e5bbc078cfd89afa
+Content-Length: 157
+X-JavaCash-Signature: e92b48e489e2233223d831b26aa9d31cbc81c8881829ae3240d398aa1b331f60
 X-JavaCash-Timestamp: 2026-09-16T15:36:48.411Z
 
-{"type":"pay-in","transactionId":149,"userId":3,"amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":null}`;
+{"type":"pay-in","transactionId":149,"reference":"REF-001","amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917"}`;
 
   signaturePayOutCaptureExample = `POST /su-ruta-webhook HTTP/1.1
 Content-Type: application/json
-Content-Length: 146
-X-JavaCash-Signature: 27f229dc4a38e81819f491c679337dfe4b09dc6c7899cda28a85989340384379
+Content-Length: 157
+X-JavaCash-Signature: 747ce53217a29ff1190f2d1be83ff58d5680e1e9ad84fd8342f026e2ac60db06
 X-JavaCash-Timestamp: 2026-09-16T15:29:08.774Z
 
-{"type":"pay-out","transactionId":148,"userId":3,"amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}`;
+{"type":"pay-out","transactionId":148,"reference":"REF-002","amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}`;
 
   signatureOpensslExample = `API_KEY='4f3c1a9b7e2d5806af14bc39d07e6a52'
 
-# PayIn -> fdb00b8cca9f967c0cf991756d893a7bfb0c5badacc0efd5e5bbc078cfd89afa
-printf '%s' '{"type":"pay-in","transactionId":149,"userId":3,"amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":null}' \\
+# PayIn -> e92b48e489e2233223d831b26aa9d31cbc81c8881829ae3240d398aa1b331f60
+printf '%s' '{"type":"pay-in","transactionId":149,"reference":"REF-001","amount":"120.00","status":"pending","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917"}' \\
   | openssl dgst -sha256 -hmac "$API_KEY"
 
-# PayOut -> 27f229dc4a38e81819f491c679337dfe4b09dc6c7899cda28a85989340384379
-printf '%s' '{"type":"pay-out","transactionId":148,"userId":3,"amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}' \\
+# PayOut -> 747ce53217a29ff1190f2d1be83ff58d5680e1e9ad84fd8342f026e2ac60db06
+printf '%s' '{"type":"pay-out","transactionId":148,"reference":"REF-002","amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}' \\
   | openssl dgst -sha256 -hmac "$API_KEY"`;
 
   webhookVerifyNodeExample = `const crypto = require('crypto');
