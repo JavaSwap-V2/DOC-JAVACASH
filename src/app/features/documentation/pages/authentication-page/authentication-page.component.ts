@@ -69,26 +69,23 @@ response = requests.post(
   // Webhook examples
   payInWebhookExample = `{
   "type": "pay-in",
-  "transactionId": "TXN-123456",
-  "userId": "USR-789",
-  "amount": 500.00,
+  "transactionId": 123456,
+  "reference": "39001303",
+  "amount": "500.00",
   "status": "paid",
   "timestamp": "2024-01-15T10:30:00Z",
-  "customId": "1001",
-  "amountReceived": 500.00,
-  "notes": ""
+  "customId": "1001"
 }`;
 
   payOutWebhookExample = `{
   "type": "pay-out",
-  "transactionId": "TXN-789012",
-  "userId": "USR-789",
+  "transactionId": 789012,
   "reference": "REF-456",
-  "amount": 300.00,
+  "amount": "300.00",
   "status": "completed",
   "timestamp": "2024-01-15T14:00:00Z",
   "customId": "2001",
-  "observation": ""
+  "observation": null
 }`;
 
   payOutBulkWebhookExample = `{

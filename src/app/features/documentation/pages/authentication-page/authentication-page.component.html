@@ -427,17 +427,17 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         </tr>
         <tr>
           <td><code>transactionId</code></td>
-          <td>string</td>
+          <td>number</td>
           <td>Identificador único de la transacción</td>
         </tr>
         <tr>
-          <td><code>userId</code></td>
+          <td><code>reference</code></td>
           <td>string</td>
-          <td>Identificador del usuario asociado</td>
+          <td>Referencia de la transacción</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
-          <td>number</td>
+          <td>string</td>
           <td>Monto solicitado de la transacción</td>
         </tr>
         <tr>
@@ -454,16 +454,6 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>customId</code></td>
           <td>string</td>
           <td>Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code></td>
-        </tr>
-        <tr>
-          <td><code>amountReceived</code></td>
-          <td>number</td>
-          <td>Monto efectivamente recibido</td>
-        </tr>
-        <tr>
-          <td><code>notes</code></td>
-          <td>string</td>
-          <td>Información adicional (puede estar vacío)</td>
         </tr>
       </tbody>
     </table>
@@ -500,13 +490,8 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         </tr>
         <tr>
           <td><code>transactionId</code></td>
-          <td>string</td>
+          <td>number</td>
           <td>Identificador único de la transacción</td>
-        </tr>
-        <tr>
-          <td><code>userId</code></td>
-          <td>string</td>
-          <td>Identificador del usuario asociado</td>
         </tr>
         <tr>
           <td><code>reference</code></td>
@@ -515,7 +500,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         </tr>
         <tr>
           <td><code>amount</code></td>
-          <td>number</td>
+          <td>string</td>
           <td>Monto de la transacción</td>
         </tr>
         <tr>
