@@ -80,7 +80,7 @@
                     ]
                 },
                 {
-                    "name": "Subir factura",
+                    "name": "Subir comprobante",
                     "event": [
                         {
                             "listen": "test",
@@ -96,78 +96,170 @@
                         "method": "POST",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "x-api-key",
                                 "value": "{{x-api-key}}"
                             }
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"transactionReference\": \"64926855\",\n  \"bankAccountId\": 1,\n  \"amount\": 150,\n  \"bankTransactionId\": 123456789,\n  \"paidAt\": \"2026-09-14T18:30:00.000Z\",\n  \"paidTime\": \"12:25:00\",\n  \"senderName\": \"Maria Lopez\",\n  \"senderAccount\": \"1234567890123\",\n  \"bankName\": \"BANRURAL\",\n  \"paymentMethod\": \"transferencia_bancaria\",\n  \"notes\": \"Pago por factura\"\n}"
+                            "raw": "{\n  \"file\": \"comprobante.jpg\",\n  \"amount\": 150,\n  \"currency\": \"GTQ\"\n}"
                         },
                         "url": {
-                            "raw": "https://payments-gt-javacash.neotisk.com/api/manual-payments/upload-bill",
-                            "protocol": "https",
+                            "raw": "{{baseUrl}}/api/payin/upload-receipt/:reference",
                             "host": [
-                                "payments-gt-javacash",
-                                "neotisk",
-                                "com"
+                                "{{baseUrl}}"
                             ],
                             "path": [
                                 "api",
-                                "manual-payments",
-                                "upload-bill"
+                                "payin",
+                                "upload-receipt",
+                                ":reference"
                             ]
                         },
-                        "description": "Endpoint para subir la factura o comprobante de una transferencia bancaria y asociarla a un Payin previamente registrado.\n\n## Cuentas bancarias\n\nSe identifica la cuenta destino de la transferencia con el campo `bankAccountId`:\n\n- **1** = Banco Industrial\n- **2** = GIT\n- **3** = BAC\n\n## Metodo de pago\n\nEl valor del campo `paymentMethod` es `transferencia_bancaria` (transfer) y debe coincidir con el metodo de pago configurado para la cuenta bancaria.\n\n## Params\n\n| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `transactionReference` | **String** | 64926855 | Referencia del payin al que se le sube la factura | si |\n| `bankAccountId` | **number** | 1 | Id de la cuenta bancaria destino: 1=Banco Industrial, 2=GIT, 3=BAC | si |\n| `amount` | **number** | 150 | Monto del pago que se guarda en extracted_amount. No es el monto de la factura, es el monto que envia el comercio | si |\n| `bankTransactionId` | **number** | 123456789 | Numero de boleta u operacion del banco (codigo de autorizacion) | si |\n| `paidAt` | **String** | 2026-09-14T18:30:00.000Z | Fecha/hora en que se realizo el pago (ISO 8601) | si |\n| `paidTime` | **String** | 12:25:00 | Hora del comprobante en formato HH:mm:ss | si |\n| `senderName` | **String** | Maria Lopez | Nombre del pagador indicado en el comprobante | si |\n| `senderAccount` | **String** | 1234567890123 | Cuenta de origen del pagador | si |\n| `bankName` | **String** | BANRURAL | Banco emisor del comprobante | si |\n| `paymentMethod` | **String** | transferencia_bancaria | Metodo de pago (transfer) | si |\n| `currency` | **String** | GTQ | Moneda. Si se omite se toma la del payin | no |\n| `notes` | **String** | Pago por factura | Notas adicionales | no |\n\nLos datos del beneficiario (nombre y cuenta) se toman automaticamente de la cuenta bancaria configurada."
-                    },
-                    "response": [
-                        {
-                            "name": "Successful Response",
-                            "status": "Created",
-                            "code": 201,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"success\": true,\n    \"message\": \"Manual payment created from provider data successfully\"\n}"
-                        },
-                        {
-                            "name": "Cuenta bancaria no activa",
-                            "status": "Bad Request",
-                            "code": 400,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"message\": \"La cuenta bancaria seleccionada no está activa\"\n}"
-                        },
-                        {
-                            "name": "No autorizado",
-                            "status": "Unauthorized",
-                            "code": 401,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"statusCode\": 401,\n    \"message\": \"Unauthorized\"\n}"
-                        }
-                    ]
+                        "description": "Sube el comprobante (imagen) del payin con la referencia indicada y lo reenvia al servicio de pagos manuales, que lo lee con OCR, crea el pago manual y deja la transaccion en `processing`.\n\nLa referencia del payin va en la URL como parametro de ruta `reference` (numerica, de 1 a 18 digitos).\n\n## Autenticacion\n\nDebes enviar el parametro **x-api-key** en los **HEADERS** con la **API KEY de un comercio** (usuario o proveedor) registrada en `api_keys`. La clave publica del checkout no sirve.\n\n### Errores de autorizacion\n\n- Sin token ni API key, o API key invalida o desactivada: HTTP 401.\n- API key valida pero sin comercio asociado, o comercio inactivo: HTTP 403.\n\n## Formato del request\n\nAunque el ejemplo se muestre como JSON, el endpoint recibe **multipart/form-data** con el archivo en el campo `file` (JPG o PNG real, maximo 5 MB). `amount` y `currency` son opcionales; si se envian deben coincidir con el payin o responde 422.\n\n| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `file` | **File** | comprobante.jpg | Imagen del comprobante de pago (JPG o PNG, maximo 5 MB) | si |\n| `amount` | **number** | 150 | Monto de la transferencia. Si se envia debe coincidir con el monto del payin | no |\n| `currency` | **String** | GTQ | Moneda del pago. Si se envia debe coincidir con la moneda del payin | no |",
+                        "response": [
+                            {
+                                "name": "Successful Response",
+                                "status": "Created",
+                                "code": 201,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": true,\n    \"message\": \"Comprobante recibido. El pago será validado automáticamente.\",\n    \"code\": 201\n}"
+                            },
+                            {
+                                "name": "Bad Request",
+                                "status": "Bad Request",
+                                "code": 400,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"Se requiere una imagen como comprobante de pago\",\n    \"code\": 400\n}"
+                            },
+                            {
+                                "name": "Unauthorized",
+                                "status": "Unauthorized",
+                                "code": 401,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required. Please provide a valid token or API key\",\n    \"code\": 401\n}"
+                            },
+                            {
+                                "name": "Forbidden",
+                                "status": "Forbidden",
+                                "code": 403,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"Se requiere la API key de un comercio\",\n    \"code\": 403\n}"
+                            },
+                            {
+                                "name": "Referencia no encontrada",
+                                "status": "Not Found",
+                                "code": 404,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"No se encontró un payin con esa referencia\",\n    \"code\": 404\n}"
+                            },
+                            {
+                                "name": "Conflicto",
+                                "status": "Conflict",
+                                "code": 409,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"El comprobante ya está en proceso de validación\",\n    \"code\": 409\n}"
+                            },
+                            {
+                                "name": "Datos no coinciden",
+                                "status": "Unprocessable Entity",
+                                "code": 422,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"El monto o la moneda no coinciden con la transaccion\",\n    \"code\": 422\n}"
+                            },
+                            {
+                                "name": "Internal Server Error",
+                                "status": "Internal Server Error",
+                                "code": 500,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"Error interno del servidor\",\n    \"code\": 500\n}"
+                            },
+                            {
+                                "name": "Service Unavailable",
+                                "status": "Service Unavailable",
+                                "code": 503,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"El servicio de comprobantes no está disponible\",\n    \"code\": 503\n}"
+                            },
+                            {
+                                "name": "Gateway Timeout",
+                                "status": "Gateway Timeout",
+                                "code": 504,
+                                "_postman_previewlanguage": "json",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "cookie": [],
+                                "body": "{\n    \"success\": false,\n    \"message\": \"El comprobante sigue en proceso. Consulte el estado del payin antes de reenviarlo.\",\n    \"code\": 504\n}"
+                            }
+                        ]
+                    }
                 },
                 {
                     "name": "Listar por referencia",
