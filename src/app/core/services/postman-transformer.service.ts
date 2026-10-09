@@ -61,14 +61,17 @@ export class PostmanTransformerService {
    */
   private transformItem(item: PostmanItem, category: 'payin' | 'payout', collectionName: string): Endpoint {
     const request = item.request!;
+    const id = this.generateId(item.name, category);
 
     return {
-      id: this.generateId(item.name, category),
+      id,
       name: item.name,
+      nameKey: this.resolveNameKey(item.name),
       method: this.normalizeMethod(request.method),
       path: this.extractPath(request.url),
       baseUrl: this.extractBaseUrl(collectionName),
       description: this.cleanDescription(request.description || item.description || ''),
+      descriptionKey: this.resolveDescriptionKey(id),
       category,
       headers: this.transformHeaders(request.header),
       requestBody: this.transformRequestBody(request.body, request.description || item.description || ''),
@@ -82,11 +85,52 @@ export class PostmanTransformerService {
    * Genera un ID único basado en el nombre y la categoría
    */
   private generateId(name: string, category: 'payin' | 'payout'): string {
-    const slug = name
+    return `${category}-${this.slugify(name)}`;
+  }
+
+  /**
+   * Convierte un texto en slug (`Listar por referencia` → `listar-por-referencia`).
+   */
+  private slugify(name: string): string {
+    return name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
-    return `${category}-${slug}`;
+  }
+
+  /**
+   * Mapea el nombre del endpoint (tal como viene en la colección Postman, en
+   * español) a su clave i18n. Si el endpoint es nuevo y no está mapeado,
+   * devuelve `undefined` y la UI muestra el nombre crudo.
+   */
+  private resolveNameKey(name: string): string | undefined {
+    const keysBySlug: Record<string, string> = {
+      'registrar': 'register',
+      'subir-comprobante': 'uploadReceipt',
+      'listar-por-referencia': 'listByReference',
+      'listar-por-cliente': 'listByClient',
+      'listar': 'list'
+    };
+    const key = keysBySlug[this.slugify(name)];
+    return key ? `sidebar.endpoints.${key}` : undefined;
+  }
+
+  /**
+   * Mapea la descripción en prosa del endpoint (por id, que ya incluye la
+   * categoría) a su clave i18n. Devuelve `undefined` si no está mapeada.
+   */
+  private resolveDescriptionKey(id: string): string | undefined {
+    const keysById: Record<string, string> = {
+      'payin-registrar': 'noteCheckout',
+      'payin-listar-por-referencia': 'listPayinByReference',
+      'payin-listar-por-cliente': 'listPayinByCustomId',
+      'payin-listar': 'listAllPayin',
+      'payin-subir-comprobante': 'uploadReceipt',
+      'payout-listar-por-referencia': 'listPayoutByReference',
+      'payout-listar': 'listAllPayout'
+    };
+    const key = keysById[id];
+    return key ? `endpoint.descriptions.${key}` : undefined;
   }
 
   /**
@@ -136,8 +180,8 @@ export class PostmanTransformerService {
    */
   private cleanDescription(description: string): string {
     return description
-      .replace(/\|.*\|/g, '') // Remueve tablas markdown
-      .replace(/#{1,6}\s/g, '') // Remueve headers markdown
+      .replace(/^[ \t]*\|.*\|[ \t]*$/gm, '') // Remueve solo las líneas de tabla (se muestran aparte como campos)
+      .replace(/\n{3,}/g, '\n\n') // Normaliza los saltos que dejan las tablas
       .trim();
   }
 
@@ -153,7 +197,8 @@ export class PostmanTransformerService {
         name: h.key,
         value: h.value,
         required: h.key === 'x-api-key' || h.key === 'Content-Type',
-        description: h.description || this.getHeaderDescription(h.key)
+        description: h.description || this.getHeaderDescription(h.key),
+        descriptionKey: this.resolveHeaderKey(h.key)
       }));
   }
 
@@ -168,6 +213,20 @@ export class PostmanTransformerService {
       'Authorization': 'Token de autorización'
     };
     return descriptions[headerName] || '';
+  }
+
+  /**
+   * Mapea el nombre de un header a la clave i18n de su descripción.
+   */
+  private resolveHeaderKey(headerName: string): string | undefined {
+    const keysByName: Record<string, string> = {
+      'x-api-key': 'apiKey',
+      'Content-Type': 'contentType',
+      'Accept': 'accept',
+      'Authorization': 'authorization'
+    };
+    const key = keysByName[headerName];
+    return key ? `endpoint.headersDesc.${key}` : undefined;
   }
 
   /**
@@ -186,6 +245,7 @@ export class PostmanTransformerService {
     return {
       contentType: 'application/json',
       description: 'Cuerpo de la petición en formato JSON',
+      descriptionKey: 'endpoint.requestBodyDescription',
       schema: parsedBody,
       example: parsedBody,
       required: true,
@@ -205,7 +265,7 @@ export class PostmanTransformerService {
     // Skip header and separator rows
     const dataRows = lines.slice(2);
 
-    return dataRows.map(row => {
+    return dataRows.map((row): RequestBodyField | null => {
       const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell.length > 0);
       if (cells.length < 4) return null;
 
@@ -221,8 +281,21 @@ export class PostmanTransformerService {
       });
       const required = cells.length >= 5 ? cells[4].toLowerCase() === 'si' : false;
 
-      return { name, type, example, description: desc, required };
+      return { name, type, example, description: desc, descriptionKey: this.resolveFieldKey(name), required };
     }).filter((field): field is RequestBodyField => field !== null);
+  }
+
+  /**
+   * Mapea el nombre de un campo del body a la clave i18n de su descripción.
+   * Solo cubre campos conocidos; el resto conserva la descripción original.
+   */
+  private resolveFieldKey(name: string): string | undefined {
+    const knownFields = [
+      'currency', 'amount', 'customId', 'userName', 'userPhone', 'userEmail',
+      'userIdentificationNumber', 'dueDate', 'userBank', 'userTypeAccount',
+      'userNumAccount', 'file'
+    ];
+    return knownFields.includes(name) ? `endpoint.fields.${name}` : undefined;
   }
 
   /**
@@ -245,11 +318,20 @@ export class PostmanTransformerService {
         status: response.code,
         statusText: response.status,
         description: this.getResponseDescription(response.code),
+        descriptionKey: this.resolveResponseKey(response.code),
         body: parsedBody,
         headers: this.transformHeaders(response.header),
         isError: response.code >= 400
       };
     });
+  }
+
+  /**
+   * Mapea un código HTTP a la clave i18n de su descripción.
+   */
+  private resolveResponseKey(code: number): string | undefined {
+    const knownCodes = [200, 201, 400, 401, 403, 404, 422, 429, 500];
+    return knownCodes.includes(code) ? `endpoint.responsesDesc.r${code}` : undefined;
   }
 
   /**
@@ -261,6 +343,7 @@ export class PostmanTransformerService {
         status: 200,
         statusText: 'OK',
         description: 'Petición exitosa',
+        descriptionKey: 'endpoint.responsesDesc.r200',
         body: { success: true, message: 'Operación exitosa' },
         isError: false
       },
@@ -268,6 +351,7 @@ export class PostmanTransformerService {
         status: 400,
         statusText: 'Bad Request',
         description: 'Petición inválida',
+        descriptionKey: 'endpoint.responsesDesc.r400',
         body: { success: false, message: 'Error en los datos enviados' },
         isError: true
       },
@@ -275,6 +359,7 @@ export class PostmanTransformerService {
         status: 401,
         statusText: 'Unauthorized',
         description: 'No autorizado',
+        descriptionKey: 'endpoint.responsesDesc.r401',
         body: { success: false, message: 'API Key inválida o faltante' },
         isError: true
       }

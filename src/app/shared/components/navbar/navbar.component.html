@@ -6,7 +6,7 @@
       <button 
         class="navbar__menu-btn hide-desktop" 
         (click)="toggleMobileMenu()"
-        aria-label="Toggle menu">
+        [attr.aria-label]="'navbar.toggleMenu' | t">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -23,13 +23,13 @@
     <!-- Navegación Central -->
     <div class="navbar__nav hide-mobile">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link">
-        Inicio
+        {{ 'navbar.home' | t }}
       </a>
       <a routerLink="/gateway" routerLinkActive="active" class="navbar__link">
-        Documentación
+        {{ 'navbar.docs' | t }}
       </a>
       <a [routerLink]="['/', currentCountry.code.toLowerCase(), 'api']" routerLinkActive="active" class="navbar__link">
-        API Reference
+        {{ 'navbar.apiReference' | t }}
       </a>
     </div>
 
@@ -39,12 +39,12 @@
       <button 
         class="navbar__action-btn navbar__search-btn"
         (click)="onSearchClick()"
-        aria-label="Buscar">
+        [attr.aria-label]="'navbar.search' | t">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
         </svg>
-        <span class="navbar__search-text hide-mobile">Buscar</span>
+        <span class="navbar__search-text hide-mobile">{{ 'navbar.search' | t }}</span>
         <kbd class="navbar__kbd hide-mobile">Ctrl K</kbd>
       </button>
 
@@ -54,7 +54,7 @@
           class="navbar__country-btn"
           (click)="toggleCountryDropdown()"
           [class.active]="showCountryDropdown">
-          <span class="navbar__country-flag">{{ currentCountry.flag }}</span>
+          <app-flag [code]="currentCountry.flagCode" [alt]="currentCountry.name" size="sm"></app-flag>
           <span class="navbar__country-name hide-mobile">{{ currentCountry.name }}</span>
           <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -68,14 +68,49 @@
             class="navbar__dropdown-item"
             [class.active]="country.code === currentCountry.code"
             (click)="selectCountry(country)">
-            <span class="navbar__country-flag">{{ country.flag }}</span>
+            <app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag>
             <div class="navbar__dropdown-content">
               <span class="navbar__dropdown-title">{{ country.name }}</span>
               <span class="navbar__dropdown-subtitle">{{ country.currency }}</span>
             </div>
-            <svg *ngIf="country.code === currentCountry.code" class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <span *ngIf="country.code === currentCountry.code" class="navbar__dropdown-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Selector de Idioma -->
+      <div class="navbar__language-selector">
+        <button 
+          class="navbar__action-btn navbar__language-btn"
+          (click)="toggleLanguageDropdown()"
+          [class.active]="showLanguageDropdown"
+          [attr.aria-label]="'navbar.selectLanguage' | t"
+          [attr.title]="'navbar.language' | t">
+          <app-flag [code]="currentLanguageOption.flagCode" [alt]="currentLanguageOption.name" size="sm"></app-flag>
+          <span class="navbar__language-code hide-mobile">{{ currentLanguage | uppercase }}</span>
+        </button>
+
+        <!-- Dropdown -->
+        <div class="navbar__dropdown navbar__dropdown--language" *ngIf="showLanguageDropdown">
+          <button 
+            *ngFor="let language of languages"
+            class="navbar__dropdown-item"
+            [class.active]="language.code === currentLanguage"
+            (click)="selectLanguage(language.code)">
+            <app-flag [code]="language.flagCode" [alt]="language.name" size="sm"></app-flag>
+            <div class="navbar__dropdown-content">
+              <span class="navbar__dropdown-title">{{ language.name }}</span>
+              <span class="navbar__dropdown-subtitle">{{ language.code | uppercase }}</span>
+            </div>
+            <span *ngIf="language.code === currentLanguage" class="navbar__dropdown-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
           </button>
         </div>
       </div>
@@ -84,7 +119,7 @@
       <button 
         class="navbar__action-btn"
         (click)="toggleTheme()"
-        [attr.aria-label]="(isDarkMode$ | async) ? 'Activar modo claro' : 'Activar modo oscuro'">
+        [attr.aria-label]="(isDarkMode$ | async) ? ('navbar.toggleLight' | t) : ('navbar.toggleDark' | t)">
         <svg *ngIf="!(isDarkMode$ | async)" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>

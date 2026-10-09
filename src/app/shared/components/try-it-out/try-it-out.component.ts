@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Endpoint } from '@core/models/api.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TranslationService } from '@core/services/translation.service';
 
 interface TryItOutRequest {
   headers: { [key: string]: string };
@@ -31,7 +32,7 @@ export class TryItOutComponent implements OnInit {
   error = '';
   isExpanded = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translationService: TranslationService) {}
 
   ngOnInit(): void {
     // Inicializar body con ejemplo si existe
@@ -52,7 +53,7 @@ export class TryItOutComponent implements OnInit {
 
   async sendRequest(): Promise<void> {
     if (!this.apiKey.trim()) {
-      this.error = 'Por favor ingresa tu API Key';
+      this.error = this.translationService.translate('tryItOut.missingApiKey');
       return;
     }
 
@@ -79,7 +80,7 @@ export class TryItOutComponent implements OnInit {
         try {
           body = JSON.parse(this.requestBody);
         } catch (e) {
-          throw new Error('JSON inválido en el body');
+          throw new Error(this.translationService.translate('tryItOut.invalidJson'));
         }
       }
 
@@ -116,7 +117,7 @@ export class TryItOutComponent implements OnInit {
           time: endTime - startTime
         };
       } else {
-        this.error = err.message || 'Error desconocido';
+        this.error = err.message || this.translationService.translate('tryItOut.unknownError');
       }
     } finally {
       this.loading = false;

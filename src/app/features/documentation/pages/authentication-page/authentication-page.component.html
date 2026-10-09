@@ -1,19 +1,15 @@
 <!-- authentication-page.component.html -->
 <article class="doc-page">
   <header class="doc-header">
-    <h1>Autenticación</h1>
+    <h1>{{ 'auth.title' | t }}</h1>
     <p class="doc-lead">
-      Aprende cómo autenticar tus peticiones a la API de JavaCash utilizando API Keys 
-      de forma segura y eficiente.
+      {{ 'auth.lead' | t }}
     </p>
   </header>
 
   <section class="doc-section">
-    <h2>Métodos de Autenticación</h2>
-    <p>
-      JavaCash API utiliza <strong>API Keys</strong> para autenticar todas las peticiones. 
-      Tu API Key identifica tu cuenta y te da acceso a los recursos de la API.
-    </p>
+    <h2>{{ 'auth.methodsTitle' | t }}</h2>
+    <p [innerHTML]="'auth.methodsTextHtml' | tHtml"></p>
 
     <div class="info-box info-box--warning">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -22,21 +18,19 @@
         <line x1="12" y1="17" x2="12.01" y2="17"></line>
       </svg>
       <div>
-        <h4>¡Mantén tu API Key segura!</h4>
+        <h4>{{ 'auth.warnTitle' | t }}</h4>
         <p>
-          Tu API Key tiene acceso completo a tu cuenta. Nunca la compartas públicamente 
-          en repositorios, código del lado del cliente, o cualquier lugar donde pueda 
-          ser expuesta.
+          {{ 'auth.warnText' | t }}
         </p>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Obtener tu API Key</h2>
+    <h2>{{ 'auth.getKeyTitle' | t }}</h2>
 
     <div class="dashboard-links">
-      <h3>Dashboards</h3>
+      <h3>{{ 'auth.dashboards' | t }}</h3>
       <div class="dashboard-cards">
         <a
           *ngFor="let country of countries"
@@ -44,9 +38,9 @@
           target="_blank"
           rel="noopener"
           class="dashboard-card">
-          <div class="dashboard-card__flag">{{ country.flag }}</div>
+          <div class="dashboard-card__flag"><app-flag [code]="country.flagCode" [alt]="country.name" size="lg"></app-flag></div>
           <div class="dashboard-card__info">
-            <h4>{{ country.name }} <em *ngIf="!country.available">(próximamente)</em></h4>
+            <h4>{{ country.name }} <em *ngIf="!country.available">{{ 'intro.soon' | t }}</em></h4>
             <code>{{ country.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -58,7 +52,7 @@
         <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🧪</div>
           <div class="dashboard-card__info">
-            <h4>Sandbox</h4>
+            <h4>{{ 'auth.sandbox' | t }}</h4>
             <code>{{ sandbox.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -74,9 +68,9 @@
       <div class="step-vertical">
         <div class="step-vertical__number">1</div>
         <div class="step-vertical__content">
-          <h3>Accede al Dashboard</h3>
+          <h3>{{ 'auth.step1Title' | t }}</h3>
           <p>
-            Inicia sesión en el dashboard correspondiente a tu país de operación.
+            {{ 'auth.step1Text' | t }}
           </p>
         </div>
       </div>
@@ -84,9 +78,9 @@
       <div class="step-vertical">
         <div class="step-vertical__number">2</div>
         <div class="step-vertical__content">
-          <h3>Ve a tu Perfil</h3>
+          <h3>{{ 'auth.step2Title' | t }}</h3>
           <p>
-            Haz clic en tu avatar en la esquina superior derecha para abrir el menú de usuario.
+            {{ 'auth.step2Text' | t }}
           </p>
         </div>
       </div>
@@ -94,15 +88,12 @@
       <div class="step-vertical">
         <div class="step-vertical__number">3</div>
         <div class="step-vertical__content">
-          <h3>Copia tu API Key</h3>
-          <p>
-            En el menú verás tu <strong>API Key</strong>. Usa los botones para ver, copiar
-            o regenerar tu clave de acceso.
-          </p>
+          <h3>{{ 'auth.step3Title' | t }}</h3>
+          <p [innerHTML]="'auth.step3TextHtml' | tHtml"></p>
           <div class="api-key-screenshot">
             <img
               src="assets/images/api-key-location.png"
-              alt="Ubicación de la API Key en el perfil de usuario"
+              [attr.alt]="'auth.screenshotAlt' | t"
               loading="lazy">
             <p class="screenshot-caption">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -110,7 +101,7 @@
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
               </svg>
-              Tu API Key se encuentra en el menú desplegable de tu perfil
+              {{ 'auth.screenshotCaption' | t }}
             </p>
           </div>
         </div>
@@ -119,16 +110,13 @@
   </section>
 
   <section class="doc-section">
-    <h2>Formato de API Key</h2>
-    <p>
-      Una API Key de JavaCash es una cadena hexadecimal de <strong>32 caracteres</strong>,
-      sin prefijo ni separadores:
-    </p>
+    <h2>{{ 'auth.formatTitle' | t }}</h2>
+    <p [innerHTML]="'auth.formatTextHtml' | tHtml"></p>
 
     <app-code-block
       [code]="apiKeyExample"
       language="bash"
-      title="Ejemplo de API Key">
+      [title]="'auth.formatExampleTitle' | t">
     </app-code-block>
 
     <div class="info-box info-box--info">
@@ -138,30 +126,23 @@
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>Una key por ambiente y por país</h4>
-        <p>
-          La API Key no indica el ambiente en su formato. Lo que determina si operas contra
-          producción o Sandbox es la <strong>URL base</strong> que uses, y cada dashboard
-          (por país y el de Sandbox) emite su propia key. Una key de un país no es válida
-          en otro.
-        </p>
+        <h4>{{ 'auth.oneKeyTitle' | t }}</h4>
+        <p [innerHTML]="'auth.oneKeyTextHtml' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Usar tu API Key</h2>
-    <p>
-      Incluye tu API Key en el header <code>x-api-key</code> de cada petición HTTP:
-    </p>
+    <h2>{{ 'auth.useTitle' | t }}</h2>
+    <p [innerHTML]="'auth.useTextHtml' | tHtml"></p>
 
     <app-code-block
       [code]="exampleHeader"
       language="curl"
-      title="Ejemplo con cURL">
+      [title]="'auth.curlExampleTitle' | t">
     </app-code-block>
 
-    <h3>Ejemplos por Lenguaje</h3>
+    <h3>{{ 'auth.langExamplesTitle' | t }}</h3>
 
     <div class="language-examples">
       <div class="language-example">
@@ -194,7 +175,7 @@
   </section>
 
   <section class="doc-section">
-    <h2>Mejores Prácticas de Seguridad</h2>
+    <h2>{{ 'auth.bestPracticesTitle' | t }}</h2>
     
     <div class="best-practices">
       <div class="practice-card practice-card--do">
@@ -202,14 +183,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
-          <h4>Hacer ✓</h4>
+          <h4>{{ 'auth.doTitle' | t }}</h4>
         </div>
         <ul>
-          <li>Usa variables de entorno para almacenar tu API Key</li>
-          <li>Rota tus API Keys periódicamente</li>
-          <li>Usa diferentes keys para desarrollo y producción</li>
-          <li>Implementa rate limiting en tu aplicación</li>
-          <li>Monitorea el uso de tu API Key en el dashboard</li>
+          <li>{{ 'auth.do1' | t }}</li>
+          <li>{{ 'auth.do2' | t }}</li>
+          <li>{{ 'auth.do3' | t }}</li>
+          <li>{{ 'auth.do4' | t }}</li>
+          <li>{{ 'auth.do5' | t }}</li>
         </ul>
       </div>
 
@@ -219,31 +200,29 @@
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-          <h4>No Hacer ✗</h4>
+          <h4>{{ 'auth.dontTitle' | t }}</h4>
         </div>
         <ul>
-          <li>Nunca hagas commit de API Keys en Git</li>
-          <li>No incluyas API Keys en código del frontend</li>
-          <li>No compartas tu API Key por email o chat</li>
-          <li>No uses la misma key en múltiples proyectos</li>
-          <li>No dejes API Keys en archivos de log</li>
+          <li>{{ 'auth.dont1' | t }}</li>
+          <li>{{ 'auth.dont2' | t }}</li>
+          <li>{{ 'auth.dont3' | t }}</li>
+          <li>{{ 'auth.dont4' | t }}</li>
+          <li>{{ 'auth.dont5' | t }}</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Variables de Entorno</h2>
-    <p>La forma más segura de manejar API Keys es usando variables de entorno:</p>
+    <h2>{{ 'auth.envTitle' | t }}</h2>
+    <p>{{ 'auth.envText' | t }}</p>
     <p>
-      Ajusta <code>JAVACASH_BASE_URL</code> según el país contra el que operes
-      (consulta la lista de entornos en la
-      <a routerLink="/gateway/introduction">introducción</a>).
+      <span [innerHTML]="'auth.envAdjustHtml' | tHtml"></span>
     </p>
 
     <div class="env-examples">
       <div class="env-example">
-        <h4>.env (Node.js)</h4>
+        <h4>{{ 'auth.envNode' | t }}</h4>
         <app-code-block
           code="JAVACASH_API_KEY=abc123xyz456def789ghi012jkl345
 JAVACASH_BASE_URL=https://api-ar.javacash.finance"
@@ -252,7 +231,7 @@ JAVACASH_BASE_URL=https://api-ar.javacash.finance"
       </div>
 
       <div class="env-example">
-        <h4>Usar en código</h4>
+        <h4>{{ 'auth.envUsage' | t }}</h4>
         <app-code-block
           code="const apiKey = process.env.JAVACASH_API_KEY;
 const baseUrl = process.env.JAVACASH_BASE_URL;"
@@ -263,31 +242,28 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
   </section>
 
   <section class="doc-section">
-    <h2>Errores de Autenticación</h2>
-    <p>
-      Si tu API Key es inválida o falta, recibirás un error <code>401 Unauthorized</code>:
-    </p>
+    <h2>{{ 'auth.authErrorsTitle' | t }}</h2>
+    <p [innerHTML]="'auth.authErrorsTextHtml' | tHtml"></p>
 
     <app-code-block
       [code]="errorExample"
       language="javascript"
-      title="Error 401 - No autorizado">
+      [title]="'auth.error401Title' | t">
     </app-code-block>
 
-    <h3>Causas Comunes</h3>
+    <h3>{{ 'auth.commonCausesTitle' | t }}</h3>
     <ul>
-      <li>API Key incorrecta o mal copiada</li>
-      <li>Header <code>x-api-key</code> faltante</li>
-      <li>API Key deshabilitada o revocada</li>
-      <li>Usando key de pruebas en producción (o viceversa)</li>
+      <li>{{ 'auth.cause1' | t }}</li>
+      <li [innerHTML]="'auth.cause2Html' | tHtml"></li>
+      <li>{{ 'auth.cause3' | t }}</li>
+      <li>{{ 'auth.cause4' | t }}</li>
     </ul>
   </section>
 
   <section class="doc-section">
-    <h2>Renovar o Revocar API Keys</h2>
+    <h2>{{ 'auth.renewTitle' | t }}</h2>
     <p>
-      Si sospechas que tu API Key fue comprometida, puedes revocarla inmediatamente 
-      desde el dashboard:
+      {{ 'auth.renewText' | t }}
     </p>
 
     <div class="info-box info-box--error">
@@ -297,21 +273,18 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
       <div>
-        <h4>API Key Comprometida</h4>
+        <h4>{{ 'auth.compromisedTitle' | t }}</h4>
         <p>
-          Si tu API Key fue expuesta públicamente, revócala inmediatamente desde 
-          el dashboard y genera una nueva. Las peticiones con la key antigua 
-          serán rechazadas al instante.
+          {{ 'auth.compromisedText' | t }}
         </p>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Configuración de Webhooks</h2>
+    <h2>{{ 'auth.webhookTitle' | t }}</h2>
     <p>
-      Los webhooks te permiten recibir notificaciones en tiempo real cuando ocurren eventos
-      en tus transacciones. Configúralos directamente desde el dashboard.
+      {{ 'auth.webhookText' | t }}
     </p>
 
     <div class="webhook-setup">
@@ -319,19 +292,17 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <div class="step-vertical">
           <div class="step-vertical__number">1</div>
           <div class="step-vertical__content">
-            <h3>Accede a Integraciones</h3>
-            <p>
-              En el dashboard, haz clic en <strong>"Integraciones"</strong> en el menú de tu perfil.
-            </p>
+            <h3>{{ 'auth.wh1Title' | t }}</h3>
+            <p [innerHTML]="'auth.wh1TextHtml' | tHtml"></p>
           </div>
         </div>
 
         <div class="step-vertical">
           <div class="step-vertical__number">2</div>
           <div class="step-vertical__content">
-            <h3>Configura tus URLs</h3>
+            <h3>{{ 'auth.wh2Title' | t }}</h3>
             <p>
-              Encontrarás dos campos para configurar webhooks:
+              {{ 'auth.wh2Text' | t }}
             </p>
             <div class="webhook-fields">
               <div class="webhook-field">
@@ -341,9 +312,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
                     <polyline points="8 12 12 16 16 12"></polyline>
                     <line x1="12" y1="8" x2="12" y2="16"></line>
                   </svg>
-                  <h4>URL de Webhook para PayIn</h4>
+                  <h4>{{ 'auth.whPayinFieldTitle' | t }}</h4>
                 </div>
-                <p>Recibe notificaciones de pagos entrantes (depósitos)</p>
+                <p>{{ 'auth.whPayinFieldText' | t }}</p>
                 <code>https://tu-servidor.com/webhooks/payin</code>
               </div>
               <div class="webhook-field">
@@ -353,9 +324,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
                     <polyline points="16 12 12 8 8 12"></polyline>
                     <line x1="12" y1="16" x2="12" y2="8"></line>
                   </svg>
-                  <h4>URL de Webhook para PayOut</h4>
+                  <h4>{{ 'auth.whPayoutFieldTitle' | t }}</h4>
                 </div>
-                <p>Recibe notificaciones de pagos salientes (retiros)</p>
+                <p>{{ 'auth.whPayoutFieldText' | t }}</p>
                 <code>https://tu-servidor.com/webhooks/payout</code>
               </div>
             </div>
@@ -365,10 +336,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <div class="step-vertical">
           <div class="step-vertical__number">3</div>
           <div class="step-vertical__content">
-            <h3>Guarda la configuración</h3>
+            <h3>{{ 'auth.wh3Title' | t }}</h3>
             <p>
-              Haz clic en guardar y tu servidor comenzará a recibir notificaciones
-              automáticamente cuando cambien los estados de tus transacciones.
+              {{ 'auth.wh3Text' | t }}
             </p>
           </div>
         </div>
@@ -382,78 +352,70 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>Requisitos del Webhook</h4>
-        <p>
-          Tu servidor debe responder con un código HTTP <code>200</code> para confirmar
-          la recepción. Si falla, JavaCash reintentará el envío varias veces.
-        </p>
-        <p>
-          El <code>customId</code> que envías al crear un PayIn o PayOut debe ser <strong>numérico</strong>
-          (solo dígitos, por ejemplo <code>"1001"</code>). Un valor con letras, guiones o espacios puede
-          impedir que recibas la notificación.
-        </p>
+        <h4>{{ 'auth.whReqTitle' | t }}</h4>
+        <p [innerHTML]="'auth.whReqText1Html' | tHtml"></p>
+        <p [innerHTML]="'auth.whReqText2Html' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <!-- Webhook PayIn -->
   <section class="doc-section">
-    <h2>Webhook de PayIn (Pago Entrante)</h2>
+    <h2>{{ 'auth.payinWhTitle' | t }}</h2>
     <p>
-      Cada vez que se crea o actualiza una transacción de pago entrante (PayIn),
-      JavaCash enviará una notificación a la URL que hayas configurado con la siguiente estructura:
+      {{ 'auth.payinWhText' | t }}
     </p>
 
     <app-code-block
       [code]="payInWebhookExample"
       language="javascript"
-      title="Ejemplo de Webhook PayIn">
+      [title]="'auth.payinWhExample' | t">
     </app-code-block>
 
-    <h3>Descripción de Campos</h3>
+    <h3>{{ 'auth.fieldsTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Campo</th>
-          <th>Tipo</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.field' | t }}</th>
+          <th>{{ 'auth.type' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>type</code></td>
           <td>string</td>
-          <td>Siempre <code>"pay-in"</code> para pagos entrantes</td>
+          <td [innerHTML]="'auth.fTypePayinHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>transactionId</code></td>
           <td>number</td>
-          <td>Identificador único de la transacción</td>
+          <td>{{ 'auth.fTxId' | t }}</td>
         </tr>
         <tr>
           <td><code>reference</code></td>
           <td>string</td>
-          <td>Referencia de la transacción</td>
+          <td>{{ 'auth.fRef' | t }}</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
           <td>string</td>
-          <td>Monto solicitado de la transacción</td>
+          <td>{{ 'auth.fAmountRequested' | t }}</td>
         </tr>
         <tr>
           <td><code>status</code></td>
           <td>string</td>
-          <td>Estado actual de la transacción</td>
+          <td>{{ 'auth.fStatus' | t }}</td>
         </tr>
         <tr>
           <td><code>timestamp</code></td>
           <td>string</td>
-          <td>Fecha y hora en formato ISO 8601</td>
+          <td>{{ 'auth.fTimestamp' | t }}</td>
         </tr>
         <tr>
           <td><code>customId</code></td>
           <td>string</td>
-          <td>Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code></td>
+          <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
         </tr>
       </tbody>
     </table>
@@ -461,67 +423,66 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
 
   <!-- Webhook PayOut -->
   <section class="doc-section">
-    <h2>Webhook de PayOut (Pago Saliente)</h2>
+    <h2>{{ 'auth.payoutWhTitle' | t }}</h2>
     <p>
-      Cuando se crea o actualiza una transacción de pago saliente (PayOut),
-      recibirás una notificación con la siguiente estructura:
+      {{ 'auth.payoutWhText' | t }}
     </p>
 
     <app-code-block
       [code]="payOutWebhookExample"
       language="javascript"
-      title="Ejemplo de Webhook PayOut">
+      [title]="'auth.payoutWhExample' | t">
     </app-code-block>
 
-    <h3>Descripción de Campos</h3>
+    <h3>{{ 'auth.fieldsTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Campo</th>
-          <th>Tipo</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.field' | t }}</th>
+          <th>{{ 'auth.type' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>type</code></td>
           <td>string</td>
-          <td>Siempre <code>"pay-out"</code> para pagos salientes</td>
+          <td [innerHTML]="'auth.fTypePayoutHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>transactionId</code></td>
           <td>number</td>
-          <td>Identificador único de la transacción</td>
+          <td>{{ 'auth.fTxId' | t }}</td>
         </tr>
         <tr>
           <td><code>reference</code></td>
           <td>string</td>
-          <td>Referencia de la transacción</td>
+          <td>{{ 'auth.fRef' | t }}</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
           <td>string</td>
-          <td>Monto de la transacción</td>
+          <td>{{ 'auth.fAmount' | t }}</td>
         </tr>
         <tr>
           <td><code>status</code></td>
           <td>string</td>
-          <td>Estado actual de la transacción</td>
+          <td>{{ 'auth.fStatus' | t }}</td>
         </tr>
         <tr>
           <td><code>timestamp</code></td>
           <td>string</td>
-          <td>Fecha y hora en formato ISO 8601</td>
+          <td>{{ 'auth.fTimestamp' | t }}</td>
         </tr>
         <tr>
           <td><code>customId</code></td>
           <td>string</td>
-          <td>Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code></td>
+          <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>observation</code></td>
           <td>string</td>
-          <td>Observaciones adicionales (puede estar vacío)</td>
+          <td>{{ 'auth.fObservation' | t }}</td>
         </tr>
       </tbody>
     </table>
@@ -529,42 +490,41 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
 
   <!-- Webhook PayOut Masivo -->
   <section class="doc-section">
-    <h2>Webhook de PayOut Masivo</h2>
+    <h2>{{ 'auth.bulkWhTitle' | t }}</h2>
     <p>
-      Cuando se procesan pagos salientes de forma masiva, recibirás una única notificación
-      que contiene el resumen de todas las transacciones del lote:
+      {{ 'auth.bulkWhText' | t }}
     </p>
 
     <app-code-block
       [code]="payOutBulkWebhookExample"
       language="javascript"
-      title="Ejemplo de Webhook PayOut Masivo">
+      [title]="'auth.bulkWhExample' | t">
     </app-code-block>
 
-    <h3>Descripción de Campos</h3>
+    <h3>{{ 'auth.fieldsTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Campo</th>
-          <th>Tipo</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.field' | t }}</th>
+          <th>{{ 'auth.type' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>type</code></td>
           <td>string</td>
-          <td>Siempre <code>"pay-outs"</code> para lotes masivos</td>
+          <td [innerHTML]="'auth.fTypePayoutsHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>totalTransactions</code></td>
           <td>number</td>
-          <td>Cantidad total de transacciones en el lote</td>
+          <td>{{ 'auth.fTotalTx' | t }}</td>
         </tr>
         <tr>
           <td><code>transactions</code></td>
           <td>array</td>
-          <td>Lista de transacciones individuales con su estado</td>
+          <td>{{ 'auth.fTxList' | t }}</td>
         </tr>
       </tbody>
     </table>
@@ -576,60 +536,55 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>Nota sobre PayOut Masivo</h4>
-        <p>
-          Cada transacción dentro del arreglo <code>transactions</code> contiene los campos
-          <code>transactionId</code>, <code>reference</code>, <code>amount</code> y <code>status</code>.
-          Revisa el estado individual de cada transacción ya que pueden variar dentro del mismo lote.
-        </p>
+        <h4>{{ 'auth.bulkNoteTitle' | t }}</h4>
+        <p [innerHTML]="'auth.bulkNoteTextHtml' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <!-- Estados de PayIn -->
   <section class="doc-section">
-    <h2>Estados de Transacción - PayIn</h2>
+    <h2>{{ 'auth.payinStatesTitle' | t }}</h2>
     <p>
-      Las transacciones de pago entrante (PayIn) pasan por los siguientes estados.
-      Recibirás un webhook cada vez que el estado cambie.
+      {{ 'auth.payinStatesText' | t }}
     </p>
 
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Estado</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.state' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>pending</code></td>
-          <td>La transacción fue creada y está esperando el pago del cliente</td>
+          <td>{{ 'auth.stPending' | t }}</td>
         </tr>
         <tr>
           <td><code>approved</code></td>
-          <td>El pago fue detectado y está siendo verificado</td>
+          <td>{{ 'auth.stApproved' | t }}</td>
         </tr>
         <tr>
           <td><code>paid</code></td>
-          <td>El pago fue confirmado exitosamente</td>
+          <td>{{ 'auth.stPaid' | t }}</td>
         </tr>
         <tr>
           <td><code>rejected</code></td>
-          <td>La transacción fue rechazada</td>
+          <td>{{ 'auth.stRejected' | t }}</td>
         </tr>
         <tr>
           <td><code>cancelled</code></td>
-          <td>La transacción fue cancelada</td>
+          <td>{{ 'auth.stCancelled' | t }}</td>
         </tr>
         <tr>
           <td><code>expired</code></td>
-          <td>La transacción expiró por falta de pago</td>
+          <td>{{ 'auth.stExpired' | t }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Flujo Normal</h3>
+    <h3>{{ 'auth.normalFlow' | t }}</h3>
     <p>
       <code>pending</code> &rarr; <code>approved</code> &rarr; <code>paid</code>
     </p>
@@ -639,67 +594,63 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <polyline points="20 6 9 17 4 12"></polyline>
       </svg>
       <div>
-        <h4>Estado final exitoso</h4>
-        <p>
-          El estado <code>paid</code> indica que el pago fue completado correctamente.
-          Usa este estado para confirmar la operación en tu sistema.
-        </p>
+        <h4>{{ 'auth.finalOkTitle' | t }}</h4>
+        <p [innerHTML]="'auth.payinFinalOkTextHtml' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <!-- Estados de PayOut -->
   <section class="doc-section">
-    <h2>Estados de Transacción - PayOut</h2>
+    <h2>{{ 'auth.payoutStatesTitle' | t }}</h2>
     <p>
-      Las transacciones de pago saliente (PayOut) pasan por los siguientes estados.
-      Recibirás un webhook cada vez que el estado cambie.
+      {{ 'auth.payoutStatesText' | t }}
     </p>
 
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Estado</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.state' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>pending</code></td>
-          <td>La transacción fue creada y está en espera de aprobación</td>
+          <td>{{ 'auth.stPendingOut' | t }}</td>
         </tr>
         <tr>
           <td><code>approved</code></td>
-          <td>La transacción fue aprobada y será procesada</td>
+          <td>{{ 'auth.stApprovedOut' | t }}</td>
         </tr>
         <tr>
           <td><code>processing</code></td>
-          <td>La transacción está siendo procesada</td>
+          <td>{{ 'auth.stProcessing' | t }}</td>
         </tr>
         <tr>
           <td><code>paid</code></td>
-          <td>El pago fue enviado al destinatario</td>
+          <td>{{ 'auth.stPaidOut' | t }}</td>
         </tr>
         <tr>
           <td><code>completed</code></td>
-          <td>La transacción fue completada exitosamente</td>
+          <td>{{ 'auth.stCompleted' | t }}</td>
         </tr>
         <tr>
           <td><code>rejected</code></td>
-          <td>La transacción fue rechazada</td>
+          <td>{{ 'auth.stRejected' | t }}</td>
         </tr>
         <tr>
           <td><code>failed</code></td>
-          <td>La transacción falló durante el procesamiento</td>
+          <td>{{ 'auth.stFailed' | t }}</td>
         </tr>
         <tr>
           <td><code>cancelled</code></td>
-          <td>La transacción fue cancelada</td>
+          <td>{{ 'auth.stCancelled' | t }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Flujo Normal</h3>
+    <h3>{{ 'auth.normalFlow' | t }}</h3>
     <p>
       <code>pending</code> &rarr; <code>approved</code> &rarr; <code>processing</code> &rarr; <code>paid</code> &rarr; <code>completed</code>
     </p>
@@ -709,71 +660,59 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <polyline points="20 6 9 17 4 12"></polyline>
       </svg>
       <div>
-        <h4>Estado final exitoso</h4>
-        <p>
-          El estado <code>completed</code> indica que el pago saliente fue completado correctamente.
-          Usa este estado para confirmar la operación en tu sistema.
-        </p>
+        <h4>{{ 'auth.finalOkTitle' | t }}</h4>
+        <p [innerHTML]="'auth.payoutFinalOkTextHtml' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <!-- Verificación de Firma -->
   <section class="doc-section">
-    <h2>Verificación de Firma (Seguridad)</h2>
+    <h2>{{ 'auth.sigTitle' | t }}</h2>
     <p>
-      Cada webhook enviado por JavaCash (PayIn, PayOut y PayOut masivo) incluye una firma digital
-      HMAC-SHA256 para que puedas verificar que la notificación es auténtica y no fue modificada.
-      Es altamente recomendable que valides esta firma en cada webhook que recibas.
+      {{ 'auth.sigText' | t }}
     </p>
 
-    <h3>Headers de Seguridad</h3>
+    <h3>{{ 'auth.sigHeadersTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Header</th>
-          <th>Descripción</th>
+          <th>{{ 'auth.header' | t }}</th>
+          <th>{{ 'auth.description' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>X-JavaCash-Signature</code></td>
-          <td>
-            Firma HMAC-SHA256 del cuerpo del webhook, en hexadecimal (64 caracteres en minúscula).
-            Presente en todos los webhooks.
-          </td>
+          <td [innerHTML]="'auth.sigHeaderSigHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>X-JavaCash-Timestamp</code></td>
-          <td>
-            Informativo: fecha y hora ISO 8601 del envío. <strong>No forma parte de la firma</strong>
-            y puede no estar presente en todas las notificaciones, por lo que tu validación
-            no debe depender de este header.
-          </td>
+          <td [innerHTML]="'auth.sigHeaderTsHtml' | tHtml"></td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Cómo se calcula la firma</h3>
+    <h3>{{ 'auth.sigHowTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Elemento</th>
-          <th>Valor</th>
+          <th>{{ 'auth.element' | t }}</th>
+          <th>{{ 'auth.value' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Algoritmo</td>
-          <td>HMAC-SHA256, resultado en hexadecimal</td>
+          <td>{{ 'auth.sigAlgorithm' | t }}</td>
+          <td>{{ 'auth.sigAlgorithmValue' | t }}</td>
         </tr>
         <tr>
-          <td>Clave</td>
-          <td>Tu <strong>API Key</strong> activa (la misma que envías en el header <code>x-api-key</code>)</td>
+          <td>{{ 'auth.sigKeyLabel' | t }}</td>
+          <td [innerHTML]="'auth.sigKeyValueHtml' | tHtml"></td>
         </tr>
         <tr>
-          <td>Mensaje</td>
-          <td>El cuerpo (body) de la petición tal como llega, byte por byte, sin prefijos ni timestamp</td>
+          <td>{{ 'auth.sigMessage' | t }}</td>
+          <td>{{ 'auth.sigMessageValue' | t }}</td>
         </tr>
       </tbody>
     </table>
@@ -785,60 +724,42 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <line x1="12" y1="17" x2="12.01" y2="17"></line>
       </svg>
       <div>
-        <h4>Importante</h4>
-        <p>
-          Calcula la firma sobre el <strong>body crudo</strong> que recibes, antes de parsear el JSON.
-          Si parseas el JSON y lo vuelves a serializar, el orden de los campos, los espacios o el formato
-          de los números pueden cambiar y la firma no coincidirá. Compara las firmas con una función de
-          tiempo constante.
-        </p>
-        <p>
-          Para protegerte de reenvíos (replay), usa el campo <code>timestamp</code> del cuerpo, que sí está
-          cubierto por la firma, y descarta notificaciones demasiado antiguas. Si tu API Key cambia,
-          los webhooks siguientes se firmarán con la nueva.
-        </p>
+        <h4>{{ 'auth.sigImportantTitle' | t }}</h4>
+        <p [innerHTML]="'auth.sigImportantText1Html' | tHtml"></p>
+        <p [innerHTML]="'auth.sigImportantText2Html' | tHtml"></p>
       </div>
     </div>
 
-    <h3>Ejemplo paso a paso</h3>
-    <p>
-      Estos son dos webhooks reales capturados en Sandbox: un PayIn y un PayOut. Para que puedas
-      reproducir el cálculo, la firma se recalculó con la API Key de ejemplo
-      <code>4f3c1a9b7e2d5806af14bc39d07e6a52</code>. Con tu propia API Key el resultado será otro,
-      pero el procedimiento es exactamente el mismo.
-    </p>
+    <h3>{{ 'auth.sigStepsTitle' | t }}</h3>
+    <p [innerHTML]="'auth.sigStepsTextHtml' | tHtml"></p>
 
     <app-code-block
       [code]="signaturePayInCaptureExample"
       language="bash"
-      title="1. Petición recibida (PayIn)">
+      [title]="'auth.sigCapPayin' | t">
     </app-code-block>
 
     <app-code-block
       [code]="signaturePayOutCaptureExample"
       language="bash"
-      title="1. Petición recibida (PayOut)">
+      [title]="'auth.sigCapPayout' | t">
     </app-code-block>
 
     <div class="steps-vertical">
       <div class="step-vertical">
         <div class="step-vertical__number">2</div>
         <div class="step-vertical__content">
-          <h3>Toma el body tal como llegó</h3>
-          <p>
-            El mensaje a firmar es el body completo, sin modificar: los mismos 168 bytes del PayIn
-            (146 del PayOut), en el mismo orden, sin espacios agregados y sin el timestamp adelante.
-            Coincide con el header <code>Content-Length</code>.
-          </p>
+          <h3>{{ 'auth.sigStep2Title' | t }}</h3>
+          <p [innerHTML]="'auth.sigStep2TextHtml' | tHtml"></p>
         </div>
       </div>
 
       <div class="step-vertical">
         <div class="step-vertical__number">3</div>
         <div class="step-vertical__content">
-          <h3>Calcula el HMAC-SHA256 con tu API Key</h3>
+          <h3>{{ 'auth.sigStep3Title' | t }}</h3>
           <p>
-            Usa tu API Key como clave y pasa el resultado a hexadecimal.
+            {{ 'auth.sigStep3Text' | t }}
           </p>
         </div>
       </div>
@@ -846,93 +767,78 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
       <div class="step-vertical">
         <div class="step-vertical__number">4</div>
         <div class="step-vertical__content">
-          <h3>Compara con <code>X-JavaCash-Signature</code></h3>
-          <p>
-            Si los dos valores son iguales, el webhook es auténtico. Responde <code>200</code> y procésalo.
-            Si no coinciden, responde <code>401</code> y revisa la tabla de problemas frecuentes.
-          </p>
+          <h3>{{ 'auth.sigStep4Title' | t }}</h3>
+          <p [innerHTML]="'auth.sigStep4TextHtml' | tHtml"></p>
         </div>
       </div>
     </div>
 
-    <h3>Prueba desde la terminal</h3>
-    <p>
-      Antes de programar la validación, puedes comprobar el cálculo con <code>openssl</code>.
-      El resultado debe ser idéntico al header <code>X-JavaCash-Signature</code> del ejemplo:
-    </p>
+    <h3>{{ 'auth.sigTerminalTitle' | t }}</h3>
+    <p [innerHTML]="'auth.sigTerminalTextHtml' | tHtml"></p>
 
     <app-code-block
       [code]="signatureOpensslExample"
       language="bash"
-      title="Verificar la firma con openssl">
+      [title]="'auth.sigOpensslTitle' | t">
     </app-code-block>
 
-    <h3>Si la firma no coincide</h3>
+    <h3>{{ 'auth.sigMismatchTitle' | t }}</h3>
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Causa</th>
-          <th>Solución</th>
+          <th>{{ 'auth.sigCause' | t }}</th>
+          <th>{{ 'auth.sigSolution' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Se antepone el timestamp al body (<code>timestamp.payload</code>)</td>
-          <td>Firma solo el body. <code>X-JavaCash-Timestamp</code> no forma parte de la firma.</td>
+          <td>{{ 'auth.sigCause1' | t }}</td>
+          <td [innerHTML]="'auth.sigCause1FixHtml' | tHtml"></td>
         </tr>
         <tr>
-          <td>El body se parsea y se vuelve a serializar antes de firmar</td>
-          <td>
-            Usa el body crudo. Por ejemplo, <code>json.dumps</code> en Python agrega espacios después de
-            <code>,</code> y <code>:</code>, y con eso la firma ya no coincide.
-          </td>
+          <td>{{ 'auth.sigCause2' | t }}</td>
+          <td [innerHTML]="'auth.sigCause2FixHtml' | tHtml"></td>
         </tr>
         <tr>
-          <td>El framework ya consumió el body</td>
-          <td>
-            Registra un parser crudo en la ruta del webhook, como <code>express.raw()</code> en Express
-            o <code>request.get_data()</code> en Flask.
-          </td>
+          <td>{{ 'auth.sigCause3' | t }}</td>
+          <td [innerHTML]="'auth.sigCause3FixHtml' | tHtml"></td>
         </tr>
         <tr>
-          <td>Se usa otra clave</td>
-          <td>
-            La clave es la API Key activa de la cuenta que creó la transacción. Cada país y el Sandbox
-            tienen su propia key. Si regeneraste la key, usa la nueva.
-          </td>
+          <td>{{ 'auth.sigCause4' | t }}</td>
+          <td>{{ 'auth.sigCause4Fix' | t }}</td>
         </tr>
         <tr>
-          <td>Se compara con otro formato</td>
-          <td>La firma está en hexadecimal y en minúscula, no en Base64.</td>
+          <td>{{ 'auth.sigCause5' | t }}</td>
+          <td>{{ 'auth.sigCause5Fix' | t }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Verificación en Node.js</h3>
+    <h3>{{ 'auth.sigVerifyNodeTitle' | t }}</h3>
     <app-code-block
       [code]="webhookVerifyNodeExample"
       language="javascript"
-      title="Verificación HMAC-SHA256 en Node.js">
+      [title]="'auth.sigVerifyNodeCodeTitle' | t">
     </app-code-block>
 
-    <h3>Verificación en Python</h3>
+    <h3>{{ 'auth.sigVerifyPythonTitle' | t }}</h3>
     <app-code-block
       [code]="webhookVerifyPythonExample"
       language="python"
-      title="Verificación HMAC-SHA256 en Python">
+      [title]="'auth.sigVerifyPythonCodeTitle' | t">
     </app-code-block>
 
-    <h3>Verificación en PHP</h3>
+    <h3>{{ 'auth.sigVerifyPhpTitle' | t }}</h3>
     <app-code-block
       [code]="webhookVerifyPhpExample"
       language="php"
-      title="Verificación HMAC-SHA256 en PHP">
+      [title]="'auth.sigVerifyPhpCodeTitle' | t">
     </app-code-block>
   </section>
 
   <!-- Recomendaciones -->
   <section class="doc-section">
-    <h2>Recomendaciones</h2>
+    <h2>{{ 'auth.recsTitle' | t }}</h2>
 
     <div class="best-practices">
       <div class="practice-card practice-card--do">
@@ -940,14 +846,14 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
-          <h4>Buenas Prácticas</h4>
+          <h4>{{ 'auth.recDoTitle' | t }}</h4>
         </div>
         <ul>
-          <li>Responde siempre con HTTP <code>200</code> lo antes posible</li>
-          <li>Valida la firma HMAC-SHA256 en cada webhook recibido</li>
-          <li>Implementa idempotencia usando el <code>transactionId</code></li>
-          <li>Procesa los webhooks de forma asíncrona</li>
-          <li>Registra todos los webhooks recibidos para auditoría</li>
+          <li [innerHTML]="'auth.recDo1Html' | tHtml"></li>
+          <li>{{ 'auth.recDo2' | t }}</li>
+          <li [innerHTML]="'auth.recDo3Html' | tHtml"></li>
+          <li>{{ 'auth.recDo4' | t }}</li>
+          <li>{{ 'auth.recDo5' | t }}</li>
         </ul>
       </div>
 
@@ -957,14 +863,14 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-          <h4>Evitar</h4>
+          <h4>{{ 'auth.recDontTitle' | t }}</h4>
         </div>
         <ul>
-          <li>No realices procesos largos antes de responder al webhook</li>
-          <li>No ignores la verificación de firma</li>
-          <li>No asumas que los webhooks llegarán en orden</li>
-          <li>No proceses el mismo webhook más de una vez sin idempotencia</li>
-          <li>No expongas tu API Key en código del cliente</li>
+          <li>{{ 'auth.recDont1' | t }}</li>
+          <li>{{ 'auth.recDont2' | t }}</li>
+          <li>{{ 'auth.recDont3' | t }}</li>
+          <li>{{ 'auth.recDont4' | t }}</li>
+          <li>{{ 'auth.recDont5' | t }}</li>
         </ul>
       </div>
     </div>
@@ -976,18 +882,14 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>Reintentos Automáticos</h4>
-        <p>
-          Si tu servidor no responde con un código <code>200</code>, JavaCash reintentará el envío
-          del webhook automáticamente. Asegúrate de que tu lógica soporte recibir el mismo
-          webhook más de una vez (idempotencia).
-        </p>
+        <h4>{{ 'auth.retriesTitle' | t }}</h4>
+        <p [innerHTML]="'auth.retriesTextHtml' | tHtml"></p>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Próximos Pasos</h2>
+    <h2>{{ 'auth.nextTitle' | t }}</h2>
     <div class="next-steps">
       <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -995,8 +897,8 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         <div>
-          <h4>Explorar Endpoints</h4>
-          <p>Ve la referencia completa de la API</p>
+          <h4>{{ 'auth.nextExploreTitle' | t }}</h4>
+          <p>{{ 'auth.nextExploreText' | t }}</p>
         </div>
       </a>
 
@@ -1007,8 +909,8 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
         <div>
-          <h4>Manejo de Errores</h4>
-          <p>Aprende a manejar errores de la API</p>
+          <h4>{{ 'auth.nextErrorsTitle' | t }}</h4>
+          <p>{{ 'auth.nextErrorsText' | t }}</p>
         </div>
       </a>
     </div>

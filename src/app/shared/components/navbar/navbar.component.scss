@@ -230,6 +230,23 @@
     position: relative;
   }
 
+  &__language-selector {
+    position: relative;
+  }
+
+  &__language-btn {
+    gap: $spacing-2;
+  }
+
+  &__language-code {
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+  }
+
+  &__dropdown--language {
+    min-width: 180px;
+  }
+
   &__country-btn {
     @include flex-center;
     gap: $spacing-2;
@@ -259,8 +276,25 @@
     }
   }
 
-  &__country-flag {
-    font-size: $text-lg;
+  &__dropdown-check {
+    @include flex-center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $primary-blue;
+    color: #ffffff;
+    flex-shrink: 0;
+
+    .dark & {
+      background: $primary-blue-light;
+      color: $dark-surface;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      stroke-width: 3;
+    }
   }
 
   &__country-name {

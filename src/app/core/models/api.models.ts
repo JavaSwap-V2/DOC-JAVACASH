@@ -12,10 +12,14 @@ export type ParameterLocation = 'header' | 'path' | 'query' | 'body';
 export interface Endpoint {
   id: string;
   name: string;
+  /** Clave i18n del nombre a mostrar (ej. `sidebar.endpoints.register`); si falta, se usa `name`. */
+  nameKey?: string;
   method: HttpMethod;
   path: string;
   baseUrl: string;
   description: string;
+  /** Clave i18n de la descripción (prosa); si falta, se usa `description`. */
+  descriptionKey?: string;
   category: 'payin' | 'payout';
   headers: Header[];
   pathParameters?: Parameter[];
@@ -31,6 +35,8 @@ export interface Header {
   value: string;
   required: boolean;
   description?: string;
+  /** Clave i18n de la descripción; si falta, se usa `description`. */
+  descriptionKey?: string;
 }
 
 export interface Parameter {
@@ -54,12 +60,16 @@ export interface RequestBodyField {
   type: string;
   example: string;
   description: string;
+  /** Clave i18n de la descripción; si falta, se usa `description`. */
+  descriptionKey?: string;
   required: boolean;
 }
 
 export interface RequestBody {
   contentType: string;
   description?: string;
+  /** Clave i18n de la descripción; si falta, se usa `description`. */
+  descriptionKey?: string;
   schema: any;
   example?: any;
   required: boolean;
@@ -70,6 +80,8 @@ export interface ApiResponse {
   status: number;
   statusText: string;
   description: string;
+  /** Clave i18n de la descripción; si falta, se usa `description`. */
+  descriptionKey?: string;
   body: any;
   headers?: Header[];
   isError: boolean;
@@ -141,6 +153,8 @@ export interface Country {
   currency: string;
   currencySymbol: string;
   flag: string;
+  /** Código ISO 3166-1 alpha-2 en minúscula (ej. `ar`) para el asset `assets/images/flags/<flagCode>.svg` */
+  flagCode: string;
   /** URL base de la API de producción */
   baseUrl: string;
   /** Dashboard de cliente donde se obtiene la API Key */
@@ -184,6 +198,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'ARS',
     currencySymbol: '$',
     flag: '🇦🇷',
+    flagCode: 'ar',
     baseUrl: 'https://api-ar.javacash.finance',
     dashboardUrl: 'https://argentina.javacash.finance',
     checkoutUrl: 'https://javacash.finance',
@@ -235,6 +250,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'USD',
     currencySymbol: '$',
     flag: '🇪🇨',
+    flagCode: 'ec',
     baseUrl: 'https://api-ec.javacash.finance',
     dashboardUrl: 'https://ecuador.javacash.finance',
     locale: 'es-EC',
@@ -273,6 +289,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'CLP',
     currencySymbol: '$',
     flag: '🇨🇱',
+    flagCode: 'cl',
     baseUrl: 'https://api-cl.javacash.finance',
     dashboardUrl: 'https://chile.javacash.finance',
     locale: 'es-CL',
@@ -311,6 +328,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'GTQ',
     currencySymbol: 'Q',
     flag: '🇬🇹',
+    flagCode: 'gt',
     baseUrl: 'https://api-gt.javacash.finance',
     dashboardUrl: 'https://guatemala.javacash.finance',
     locale: 'es-GT',
@@ -349,6 +367,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'PEN',
     currencySymbol: 'S/',
     flag: '🇵🇪',
+    flagCode: 'pe',
     baseUrl: 'https://api-pe.javacash.finance',
     dashboardUrl: 'https://peru.javacash.finance',
     locale: 'es-PE',
@@ -567,6 +586,33 @@ export interface ModalAction {
   variant: 'primary' | 'secondary' | 'danger';
   onClick: () => void;
 }
+
+// ============================================
+// language.model.ts
+// Idiomas soportados por la documentación
+// ============================================
+
+export type Language = 'es' | 'en' | 'zh';
+
+/** Idioma usado cuando no se puede detectar otro. */
+export const DEFAULT_LANGUAGE: Language = 'es';
+
+export const SUPPORTED_LANGUAGES: Language[] = ['es', 'en', 'zh'];
+
+export interface LanguageOption {
+  code: Language;
+  /** Nombre nativo del idioma (se muestra igual sin importar el idioma activo). */
+  name: string;
+  flag: string;
+  /** Código ISO 3166-1 alpha-2 en minúscula del país asociado al idioma */
+  flagCode: string;
+}
+
+export const LANGUAGES: LanguageOption[] = [
+  { code: 'es', name: 'Español', flag: '🇦🇷', flagCode: 'ar' },
+  { code: 'en', name: 'English', flag: '🇺🇸', flagCode: 'us' },
+  { code: 'zh', name: '中文', flag: '🇨🇳', flagCode: 'cn' }
+];
 
 export type Theme = 'light' | 'dark' | 'auto';
 

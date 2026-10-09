@@ -3,10 +3,10 @@ import { COUNTRIES } from '@core/models/api.models';
 
 interface ErrorCode {
   code: number;
-  name: string;
-  description: string;
-  causes: string[];
-  solution: string;
+  nameKey: string;
+  descriptionKey: string;
+  causesKeys: string[];
+  solutionKey: string;
   example?: string;
 }
 
@@ -23,15 +23,15 @@ export class ErrorsPageComponent {
   errorCodes: ErrorCode[] = [
     {
       code: 400,
-      name: 'Bad Request',
-      description: 'La petición contiene datos inválidos o mal formateados.',
-      causes: [
-        'JSON mal formado en el body',
-        'Campos requeridos faltantes',
-        'Valores fuera de rango permitido',
-        'Formato de fecha incorrecto'
+      nameKey: 'errors.codes.400.name',
+      descriptionKey: 'errors.codes.400.description',
+      causesKeys: [
+        'errors.codes.400.causes.0',
+        'errors.codes.400.causes.1',
+        'errors.codes.400.causes.2',
+        'errors.codes.400.causes.3'
       ],
-      solution: 'Verifica que todos los campos requeridos estén presentes y tengan el formato correcto.',
+      solutionKey: 'errors.codes.400.solution',
       example: `{
   "success": false,
   "message": "Validation failed",
@@ -50,15 +50,15 @@ export class ErrorsPageComponent {
     },
     {
       code: 401,
-      name: 'Unauthorized',
-      description: 'La API Key es inválida, está ausente o ha sido revocada.',
-      causes: [
-        'API Key incorrecta',
-        'Header x-api-key faltante',
-        'API Key deshabilitada',
-        'API Key expirada'
+      nameKey: 'errors.codes.401.name',
+      descriptionKey: 'errors.codes.401.description',
+      causesKeys: [
+        'errors.codes.401.causes.0',
+        'errors.codes.401.causes.1',
+        'errors.codes.401.causes.2',
+        'errors.codes.401.causes.3'
       ],
-      solution: 'Verifica que estés usando la API Key correcta en el header x-api-key.',
+      solutionKey: 'errors.codes.401.solution',
       example: `{
   "success": false,
   "message": "Invalid API key or missing authentication",
@@ -68,14 +68,14 @@ export class ErrorsPageComponent {
     },
     {
       code: 403,
-      name: 'Forbidden',
-      description: 'No tienes permisos para acceder a este recurso.',
-      causes: [
-        'API Key sin permisos suficientes',
-        'Acceso a recurso de otra cuenta',
-        'Plan no incluye esta funcionalidad'
+      nameKey: 'errors.codes.403.name',
+      descriptionKey: 'errors.codes.403.description',
+      causesKeys: [
+        'errors.codes.403.causes.0',
+        'errors.codes.403.causes.1',
+        'errors.codes.403.causes.2'
       ],
-      solution: 'Contacta con soporte para verificar los permisos de tu cuenta.',
+      solutionKey: 'errors.codes.403.solution',
       example: `{
   "success": false,
   "message": "Access denied to this resource",
@@ -85,14 +85,14 @@ export class ErrorsPageComponent {
     },
     {
       code: 404,
-      name: 'Not Found',
-      description: 'El recurso solicitado no existe.',
-      causes: [
-        'ID de transacción inexistente',
-        'Endpoint incorrecto',
-        'Recurso eliminado'
+      nameKey: 'errors.codes.404.name',
+      descriptionKey: 'errors.codes.404.description',
+      causesKeys: [
+        'errors.codes.404.causes.0',
+        'errors.codes.404.causes.1',
+        'errors.codes.404.causes.2'
       ],
-      solution: 'Verifica que el ID del recurso sea correcto y que el endpoint exista.',
+      solutionKey: 'errors.codes.404.solution',
       example: `{
   "success": false,
   "message": "Transaction not found",
@@ -102,15 +102,15 @@ export class ErrorsPageComponent {
     },
     {
       code: 422,
-      name: 'Unprocessable Entity',
-      description: 'La petición está bien formada pero contiene errores de lógica de negocio.',
-      causes: [
-        'Transacción duplicada',
-        'Monto insuficiente',
-        'Cuenta de destino inválida',
-        'Fecha de vencimiento en el pasado'
+      nameKey: 'errors.codes.422.name',
+      descriptionKey: 'errors.codes.422.description',
+      causesKeys: [
+        'errors.codes.422.causes.0',
+        'errors.codes.422.causes.1',
+        'errors.codes.422.causes.2',
+        'errors.codes.422.causes.3'
       ],
-      solution: 'Revisa la lógica de negocio y los datos enviados.',
+      solutionKey: 'errors.codes.422.solution',
       example: `{
   "success": false,
   "message": "Ya tienes una transacción similar en revisión",
@@ -120,14 +120,14 @@ export class ErrorsPageComponent {
     },
     {
       code: 429,
-      name: 'Too Many Requests',
-      description: 'Has excedido el límite de peticiones permitidas.',
-      causes: [
-        'Demasiadas peticiones en corto tiempo',
-        'Rate limit excedido',
-        'Comportamiento sospechoso detectado'
+      nameKey: 'errors.codes.429.name',
+      descriptionKey: 'errors.codes.429.description',
+      causesKeys: [
+        'errors.codes.429.causes.0',
+        'errors.codes.429.causes.1',
+        'errors.codes.429.causes.2'
       ],
-      solution: 'Implementa backoff exponencial y respeta los rate limits.',
+      solutionKey: 'errors.codes.429.solution',
       example: `{
   "success": false,
   "message": "Rate limit exceeded. Try again in 60 seconds",
@@ -138,14 +138,14 @@ export class ErrorsPageComponent {
     },
     {
       code: 500,
-      name: 'Internal Server Error',
-      description: 'Error interno del servidor. El equipo de JavaCash ha sido notificado.',
-      causes: [
-        'Error inesperado en el servidor',
-        'Problema de base de datos',
-        'Servicio temporal no disponible'
+      nameKey: 'errors.codes.500.name',
+      descriptionKey: 'errors.codes.500.description',
+      causesKeys: [
+        'errors.codes.500.causes.0',
+        'errors.codes.500.causes.1',
+        'errors.codes.500.causes.2'
       ],
-      solution: 'Reintenta la petición. Si persiste, contacta a soporte.',
+      solutionKey: 'errors.codes.500.solution',
       example: `{
   "success": false,
   "message": "Internal server error. Please try again later",
@@ -156,14 +156,14 @@ export class ErrorsPageComponent {
     },
     {
       code: 503,
-      name: 'Service Unavailable',
-      description: 'El servicio está temporalmente no disponible, generalmente por mantenimiento.',
-      causes: [
-        'Mantenimiento programado',
-        'Sobrecarga del sistema',
-        'Actualización en progreso'
+      nameKey: 'errors.codes.503.name',
+      descriptionKey: 'errors.codes.503.description',
+      causesKeys: [
+        'errors.codes.503.causes.0',
+        'errors.codes.503.causes.1',
+        'errors.codes.503.causes.2'
       ],
-      solution: 'Espera unos minutos y reintenta. Verifica el status en status.javacash.finance',
+      solutionKey: 'errors.codes.503.solution',
       example: `{
   "success": false,
   "message": "Service temporarily unavailable",

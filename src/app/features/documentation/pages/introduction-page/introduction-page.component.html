@@ -3,31 +3,29 @@
   <header class="doc-header">
     <div class="doc-header__badge">
       <span class="version-badge">v1.0</span>
-      <span class="status-badge status-badge--stable">Estable</span>
+      <span class="status-badge status-badge--stable">{{ 'intro.stable' | t }}</span>
     </div>
-    <h1 id="intro-title">Introduccion a JavaCash API</h1>
+    <h1 id="intro-title">{{ 'intro.title' | t }}</h1>
     <p class="doc-lead">
-      Bienvenido a la documentacion de la API de JavaCash. Esta guia te ayudara a integrar
-      pagos entrantes (PayIn) y salientes (PayOut) en tu aplicacion de forma segura y eficiente.
+      {{ 'intro.lead' | t }}
     </p>
   </header>
 
   <section class="doc-section" aria-labelledby="what-is">
-    <h2 id="what-is">Que es JavaCash API?</h2>
+    <h2 id="what-is">{{ 'intro.whatTitle' | t }}</h2>
     <p>
-      JavaCash API es una interfaz REST que te permite procesar transacciones financieras en
-      Latinoamérica. Con nuestra API puedes:
+      {{ 'intro.whatText' | t }}
     </p>
     <ul role="list">
-      <li><strong>Recibir pagos (PayIn):</strong> Genera enlaces de pago seguros para tus clientes</li>
-      <li><strong>Enviar fondos (PayOut):</strong> Realiza transferencias a cuentas bancarias o billeteras digitales</li>
-      <li><strong>Consultar estados:</strong> Verifica el estado de cualquier transaccion en tiempo real</li>
-      <li><strong>Gestionar webhooks:</strong> Recibe notificaciones automaticas de cambios de estado</li>
+      <li [innerHTML]="'intro.whatRecv' | tHtml"></li>
+      <li [innerHTML]="'intro.whatSend' | tHtml"></li>
+      <li [innerHTML]="'intro.whatStatus' | tHtml"></li>
+      <li [innerHTML]="'intro.whatWebhooks' | tHtml"></li>
     </ul>
   </section>
 
   <section class="doc-section" aria-labelledby="features">
-    <h2 id="features">Caracteristicas Principales</h2>
+    <h2 id="features">{{ 'intro.featuresTitle' | t }}</h2>
     <div class="feature-grid" role="list">
       <div class="feature-item" role="listitem">
         <div class="feature-icon feature-icon--blue" aria-hidden="true">
@@ -35,8 +33,8 @@
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
         </div>
-        <h3>Seguridad</h3>
-        <p>Autenticacion mediante API Key con encriptacion SSL/TLS en todas las comunicaciones.</p>
+        <h3>{{ 'intro.securityTitle' | t }}</h3>
+        <p>{{ 'intro.securityText' | t }}</p>
       </div>
 
       <div class="feature-item" role="listitem">
@@ -45,8 +43,8 @@
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
         </div>
-        <h3>Velocidad</h3>
-        <p>Procesamiento en tiempo real con respuestas en milisegundos.</p>
+        <h3>{{ 'intro.speedTitle' | t }}</h3>
+        <p>{{ 'intro.speedText' | t }}</p>
       </div>
 
       <div class="feature-item" role="listitem">
@@ -55,8 +53,8 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
-        <h3>Confiabilidad</h3>
-        <p>99.9% de uptime con infraestructura redundante y monitoreo 24/7.</p>
+        <h3>{{ 'intro.reliabilityTitle' | t }}</h3>
+        <p>{{ 'intro.reliabilityText' | t }}</p>
       </div>
 
       <div class="feature-item" role="listitem">
@@ -66,32 +64,31 @@
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
         </div>
-        <h3>Multi-tenant</h3>
-        <p>Soporte nativo para multiples paises y monedas con aislamiento de datos.</p>
+        <h3>{{ 'intro.multitenantTitle' | t }}</h3>
+        <p>{{ 'intro.multitenantText' | t }}</p>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Quick Start</h2>
-    <p>Realiza tu primera transacción en 3 simples pasos:</p>
+    <h2>{{ 'intro.quickStartTitle' | t }}</h2>
+    <p>{{ 'intro.quickStartText' | t }}</p>
 
     <div class="steps-vertical">
       <div class="step-vertical">
         <div class="step-vertical__number">1</div>
         <div class="step-vertical__content">
-          <h3>Obtén tu API Key</h3>
+          <h3>{{ 'intro.step1Title' | t }}</h3>
           <p>
-            Accede al Dashboard de JavaCash, navega a tu perfil y copia tu API Key.
-            Este identificador unico autenticara todas tus peticiones.
+            {{ 'intro.step1Text' | t }}
           </p>
           <ul>
             <li *ngFor="let country of countries">
               <strong>{{ country.name }}:</strong>
               <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>
-              <em *ngIf="!country.available"> (próximamente)</em>
+              <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
             </li>
-            <li><strong>Sandbox:</strong> <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a></li>
+            <li><strong>{{ 'intro.sandbox' | t }}:</strong> <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a></li>
           </ul>
         </div>
       </div>
@@ -99,14 +96,14 @@
       <div class="step-vertical">
         <div class="step-vertical__number">2</div>
         <div class="step-vertical__content">
-          <h3>Haz tu primera llamada</h3>
+          <h3>{{ 'intro.step2Title' | t }}</h3>
           <p>
-            Utiliza el siguiente ejemplo para crear tu primera transacción de PayIn:
+            {{ 'intro.step2Text' | t }}
           </p>
           <app-code-block
             [code]="quickStartCode"
             language="curl"
-            title="Crear PayIn">
+            [title]="'intro.createPayin' | t">
           </app-code-block>
         </div>
       </div>
@@ -114,26 +111,23 @@
       <div class="step-vertical">
         <div class="step-vertical__number">3</div>
         <div class="step-vertical__content">
-          <h3>Procesa la respuesta</h3>
+          <h3>{{ 'intro.step3Title' | t }}</h3>
           <p>
-            La API responderá con un objeto JSON conteniendo los detalles de la transacción:
+            {{ 'intro.step3Text' | t }}
           </p>
           <app-code-block
             [code]="responseExample"
             language="javascript"
-            title="Respuesta exitosa">
+            [title]="'intro.successfulResponse' | t">
           </app-code-block>
-          <p>
-            El campo <code>checkoutUrl</code> contiene el enlace que debes compartir con tu 
-            cliente para que complete el pago.
-          </p>
+          <p [innerHTML]="'intro.step3NoteHtml' | tHtml"></p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
-    <h2>Entornos Disponibles</h2>
+    <h2>{{ 'intro.envTitle' | t }}</h2>
     <div class="info-box info-box--info">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="12" cy="12" r="10"></circle>
@@ -141,30 +135,30 @@
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>API de Producción</h4>
+        <h4>{{ 'intro.prodApiTitle' | t }}</h4>
         <ul>
           <li *ngFor="let country of countries">
             <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
-            <em *ngIf="!country.available"> (próximamente)</em>
+            <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
           </li>
         </ul>
         <br>
-        <h4>Dashboard</h4>
-        <p>Accede al dashboard para gestionar tus transacciones y obtener tu API Key:</p>
+        <h4>{{ 'intro.dashboardTitle' | t }}</h4>
+        <p>{{ 'intro.dashboardText' | t }}</p>
         <ul>
           <li *ngFor="let country of countries">
             <strong>{{ country.name }}:</strong>
             <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
-            <em *ngIf="!country.available"> (próximamente)</em>
+            <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
           </li>
         </ul>
         <br>
-        <h4>Entorno Sandbox (desarrollo/pruebas)</h4>
-        <p>El Sandbox es único y compartido por todos los países.</p>
+        <h4>{{ 'intro.sandboxTitle' | t }}</h4>
+        <p>{{ 'intro.sandboxText' | t }}</p>
         <ul>
-          <li><strong>API Sandbox:</strong> <code>{{ sandbox.baseUrl }}</code></li>
+          <li><span [innerHTML]="'intro.sandboxApi' | tHtml"></span> <code>{{ sandbox.baseUrl }}</code></li>
           <li>
-            <strong>Dashboard Sandbox:</strong>
+            <span [innerHTML]="'intro.sandboxDashboard' | tHtml"></span>
             <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener"><code>{{ sandbox.dashboardUrl }}</code></a>
           </li>
         </ul>
@@ -173,25 +167,21 @@
   </section>
 
   <section class="doc-section" aria-labelledby="country-params">
-    <h2 id="country-params">Parámetros por País</h2>
-    <p>
-      El contrato de la API es el mismo en todos los países. Lo que cambia es el valor que
-      debes enviar en <code>currency</code> y el documento de identidad que espera
-      <code>userIdentificationNumber</code>.
-    </p>
+    <h2 id="country-params">{{ 'intro.countryParamsTitle' | t }}</h2>
+    <p [innerHTML]="'intro.countryParamsTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" aria-label="Moneda y documento de identidad por pais">
+    <table class="doc-table" role="table" aria-label="Currency and identity document by country">
       <thead>
         <tr>
-          <th scope="col">País</th>
+          <th scope="col">{{ 'intro.country' | t }}</th>
           <th scope="col"><code>currency</code></th>
-          <th scope="col">Documento</th>
-          <th scope="col">Ejemplo</th>
+          <th scope="col">{{ 'intro.document' | t }}</th>
+          <th scope="col">{{ 'intro.example' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let country of countries">
-          <td>{{ country.flag }} {{ country.name }}</td>
+          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
           <td><code>{{ country.currency }}</code></td>
           <td>{{ country.identification.label }}</td>
           <td><code>{{ country.identification.example }}</code></td>
@@ -199,24 +189,20 @@
       </tbody>
     </table>
 
-    <h3>Tipos de Cuenta (PayOut)</h3>
-    <p>
-      El campo <code>userTypeAccount</code> siempre acepta los mismos dos valores,
-      <code>savings</code> y <code>checking</code>. El nombre comercial que usa cada país
-      es distinto:
-    </p>
+    <h3>{{ 'intro.accountTypesTitle' | t }}</h3>
+    <p [innerHTML]="'intro.accountTypesTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" aria-label="Nombre local de cada tipo de cuenta por pais">
+    <table class="doc-table" role="table" aria-label="Local name of each account type by country">
       <thead>
         <tr>
-          <th scope="col">País</th>
+          <th scope="col">{{ 'intro.country' | t }}</th>
           <th scope="col"><code>savings</code></th>
           <th scope="col"><code>checking</code></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let country of countries">
-          <td>{{ country.flag }} {{ country.name }}</td>
+          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
           <td>{{ country.accountTypes.savings }}</td>
           <td>{{ country.accountTypes.checking }}</td>
         </tr>
@@ -225,24 +211,19 @@
   </section>
 
   <section class="doc-section" aria-labelledby="payment-methods">
-    <h2 id="payment-methods">Métodos de Pago por País</h2>
-    <p>
-      El contrato de la API es el mismo en todos los países; lo que cambia es el
-      medio que el cliente usa para pagar. La lista siguiente se edita en la
-      configuración de cada país (<code>methods</code>), sin tocar el código de
-      los componentes.
-    </p>
+    <h2 id="payment-methods">{{ 'intro.methodsTitle' | t }}</h2>
+    <p [innerHTML]="'intro.methodsTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" aria-label="Metodos de pago por pais">
+    <table class="doc-table" role="table" aria-label="Payment methods by country">
       <thead>
         <tr>
-          <th scope="col">País</th>
-          <th scope="col">Métodos de Pago</th>
+          <th scope="col">{{ 'intro.country' | t }}</th>
+          <th scope="col">{{ 'intro.paymentMethods' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let country of countries">
-          <td>{{ country.flag }} {{ country.name }}</td>
+          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
           <td>
             <ul class="method-list">
               <li *ngFor="let method of country.methods">
@@ -257,40 +238,40 @@
   </section>
 
   <section class="doc-section" aria-labelledby="rate-limits">
-    <h2 id="rate-limits">Rate Limits</h2>
+    <h2 id="rate-limits">{{ 'intro.rateLimitsTitle' | t }}</h2>
     <p>
-      Para garantizar la estabilidad del servicio, aplicamos los siguientes limites:
+      {{ 'intro.rateLimitsText' | t }}
     </p>
-    <table class="doc-table" role="table" aria-label="Limites de peticiones por tipo de cliente">
+    <table class="doc-table" role="table" aria-label="Request limits by client type">
       <thead>
         <tr>
-          <th scope="col">Tipo de Cliente</th>
-          <th scope="col">Limite</th>
-          <th scope="col">Periodo</th>
+          <th scope="col">{{ 'intro.clientType' | t }}</th>
+          <th scope="col">{{ 'intro.limit' | t }}</th>
+          <th scope="col">{{ 'intro.period' | t }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Estandar</td>
+          <td>{{ 'intro.standard' | t }}</td>
           <td>100 requests</td>
-          <td>Por minuto</td>
+          <td>{{ 'intro.perMinute' | t }}</td>
         </tr>
         <tr>
-          <td>Premium</td>
+          <td>{{ 'intro.premium' | t }}</td>
           <td>500 requests</td>
-          <td>Por minuto</td>
+          <td>{{ 'intro.perMinute' | t }}</td>
         </tr>
         <tr>
-          <td>Enterprise</td>
-          <td>Personalizado</td>
-          <td>Segun contrato</td>
+          <td>{{ 'intro.enterprise' | t }}</td>
+          <td>{{ 'intro.custom' | t }}</td>
+          <td>{{ 'intro.perContract' | t }}</td>
         </tr>
       </tbody>
     </table>
   </section>
   
   <section class="doc-section" aria-labelledby="support-section">
-    <h2 id="support-section">Soporte y Recursos</h2>
+    <h2 id="support-section">{{ 'intro.supportTitle' | t }}</h2>
     <div class="support-grid">
       <div class="support-item">
         <div class="support-item__icon" aria-hidden="true">
@@ -309,8 +290,8 @@
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
         </div>
-        <h4>Chat en Vivo</h4>
-        <p>Lunes a Viernes, 9am - 6pm</p>
+        <h4>{{ 'intro.liveChat' | t }}</h4>
+        <p>{{ 'intro.liveChatHours' | t }}</p>
       </div>
 
       <div class="support-item">
@@ -319,8 +300,8 @@
             <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
           </svg>
         </div>
-        <h4>GitHub</h4>
-        <p>Reporta issues y contribuye</p>
+        <h4>{{ 'intro.github' | t }}</h4>
+        <p>{{ 'intro.githubText' | t }}</p>
       </div>
 
       <div class="support-item">
@@ -330,15 +311,15 @@
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
         </div>
-        <h4>Status</h4>
+        <h4>{{ 'intro.status' | t }}</h4>
         <p>status.javacash.finance</p>
       </div>
     </div>
   </section>
 
   <section class="doc-section" aria-labelledby="next-steps">
-    <h2 id="next-steps">Proximos Pasos</h2>
-    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+    <h2 id="next-steps">{{ 'intro.nextTitle' | t }}</h2>
+    <nav class="next-steps" aria-label="Navigation to next sections">
       <a routerLink="/gateway/authentication" class="next-step-card" aria-describedby="auth-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="7" cy="17" r="3"></circle>
@@ -346,8 +327,8 @@
           <path d="m10.39 10.71 3.54 3.54"></path>
         </svg>
         <div>
-          <h4>Autenticacion</h4>
-          <p id="auth-desc">Aprende como autenticar tus peticiones</p>
+          <h4>{{ 'intro.authTitle' | t }}</h4>
+          <p id="auth-desc">{{ 'intro.authNextDesc' | t }}</p>
         </div>
       </a>
 
@@ -358,7 +339,7 @@
         </svg>
         <div>
           <h4>API Reference</h4>
-          <p id="api-desc">Explora todos los endpoints disponibles</p>
+          <p id="api-desc">{{ 'intro.apiNextDesc' | t }}</p>
         </div>
       </a>
 
@@ -369,8 +350,8 @@
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
         <div>
-          <h4>Manejo de Errores</h4>
-          <p id="errors-desc">Codigos de error y como manejarlos</p>
+          <h4>{{ 'intro.errorsNextTitle' | t }}</h4>
+          <p id="errors-desc">{{ 'intro.errorsNextDesc' | t }}</p>
         </div>
       </a>
     </nav>

@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ThemeService } from './core/services/theme.service';
 import { EndpointService } from './core/services/endpoint.service';
+import { TranslationService } from './core/services/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,14 @@ export class AppComponent implements OnInit {
   constructor(
     private themeService: ThemeService,
     private endpointService: EndpointService,
+    private translationService: TranslationService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    // Inicializar idioma (detecta el del navegador y aplica el <html lang>).
+    this.translationService.getCurrentLanguage();
+
     // Inicializar tema
     this.themeService.setTheme(this.themeService.getCurrentTheme());
 
@@ -49,7 +54,12 @@ export class AppComponent implements OnInit {
 
     if (code && segments[1] === 'api') {
       if (code !== this.endpointService.getCurrentCountry()) {
+        // setCurrentCountry ya dispara la carga de la colección.
         this.endpointService.setCurrentCountry(code);
+      } else {
+        // En un arranque nuevo el país puede coincidir con el guardado y aun
+        // así no haber endpoints cargados: forzamos la carga (usa caché).
+        this.endpointService.loadEndpointsForCountry(code).subscribe();
       }
       return;
     }

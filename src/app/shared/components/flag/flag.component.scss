@@ -1,0 +1,31 @@
+// flag.component.scss
+.app-flag {
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+
+  &--sm {
+    width: 18px;
+    height: 12px;
+  }
+
+  &--md {
+    width: 22px;
+    height: 15px;
+  }
+
+  &--lg {
+    width: 30px;
+    height: 20px;
+    border-radius: 4px;
+  }
+
+  &--xl {
+    width: 48px;
+    height: 32px;
+    border-radius: 5px;
+  }
+}

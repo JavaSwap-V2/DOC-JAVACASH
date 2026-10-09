@@ -315,10 +315,14 @@
 
 .country-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: $spacing-6;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
 }
 
 .country-card {
@@ -368,6 +372,7 @@
 
   &__flag {
     font-size: 64px;
+    line-height: 0;
   }
 
   &__name {

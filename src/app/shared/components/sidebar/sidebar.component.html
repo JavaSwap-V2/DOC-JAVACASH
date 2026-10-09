@@ -2,8 +2,8 @@
 <aside class="sidebar" [class.sidebar--open]="isOpen">
   <!-- Header con botón de cerrar (mobile) -->
   <div class="sidebar__header hide-desktop">
-    <h3 class="sidebar__title">Navegación</h3>
-    <button class="sidebar__close-btn" (click)="closeSidebar()" aria-label="Cerrar menú">
+    <h3 class="sidebar__title">{{ 'sidebar.navigation' | t }}</h3>
+    <button class="sidebar__close-btn" (click)="closeSidebar()" [attr.aria-label]="'sidebar.closeMenu' | t">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -16,7 +16,7 @@
     <!-- Navegación principal -->
     <nav class="sidebar__nav">
       <div class="sidebar__section">
-        <h4 class="sidebar__section-title">Documentación</h4>
+        <h4 class="sidebar__section-title">{{ 'sidebar.documentation' | t }}</h4>
         <ul class="sidebar__list">
           <li *ngFor="let item of navigationItems">
             <a 
@@ -48,7 +48,7 @@
                   </g>
                 </ng-container>
               </svg>
-              <span class="sidebar__label">{{ item.label }}</span>
+              <span class="sidebar__label">{{ item.label | t }}</span>
             </a>
           </li>
         </ul>
@@ -98,7 +98,7 @@
                 variant="method" 
                 size="sm">
               </app-badge>
-              <span class="sidebar__endpoint-name">{{ endpoint.name }}</span>
+              <span class="sidebar__endpoint-name">{{ endpoint.nameKey ? (endpoint.nameKey | t) : endpoint.name }}</span>
             </button>
           </li>
         </ul>

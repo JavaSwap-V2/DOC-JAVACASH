@@ -3,7 +3,16 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ThemeService } from '@core/services/theme.service';
 import { EndpointService } from '@core/services/endpoint.service';
-import { Country, COUNTRIES, COUNTRY_LIST, CountryCode } from '@core/models/api.models';
+import { TranslationService } from '@core/services/translation.service';
+import {
+  Country,
+  COUNTRIES,
+  COUNTRY_LIST,
+  CountryCode,
+  Language,
+  LANGUAGES,
+  LanguageOption
+} from '@core/models/api.models';
 
 @Component({
   selector: 'app-navbar',
@@ -19,11 +28,17 @@ export class NavbarComponent implements OnInit {
   currentCountry: Country = COUNTRIES.ARG;
   countries = COUNTRY_LIST;
   showCountryDropdown = false;
+  showLanguageDropdown = false;
   showMobileMenu = false;
+
+  languages: LanguageOption[] = LANGUAGES;
+  currentLanguage: Language = 'es';
+  currentLanguageOption: LanguageOption = LANGUAGES[0];
 
   constructor(
     private themeService: ThemeService,
     private endpointService: EndpointService,
+    private translationService: TranslationService,
     private router: Router
   ) {
     this.isDarkMode$ = this.themeService.isDarkMode$;
@@ -32,6 +47,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.endpointService.currentCountry$.subscribe(code => {
       this.currentCountry = COUNTRIES[code];
+    });
+
+    this.translationService.currentLanguage$.subscribe(language => {
+      this.currentLanguage = language;
+      this.currentLanguageOption = LANGUAGES.find(l => l.code === language) ?? LANGUAGES[0];
     });
   }
 
@@ -57,6 +77,17 @@ export class NavbarComponent implements OnInit {
 
   toggleCountryDropdown(): void {
     this.showCountryDropdown = !this.showCountryDropdown;
+    this.showLanguageDropdown = false;
+  }
+
+  toggleLanguageDropdown(): void {
+    this.showLanguageDropdown = !this.showLanguageDropdown;
+    this.showCountryDropdown = false;
+  }
+
+  selectLanguage(language: Language): void {
+    this.translationService.setLanguage(language);
+    this.showLanguageDropdown = false;
   }
 
   toggleMobileMenu(): void {

@@ -3,13 +3,17 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchResult, SearchOptions, Endpoint } from '../models/api.models';
 import { EndpointService } from './endpoint.service';
+import { TranslationService } from './translation.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  constructor(private endpointService: EndpointService) {}
+  constructor(
+    private endpointService: EndpointService,
+    private translationService: TranslationService
+  ) {}
 
   /**
    * Busca en endpoints
@@ -56,17 +60,20 @@ export class SearchService {
     const highlights: any[] = [];
 
     // Búsqueda en nombre (peso: 10)
-    if (endpoint.name.toLowerCase().includes(searchTerm)) {
+    const displayName = endpoint.nameKey
+      ? this.translationService.translate(endpoint.nameKey)
+      : endpoint.name;
+    if (displayName.toLowerCase().includes(searchTerm) || endpoint.name.toLowerCase().includes(searchTerm)) {
       relevance += 10;
       highlights.push({
         field: 'name',
-        snippet: endpoint.name,
+        snippet: displayName,
         matchedText: searchTerm
       });
     }
 
     // Búsqueda exacta en nombre (bonus: 5)
-    if (endpoint.name.toLowerCase() === searchTerm) {
+    if (displayName.toLowerCase() === searchTerm || endpoint.name.toLowerCase() === searchTerm) {
       relevance += 5;
     }
 
@@ -103,7 +110,7 @@ export class SearchService {
     return {
       id: endpoint.id,
       type: 'endpoint',
-      title: endpoint.name,
+      title: displayName,
       description: endpoint.description,
       path: `/${this.endpointService.getCurrentCountry().toLowerCase()}/api/${endpoint.category}/${endpoint.id}`,
       category: endpoint.category,

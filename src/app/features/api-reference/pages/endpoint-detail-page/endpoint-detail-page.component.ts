@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Endpoint, CodeLanguage } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
+import { TranslationService } from '@core/services/translation.service';
 
 @Component({
   selector: 'app-endpoint-detail-page',
@@ -21,7 +22,8 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +83,16 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   getFullUrl(): string {
     if (!this.endpoint) return '';
     return `${this.endpoint.baseUrl}${this.endpoint.path}`;
+  }
+
+  /**
+   * Descripción del endpoint traducida si hay clave i18n; si no, la original.
+   */
+  getDescription(): string {
+    if (!this.endpoint) return '';
+    return this.endpoint.descriptionKey
+      ? this.translationService.translate(this.endpoint.descriptionKey)
+      : this.endpoint.description;
   }
 
   copyUrl(): void {

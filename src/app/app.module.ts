@@ -19,6 +19,11 @@ import { BadgeComponent } from './shared/components/badge/badge.component';
 import { CodeBlockComponent } from './shared/components/code-block/code-block.component';
 import { SearchModalComponent } from './shared/components/search-modal/search-modal.component';
 import { TryItOutComponent } from './shared/components/try-it-out/try-it-out.component';
+import { FlagComponent } from './shared/components/flag/flag.component';
+
+// Shared Pipes
+import { MarkdownPipe } from './shared/pipes/markdown.pipe';
+import { TranslatePipe, TranslateHtmlPipe } from './shared/pipes/translate.pipe';
 
 // Pages - Home
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
@@ -44,6 +49,11 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     CodeBlockComponent,
     SearchModalComponent,
     TryItOutComponent,
+    FlagComponent,
+    // Shared Pipes
+    MarkdownPipe,
+    TranslatePipe,
+    TranslateHtmlPipe,
     // Pages
     HomePageComponent,
     EndpointDetailPageComponent,

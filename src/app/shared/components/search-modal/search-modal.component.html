@@ -10,7 +10,7 @@
       <input
         type="text"
         class="search-modal__input"
-        placeholder="Buscar endpoints, documentación..."
+        [attr.placeholder]="'search.placeholder' | t"
         [(ngModel)]="searchQuery"
         (input)="onSearchInput($event)"
         autofocus>
@@ -22,13 +22,13 @@
       <!-- Loading -->
       <div class="search-modal__loading" *ngIf="loading">
         <div class="spinner-small"></div>
-        <span>Buscando...</span>
+        <span>{{ 'search.searching' | t }}</span>
       </div>
 
       <!-- Results List -->
       <div class="search-results" *ngIf="!loading && results.length > 0">
         <div class="search-results__header">
-          <span>{{ results.length }} resultado(s)</span>
+          <span>{{ 'search.results' | t: { count: results.length } }}</span>
         </div>
         <div
           *ngFor="let result of results; let i = index"
@@ -72,7 +72,7 @@
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
         </svg>
-        <p>No se encontraron resultados para "{{ searchQuery }}"</p>
+        <p>{{ 'search.empty' | t: { query: searchQuery } }}</p>
       </div>
     </div>
 
@@ -80,9 +80,9 @@
     <div class="search-modal__body" *ngIf="searchQuery.length < 2 && recentSearches.length > 0">
       <div class="recent-searches">
         <div class="recent-searches__header">
-          <span>Búsquedas recientes</span>
+          <span>{{ 'search.recent' | t }}</span>
           <button class="recent-searches__clear" (click)="clearRecentSearches()">
-            Limpiar
+            {{ 'search.clear' | t }}
           </button>
         </div>
         <button
@@ -103,15 +103,15 @@
       <div class="search-modal__shortcuts">
         <div class="shortcut">
           <kbd>↑</kbd><kbd>↓</kbd>
-          <span>Navegar</span>
+          <span>{{ 'search.navigate' | t }}</span>
         </div>
         <div class="shortcut">
           <kbd>Enter</kbd>
-          <span>Seleccionar</span>
+          <span>{{ 'search.select' | t }}</span>
         </div>
         <div class="shortcut">
           <kbd>ESC</kbd>
-          <span>Cerrar</span>
+          <span>{{ 'search.close' | t }}</span>
         </div>
       </div>
     </div>
