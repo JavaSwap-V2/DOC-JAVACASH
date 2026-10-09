@@ -15,9 +15,14 @@ import { PostmanTransformerService } from './postman-transformer.service';
   providedIn: 'root'
 })
 export class EndpointService {
+  /** Clave de sessionStorage donde se recuerda el país elegido. */
+  private static readonly COUNTRY_STORAGE_KEY = 'javacash-docs-country';
+
   private endpointsSubject = new BehaviorSubject<Endpoint[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private currentCountrySubject = new BehaviorSubject<CountryCode>('ARG');
+  private currentCountrySubject = new BehaviorSubject<CountryCode>(
+    this.readStoredCountry()
+  );
 
   endpoints$ = this.endpointsSubject.asObservable();
   loading$ = this.loadingSubject.asObservable();
@@ -39,7 +44,11 @@ export class EndpointService {
     // Verificar caché
     if (this.endpointsCache.has(cacheKey)) {
       const cached = this.endpointsCache.get(cacheKey)!;
-      this.endpointsSubject.next(cached);
+      // Solo publica si sigue siendo el país actual: una carga rezagada no
+      // debe pisar los endpoints del país que el usuario está viendo.
+      if (this.currentCountrySubject.value === country) {
+        this.endpointsSubject.next(cached);
+      }
       return of(cached);
     }
 
@@ -57,6 +66,11 @@ export class EndpointService {
         return [...payinEndpoints, ...payoutEndpoints];
       }),
       tap(endpoints => {
+        // Si el país cambió mientras cargaba, se descarta esta respuesta para
+        // no reemplazar los endpoints del país que el usuario está viendo.
+        if (this.currentCountrySubject.value !== country) {
+          return;
+        }
         this.endpointsCache.set(cacheKey, endpoints);
         this.endpointsSubject.next(endpoints);
         this.loadingSubject.next(false);
@@ -156,9 +170,11 @@ export class EndpointService {
   }
 
   /**
-   * Establece país actual
+   * Establece país actual y lo recuerda en sessionStorage para que la
+   * elección sobreviva a un recargo de la página.
    */
   setCurrentCountry(country: CountryCode): void {
+    this.persistCountry(country);
     this.currentCountrySubject.next(country);
     this.loadEndpointsForCountry(country).subscribe();
   }
@@ -168,6 +184,30 @@ export class EndpointService {
    */
   getCurrentCountry(): CountryCode {
     return this.currentCountrySubject.value;
+  }
+
+  /**
+   * País recordado en sessionStorage; valida contra los países soportados y
+   * cae a Argentina si no hay nada válido.
+   */
+  private readStoredCountry(): CountryCode {
+    try {
+      const stored = sessionStorage.getItem(EndpointService.COUNTRY_STORAGE_KEY);
+      if (stored && stored in COUNTRIES) {
+        return stored as CountryCode;
+      }
+    } catch {
+      // sessionStorage puede no estar disponible (modo privado/SSR).
+    }
+    return 'ARG';
+  }
+
+  private persistCountry(country: CountryCode): void {
+    try {
+      sessionStorage.setItem(EndpointService.COUNTRY_STORAGE_KEY, country);
+    } catch {
+      // Ignorar si el almacenamiento no está disponible.
+    }
   }
 
   /**
