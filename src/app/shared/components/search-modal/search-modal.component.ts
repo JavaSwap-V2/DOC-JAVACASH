@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -11,8 +11,9 @@ import { SearchResult } from '@core/models/api.models';
   styleUrls: ['./search-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SearchModalComponent implements OnInit, OnDestroy {
+export class SearchModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() close = new EventEmitter<void>();
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
 
   searchQuery = '';
   results: SearchResult[] = [];
@@ -50,6 +51,12 @@ export class SearchModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.searchInput) {
+      this.searchInput.nativeElement.focus();
+    }
   }
 
   @HostListener('document:keydown.escape')

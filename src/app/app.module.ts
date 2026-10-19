@@ -20,6 +20,7 @@ import { CodeBlockComponent } from './shared/components/code-block/code-block.co
 import { SearchModalComponent } from './shared/components/search-modal/search-modal.component';
 import { TryItOutComponent } from './shared/components/try-it-out/try-it-out.component';
 import { FlagComponent } from './shared/components/flag/flag.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 // Shared Pipes
 import { MarkdownPipe } from './shared/pipes/markdown.pipe';
@@ -50,6 +51,7 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     SearchModalComponent,
     TryItOutComponent,
     FlagComponent,
+    ToastComponent,
     // Shared Pipes
     MarkdownPipe,
     TranslatePipe,

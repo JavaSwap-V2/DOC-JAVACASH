@@ -1,0 +1,164 @@
+// toast.component.scss
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.toast-container {
+  position: fixed;
+  top: $spacing-6;
+  right: $spacing-6;
+  z-index: $z-tooltip;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  max-width: 420px;
+  pointer-events: none;
+
+  @include mobile {
+    top: $spacing-4;
+    right: $spacing-4;
+    left: $spacing-4;
+    max-width: none;
+  }
+}
+
+.toast {
+  @include flex-start;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  background: $surface-elevated;
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  min-width: 320px;
+  animation: slideInRight $transition-slow ease-out;
+  pointer-events: auto;
+
+  .dark & {
+    background: $dark-surface-elevated;
+    border-color: $dark-border;
+    box-shadow: $shadow-dark-lg;
+  }
+
+  @include mobile {
+    min-width: auto;
+    width: 100%;
+  }
+
+  &--success {
+    border-left: 4px solid $success;
+    
+    .toast__icon {
+      color: $success;
+    }
+  }
+
+  &--error {
+    border-left: 4px solid $error;
+    
+    .toast__icon {
+      color: $error;
+    }
+  }
+
+  &--warning {
+    border-left: 4px solid $warning;
+    
+    .toast__icon {
+      color: $warning;
+    }
+  }
+
+  &--info {
+    border-left: 4px solid $info;
+    
+    .toast__icon {
+      color: $info;
+    }
+  }
+
+  &__icon {
+    @include flex-center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    color: $text-primary;
+    margin: 0;
+    line-height: $leading-tight;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__message {
+    font-size: $text-sm;
+    color: $text-secondary;
+    margin: $spacing-1 0 0;
+    line-height: $leading-normal;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__dismiss {
+    @include flex-center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    color: $text-tertiary;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .dark & {
+      color: $dark-text-tertiary;
+    }
+
+    &:hover {
+      background: $background-gray;
+      color: $text-primary;
+
+      .dark & {
+        background: $dark-surface-hover;
+        color: $dark-text-primary;
+      }
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

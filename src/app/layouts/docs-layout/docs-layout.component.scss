@@ -6,6 +6,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
+  overflow-x: hidden;
 
   &__body {
     flex: 1;
@@ -17,6 +19,7 @@
     flex: 1;
     margin-left: $sidebar-width;
     min-height: calc(100vh - #{$navbar-height});
+    max-width: calc(100% - #{$sidebar-width});
     background: $background-white;
 
     .dark & {
@@ -25,6 +28,7 @@
 
     @include mobile {
       margin-left: 0;
+      max-width: 100%;
     }
   }
 

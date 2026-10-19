@@ -1,6 +1,9 @@
 <!-- docs-layout.component.html -->
 <div class="docs-layout">
-  <app-navbar (menuToggle)="onMenuToggle()"></app-navbar>
+  <app-navbar 
+    (menuToggle)="onMenuToggle()"
+    (searchFocus)="onSearchFocus()">
+  </app-navbar>
   
   <div class="docs-layout__body">
     <app-sidebar 
@@ -14,4 +17,9 @@
       </div>
     </main>
   </div>
+
+  <app-search-modal 
+    *ngIf="searchModalOpen"
+    (close)="onSearchClose()">
+  </app-search-modal>
 </div>
