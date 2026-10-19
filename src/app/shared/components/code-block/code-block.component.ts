@@ -2,7 +2,7 @@
 // code-block.component.ts
 // ============================================
 
-import { Component, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit, OnChanges, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { CodeLanguage } from '@core/models/api.models';
 
 @Component({
@@ -11,7 +11,7 @@ import { CodeLanguage } from '@core/models/api.models';
   styleUrls: ['./code-block.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CodeBlockComponent implements AfterViewInit {
+export class CodeBlockComponent implements AfterViewInit, OnChanges {
   @Input() code: string = '';
   @Input() language: CodeLanguage = 'javascript';
   @Input() title?: string;
@@ -52,7 +52,16 @@ export class CodeBlockComponent implements AfterViewInit {
 
   async copyToClipboard(): Promise<void> {
     try {
-      await navigator.clipboard.writeText(this.code);
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(this.code);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = this.code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
       this.isCopied = true;
       this.copied.emit();
 
@@ -61,6 +70,7 @@ export class CodeBlockComponent implements AfterViewInit {
       }, 2000);
     } catch (error) {
       console.error('Failed to copy code:', error);
+      this.isCopied = false;
     }
   }
 

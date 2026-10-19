@@ -35,6 +35,7 @@ export const en: TranslationDictionary = {
       uploadReceipt: 'Upload receipt',
       listByReference: 'List by reference',
       listByClient: 'List by customer',
+      detailById: 'Detail by id',
       list: 'List'
     }
   },
@@ -86,7 +87,12 @@ export const en: TranslationDictionary = {
       userBank: 'Bank name',
       userTypeAccount: 'Bank account type: `savings` (savings account) or `checking` (checking account)',
       userNumAccount: 'Bank account number',
-      file: 'Payment receipt image (JPG or PNG, max 5 MB)'
+      file: 'Payment receipt image (JPG or PNG, max 5 MB)',
+      payment_proof: 'Payment proof image (JPG or PNG, max 5 MB)',
+      recipient_name: 'Recipient name',
+      recipient_email: 'Recipient email address',
+      payment_method: 'Payment method used (e.g. bank transfer)',
+      recipient_document: 'Recipient identity document number'
     },
     responsesDesc: {
       r200: 'The request was successful',
@@ -95,18 +101,21 @@ export const en: TranslationDictionary = {
       r401: 'Unauthorized - invalid or missing API Key',
       r403: 'Forbidden access',
       r404: 'Resource not found',
-      r422: 'Unprocessable entity - Validation error',
-      r429: 'Too many requests - Rate limit exceeded',
+      r422: 'Unprocessable Entity - validation error',
+      r429: 'Too Many Requests - rate limit exceeded',
       r500: 'Internal server error'
     },
     descriptions: {
       noteCheckout: 'Important: the 201 Created response returns the checkoutUrl variable; this is the Checkout link',
-      listPayinByReference: 'Endpoint to get a payin by reference',
-      listPayinByCustomId: 'Endpoint to get a payin by custom id',
-      listAllPayin: 'Endpoint to get all payins',
-      listPayoutByReference: 'Endpoint to get a payout by reference',
-      listAllPayout: 'Endpoint to get all payouts',
-      uploadReceipt: 'Upload the (image) receipt of the payin with the given reference to the manual payments service, which reads it with OCR, creates the manual payment and leaves the transaction in `processing`.\n\n## Route\n\nThe payin reference travels in the URL as the route parameter `reference` (numeric, 1 to 18 digits).\n\n## Authentication\n\nSend **x-api-key** in the **headers** with the **API key of a merchant** (user or provider) registered in `api_keys`. The checkout public key will not work.\n\n**Authorization responses**\n\n- No token or API key, or invalid or disabled API key: **401**.\n- Valid API key but no associated merchant, or inactive merchant: **403**.\n\n## Request format\n\nAlthough the example is shown as JSON, the endpoint receives **multipart/form-data** with the file in the `file` field (real JPG or PNG, max 5 MB). `amount` and `currency` are optional; if sent, they must match the payin or it responds **422**.'
+      listPayinByReference: 'Endpoint to get a PayIn by reference',
+      listPayinByCustomId: 'Endpoint to get a PayIn by custom id',
+      listAllPayin: 'Endpoint to get all PayIns',
+      listPayoutByReference: 'Endpoint to get a PayOut by reference',
+      listAllPayout: 'Endpoint to get all PayOuts',
+      payinDetailById: 'Endpoint to get a PayIn by its id',
+      payoutDetailById: 'Endpoint to get a PayOut by its id',
+      listPayoutByCustomId: 'Endpoint to get a PayOut by custom id',
+      uploadReceipt: 'Upload the payment receipt (image) to the manual payments service, which reads it with OCR, creates the manual payment and leaves the transaction in `processing`.\n\n## Authentication\n\nSend **x-api-key** in the **headers** with the **API Key of a merchant** (user or provider) registered in `api_keys`. The checkout public key will not work.\n\n**Authorization responses**\n\n- No token or API Key, or invalid or disabled API Key: **401**.\n- Valid API Key but without the `manual_payments:create` permission: **403**.\n\n## Request format\n\nThe endpoint receives **multipart/form-data** with the file in the `payment_proof` field (real JPG or PNG, max 5 MB). The example is shown as JSON for convenience, but the real request is `multipart/form-data`.'
     }
   },
   tryItOut: {
@@ -310,9 +319,11 @@ export const en: TranslationDictionary = {
     fTypePayoutHtml: 'Always <code>"pay-out"</code> for outgoing payments',
     fTypePayoutsHtml: 'Always <code>"pay-outs"</code> for bulk batches',
     fTxId: 'Unique transaction identifier',
+    fUserId: 'Merchant (user) identifier that receives the notification',
     fRef: 'Transaction reference',
     fAmountRequested: 'Requested transaction amount',
     fAmount: 'Transaction amount',
+    fAmountReceived: 'Amount actually received (pay-in only)',
     fStatus: 'Current transaction status',
     fTimestamp: 'Date and time in ISO 8601 format',
     fCustomIdHtml: 'Custom identifier you sent when creating the transaction. It is numeric (digits only) and arrives as a string, for example <code>"1001"</code>',
@@ -336,7 +347,7 @@ export const en: TranslationDictionary = {
     finalOkTitle: 'Successful final state',
     payinFinalOkTextHtml: 'The <code>paid</code> state indicates that the payment was completed successfully. Use this state to confirm the operation in your system.',
     payoutFinalOkTextHtml: 'The <code>completed</code> state indicates that the outgoing payment was completed successfully. Use this state to confirm the operation in your system.',
-    stPending: 'The transaction was created and is waiting for the customer payment',
+    stPending: 'The transaction was created and is waiting for the customer\'s payment',
     stApproved: 'The payment was detected and is being verified',
     stPaid: 'The payment was confirmed successfully',
     stRejected: 'The transaction was rejected',
@@ -371,7 +382,7 @@ export const en: TranslationDictionary = {
     sigCapPayin: '1. Received request (PayIn)',
     sigCapPayout: '1. Received request (PayOut)',
     sigStep2Title: 'Take the body exactly as it arrived',
-    sigStep2TextHtml: 'The message to sign is the complete body, unmodified: the same 168 bytes of the PayIn (146 of the PayOut), in the same order, with no added spaces and without the timestamp in front. It matches the <code>Content-Length</code> header.',
+    sigStep2TextHtml: 'The message to sign is the complete body, unmodified: the same 170 bytes of the PayIn (169 of the PayOut), in the same order, with no added spaces and without the timestamp in front. It matches the <code>Content-Length</code> header.',
     sigStep3Title: 'Compute the HMAC-SHA256 with your API Key',
     sigStep3Text: 'Use your API Key as the key and convert the result to hexadecimal.',
     sigStep4Title: 'Compare with X-JavaCash-Signature',

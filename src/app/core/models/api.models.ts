@@ -333,7 +333,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     dashboardUrl: 'https://guatemala.javacash.finance',
     locale: 'es-GT',
     timezone: 'America/Guatemala',
-    available: false,
+    available: true,
     identification: {
       label: 'DPI / NIT',
       example: '1234567890101',

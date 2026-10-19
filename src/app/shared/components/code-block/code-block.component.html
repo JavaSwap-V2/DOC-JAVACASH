@@ -32,7 +32,7 @@
   <!-- Code Content -->
   <div class="code-block__content">
     <pre class="code-block__pre" *ngIf="!showLineNumbers"><code 
-      #codeElement
+      #codeElementNoLines
       [class]="'language-' + language">{{ code }}</code></pre>
 
     <!-- With Line Numbers -->
@@ -46,7 +46,7 @@
         </div>
       </div>
       <pre class="code-block__pre"><code 
-        #codeElement
+        #codeElementLines
         [class]="'language-' + language">{{ code }}</code></pre>
     </div>
   </div>

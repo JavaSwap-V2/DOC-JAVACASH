@@ -36,6 +36,7 @@ export const es = {
       uploadReceipt: 'Subir comprobante',
       listByReference: 'Listar por referencia',
       listByClient: 'Listar por cliente',
+      detailById: 'Detalle por id',
       list: 'Listar'
     }
   },
@@ -87,7 +88,12 @@ export const es = {
       userBank: 'Nombre del banco',
       userTypeAccount: 'Tipo de cuenta bancaria: `savings` (Caja de Ahorro) o `checking` (Cuenta Corriente)',
       userNumAccount: 'Número de cuenta bancaria',
-      file: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)'
+      file: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)',
+      payment_proof: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)',
+      recipient_name: 'Nombre del destinatario',
+      recipient_email: 'Correo electrónico del destinatario',
+      payment_method: 'Método de pago utilizado (por ejemplo, transferencia bancaria)',
+      recipient_document: 'Documento de identidad del destinatario'
     },
     responsesDesc: {
       r200: 'La petición fue exitosa',
@@ -101,13 +107,16 @@ export const es = {
       r500: 'Error interno del servidor'
     },
     descriptions: {
-      noteCheckout: 'Importante: la respuesta de 201 Created devuelve la variable checkoutUrl, esta es el link del Checkout',
-      listPayinByReference: 'Endpoint para obtener un payin por referencia',
-      listPayinByCustomId: 'Endpoint para obtener un payin por custom id',
-      listAllPayin: 'Enpoint para obtener todos los payin',
-      listPayoutByReference: 'Endpoint para obtener un payout por referencia',
-      listAllPayout: 'Enpoint para obtener todos los payouts',
-      uploadReceipt: 'Sube el comprobante (imagen) del payin con la referencia indicada al servicio de pagos manuales, que lo lee con OCR, crea el pago manual y deja la transacción en `processing`.\n\n## Ruta\n\nLa referencia del payin viaja en la URL como parámetro de ruta `reference` (numérica, de 1 a 18 dígitos).\n\n## Autenticación\n\nEnvía **x-api-key** en los **headers** con la **API key de un comercio** (usuario o proveedor) registrada en `api_keys`. La clave pública del checkout no sirve.\n\n**Respuestas de autorización**\n\n- Sin token ni API key, o API key inválida o desactivada: **401**.\n- API key válida pero sin comercio asociado, o comercio inactivo: **403**.\n\n## Formato del request\n\nAunque el ejemplo se muestre como JSON, el endpoint recibe **multipart/form-data** con el archivo en el campo `file` (JPG o PNG real, máximo 5 MB). `amount` y `currency` son opcionales; si se envían deben coincidir con el payin o responde **422**.'
+      noteCheckout: 'Importante: la respuesta de 201 Created devuelve la variable checkoutUrl; este es el enlace del checkout',
+      listPayinByReference: 'Endpoint para obtener un PayIn por referencia',
+      listPayinByCustomId: 'Endpoint para obtener un PayIn por custom id',
+      listAllPayin: 'Endpoint para obtener todos los PayIn',
+      listPayoutByReference: 'Endpoint para obtener un PayOut por referencia',
+      listAllPayout: 'Endpoint para obtener todos los PayOut',
+      payinDetailById: 'Endpoint para obtener un PayIn por su id',
+      payoutDetailById: 'Endpoint para obtener un PayOut por su id',
+      listPayoutByCustomId: 'Endpoint para obtener un PayOut por custom id',
+      uploadReceipt: 'Sube el comprobante (imagen) del pago al servicio de pagos manuales, que lo lee con OCR, crea el pago manual y deja la transacción en `processing`.\n\n## Autenticación\n\nEnvía **x-api-key** en los **headers** con la **API Key de un comercio** (usuario o proveedor) registrada en `api_keys`. La clave pública del checkout no sirve.\n\n**Respuestas de autorización**\n\n- Sin token ni API Key, o API Key inválida o desactivada: **401**.\n- API Key válida pero sin el permiso `manual_payments:create`: **403**.\n\n## Formato del request\n\nEl endpoint recibe **multipart/form-data** con el archivo en el campo `payment_proof` (JPG o PNG real, máximo 5 MB). El ejemplo se muestra como JSON por comodidad, pero el envío real es `multipart/form-data`.'
     }
   },
   tryItOut: {
@@ -217,7 +226,7 @@ export const es = {
     perMinute: 'Por minuto',
     supportTitle: 'Soporte y Recursos',
     liveChat: 'Chat en Vivo',
-    liveChatHours: 'Lunes a Viernes, 9am - 6pm',
+    liveChatHours: 'Lunes a viernes, 9:00 - 18:00',
     github: 'GitHub',
     githubText: 'Reporta issues y contribuye',
     status: 'Status',
@@ -234,7 +243,7 @@ export const es = {
     methodsTitle: 'Métodos de Autenticación',
     methodsTextHtml: 'JavaCash API utiliza <strong>API Keys</strong> para autenticar todas las peticiones. Tu API Key identifica tu cuenta y te da acceso a los recursos de la API.',
     warnTitle: '¡Mantén tu API Key segura!',
-    warnText: 'Tu API Key tiene acceso completo a tu cuenta. Nunca la compartas públicamente en repositorios, código del lado del cliente, o cualquier lugar donde pueda ser expuesta.',
+    warnText: 'Tu API Key tiene acceso completo a tu cuenta. Nunca la compartas públicamente en repositorios, código del lado del cliente o cualquier lugar donde pueda ser expuesta.',
     getKeyTitle: 'Obtener tu API Key',
     dashboards: 'Dashboards',
     sandbox: 'Sandbox',
@@ -311,9 +320,11 @@ export const es = {
     fTypePayoutHtml: 'Siempre <code>"pay-out"</code> para pagos salientes',
     fTypePayoutsHtml: 'Siempre <code>"pay-outs"</code> para lotes masivos',
     fTxId: 'Identificador único de la transacción',
+    fUserId: 'Identificador del comercio (usuario) que recibe la notificación',
     fRef: 'Referencia de la transacción',
     fAmountRequested: 'Monto solicitado de la transacción',
     fAmount: 'Monto de la transacción',
+    fAmountReceived: 'Monto efectivamente recibido (solo pay-in)',
     fStatus: 'Estado actual de la transacción',
     fTimestamp: 'Fecha y hora en formato ISO 8601',
     fCustomIdHtml: 'Identificador personalizado que enviaste al crear la transacción. Es numérico (solo dígitos) y llega como string, por ejemplo <code>"1001"</code>',
@@ -372,7 +383,7 @@ export const es = {
     sigCapPayin: '1. Petición recibida (PayIn)',
     sigCapPayout: '1. Petición recibida (PayOut)',
     sigStep2Title: 'Toma el body tal como llegó',
-    sigStep2TextHtml: 'El mensaje a firmar es el body completo, sin modificar: los mismos 168 bytes del PayIn (146 del PayOut), en el mismo orden, sin espacios agregados y sin el timestamp adelante. Coincide con el header <code>Content-Length</code>.',
+    sigStep2TextHtml: 'El mensaje a firmar es el body completo, sin modificar: los mismos 170 bytes del PayIn (169 del PayOut), en el mismo orden, sin espacios agregados y sin el timestamp adelante. Coincide con el header <code>Content-Length</code>.',
     sigStep3Title: 'Calcula el HMAC-SHA256 con tu API Key',
     sigStep3Text: 'Usa tu API Key como clave y pasa el resultado a hexadecimal.',
     sigStep4Title: 'Compara con X-JavaCash-Signature',
@@ -432,7 +443,7 @@ export const es = {
     fSuccessHtml: 'Siempre <code>false</code> en errores',
     fMessage: 'Descripción detallada del error',
     fCode: 'Código de estado HTTP',
-    fError: 'Tipo de error (e.g., "Unauthorized")',
+    fError: 'Tipo de error (p. ej., "Unauthorized")',
     fErrors: 'Detalles adicionales (opcional)',
     codesTitle: 'Códigos de Error HTTP',
     codesText: 'La API utiliza códigos de estado HTTP estándar para indicar el éxito o fracaso de una petición.',
@@ -471,7 +482,7 @@ export const es = {
     supportTitle: 'Soporte',
     supportText: 'Si encuentras un error que no puedes resolver, contacta a nuestro equipo de soporte:',
     liveChat: 'Chat en Vivo',
-    liveChatHours: 'Lunes a Viernes, 9am - 6pm',
+    liveChatHours: 'Lunes a viernes, 9:00 - 18:00',
     nextTitle: 'Próximos Pasos',
     nextIntroTitle: 'Introducción',
     nextIntroText: 'Vuelve a la guía de inicio',

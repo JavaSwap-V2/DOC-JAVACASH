@@ -97,6 +97,15 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
 
   copyUrl(): void {
     const url = this.getFullUrl();
-    navigator.clipboard.writeText(url);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
   }
 }

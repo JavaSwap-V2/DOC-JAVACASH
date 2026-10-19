@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { EndpointGroup, Endpoint } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 
@@ -11,13 +11,15 @@ import { EndpointService } from '@core/services/endpoint.service';
   styleUrls: ['./sidebar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   @Input() isOpen = true;
   @Output() close = new EventEmitter<void>();
 
   endpointGroups$: Observable<EndpointGroup[]>;
   activeEndpointId: string = '';
-  expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']); // Por defecto expandidos
+  expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']);
+
+  private destroy$ = new Subject<void>();
 
   navigationItems = [
     { label: 'sidebar.introduction', icon: 'book', path: '/gateway/introduction' },
@@ -33,14 +35,19 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Detectar endpoint activo en la ruta
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
     ).subscribe(() => {
       this.updateActiveEndpoint();
     });
 
     this.updateActiveEndpoint();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private updateActiveEndpoint(): void {

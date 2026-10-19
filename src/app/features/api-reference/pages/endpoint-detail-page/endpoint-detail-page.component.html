@@ -108,8 +108,8 @@
 
     <!-- Code Block -->
     <app-code-block
-      *ngIf="getSelectedExample()"
-      [code]="getSelectedExample()!.code"
+      *ngIf="getSelectedExample() as example"
+      [code]="example.code"
       [language]="selectedLanguage"
       [showLineNumbers]="false">
     </app-code-block>

@@ -176,7 +176,7 @@ export class ErrorsPageComponent {
   retryExample = `const maxRetries = 3;
 let retries = 0;
 
-async function makeRequestWithRetry() {
+async function makeRequestWithRetry(url, options) {
   while (retries < maxRetries) {
     try {
       const response = await fetch(url, options);

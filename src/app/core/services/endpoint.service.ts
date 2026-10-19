@@ -54,7 +54,7 @@ export class EndpointService {
 
     this.loadingSubject.next(true);
 
-    // Cargar ambas colecciones: Payin y Payout
+    // Cargar ambas colecciones: PayIn y PayOut
     const payinPath = this.getCollectionPath(country, 'payin');
     const payoutPath = this.getCollectionPath(country, 'payout');
 

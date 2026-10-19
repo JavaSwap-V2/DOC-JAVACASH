@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchResult, SearchOptions, Endpoint } from '../models/api.models';
 import { EndpointService } from './endpoint.service';
@@ -146,7 +146,10 @@ export class SearchService {
   highlightText(text: string, searchTerm: string): string {
     if (!searchTerm) return text;
     
-    const regex = new RegExp(`(${searchTerm})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
+    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'gi');
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML.replace(regex, '<mark>$1</mark>');
   }
 }

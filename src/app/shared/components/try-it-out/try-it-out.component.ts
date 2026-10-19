@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Endpoint } from '@core/models/api.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslationService } from '@core/services/translation.service';
+import { firstValueFrom } from 'rxjs';
 
 interface TryItOutRequest {
   headers: { [key: string]: string };
@@ -85,7 +86,7 @@ export class TryItOutComponent implements OnInit {
       }
 
       // Hacer request
-      const response: any = await this.http.request(
+      const response: any = await firstValueFrom(this.http.request(
         this.endpoint.method,
         url,
         {
@@ -93,7 +94,7 @@ export class TryItOutComponent implements OnInit {
           body,
           observe: 'response'
         }
-      ).toPromise();
+      ));
 
       const endTime = Date.now();
 

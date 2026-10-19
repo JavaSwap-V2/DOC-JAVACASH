@@ -393,9 +393,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td>{{ 'auth.fTxId' | t }}</td>
         </tr>
         <tr>
-          <td><code>reference</code></td>
-          <td>string</td>
-          <td>{{ 'auth.fRef' | t }}</td>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fUserId' | t }}</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
@@ -416,6 +416,11 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>customId</code></td>
           <td>string</td>
           <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td><code>amountReceived</code></td>
+          <td>string</td>
+          <td>{{ 'auth.fAmountReceived' | t }}</td>
         </tr>
       </tbody>
     </table>
@@ -453,6 +458,11 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>transactionId</code></td>
           <td>number</td>
           <td>{{ 'auth.fTxId' | t }}</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fUserId' | t }}</td>
         </tr>
         <tr>
           <td><code>reference</code></td>
@@ -515,6 +525,16 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>type</code></td>
           <td>string</td>
           <td [innerHTML]="'auth.fTypePayoutsHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fUserId' | t }}</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>{{ 'auth.fTimestamp' | t }}</td>
         </tr>
         <tr>
           <td><code>totalTransactions</code></td>
