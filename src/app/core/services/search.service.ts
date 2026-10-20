@@ -78,11 +78,14 @@ export class SearchService {
     }
 
     // Búsqueda en descripción (peso: 5)
-    if (endpoint.description.toLowerCase().includes(searchTerm)) {
+    const displayDescription = endpoint.descriptionKey
+      ? this.translationService.translate(endpoint.descriptionKey)
+      : endpoint.description;
+    if (displayDescription.toLowerCase().includes(searchTerm)) {
       relevance += 5;
       highlights.push({
         field: 'description',
-        snippet: this.getSnippet(endpoint.description, searchTerm),
+        snippet: this.getSnippet(displayDescription, searchTerm),
         matchedText: searchTerm
       });
     }
@@ -111,7 +114,7 @@ export class SearchService {
       id: endpoint.id,
       type: 'endpoint',
       title: displayName,
-      description: endpoint.description,
+      description: displayDescription,
       path: `/${this.endpointService.getCurrentCountry().toLowerCase()}/api/${endpoint.category}/${endpoint.id}`,
       category: endpoint.category,
       method: endpoint.method,

@@ -11,9 +11,61 @@ export const es = {
     copyUrl: 'Copiar URL',
     loading: 'Cargando...',
     yes: 'Sí',
-    no: 'No'
+    no: 'No',
+    dismiss: 'Cerrar',
+    email: 'Email',
+    copiedClipboard: 'Copiado al portapapeles',
+    copyErrorTitle: 'Error al copiar',
+    copyErrorMessage: 'No se pudo copiar el código',
+    copiedUrl: 'URL copiada',
+    copyUrlErrorMessage: 'No se pudo copiar la URL'
+  },
+  meta: {
+    title: 'JavaCash - Documentación de la API',
+    description: 'Documentación oficial de la API de JavaCash para integración de pagos en Argentina, Ecuador, Chile, Guatemala y Perú.'
+  },
+  country: {
+    accountTypes: {
+      savings: 'Cuenta de Ahorro',
+      checking: 'Cuenta Corriente'
+    },
+    methods: {
+      transfer: {
+        name: 'Transferencia',
+        description: 'El cliente transfiere el monto desde su banca en línea a una cuenta local.'
+      },
+      qr: {
+        name: 'QR CobroDigital',
+        description: 'El cliente escanea el código QR o elige un medio de pago dentro del QR.'
+      },
+      rapipago: {
+        name: 'Rapipago',
+        description: 'El cliente paga en efectivo generando su boleta en la red Rapipago.'
+      },
+      mercadopago: {
+        name: 'Mercado Pago',
+        description: 'El cliente paga con su billetera de Mercado Pago dentro del checkout.'
+      },
+      transferencia: {
+        name: 'Transferencia bancaria',
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      efectivo: {
+        name: 'Pago en efectivo',
+        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+      },
+      tarjeta: {
+        name: 'Tarjeta de débito / crédito',
+        description: 'El cliente paga con tarjeta dentro del checkout.'
+      },
+      billetera: {
+        name: 'Billetera digital',
+        description: 'El cliente paga desde su billetera digital dentro del checkout.'
+      }
+    }
   },
   navbar: {
+    title: 'Documentación API',
     home: 'Inicio',
     docs: 'Documentación',
     apiReference: 'API Reference',
@@ -53,23 +105,29 @@ export const es = {
   },
   endpoint: {
     url: 'Endpoint URL',
-    headers: 'Headers',
+    headers: 'Encabezados',
     name: 'Nombre',
     value: 'Valor',
     required: 'Requerido',
     description: 'Descripción',
-    requestBody: 'Request Body',
+    requestBody: 'Cuerpo de la petición',
     param: 'Parámetro',
     type: 'Tipo',
     requiredShort: 'Requerido',
-    requestBodyExample: 'Ejemplo de Request Body',
+    requestBodyExample: 'Ejemplo de cuerpo de petición',
     codeExamples: 'Ejemplos de Código',
     responses: 'Respuestas',
-    responseBody: 'Response Body',
+    responseBody: 'Cuerpo de la respuesta',
     loading: 'Cargando endpoint...',
     notFoundTitle: 'Endpoint no encontrado',
     notFoundText: 'No pudimos encontrar el endpoint que buscas.',
     requestBodyDescription: 'Cuerpo de la petición en formato JSON',
+    groups: {
+      payin: 'Endpoints para recibir pagos',
+      payout: 'Endpoints para enviar fondos',
+      payinName: 'PayIn',
+      payoutName: 'PayOut'
+    },
     headersDesc: {
       apiKey: 'Tu API Key de autenticación',
       contentType: 'Tipo de contenido de la petición',
@@ -104,7 +162,13 @@ export const es = {
       r404: 'Recurso no encontrado',
       r422: 'Entidad no procesable - Error de validación',
       r429: 'Demasiadas peticiones - Rate limit excedido',
-      r500: 'Error interno del servidor'
+      r500: 'Error interno del servidor',
+      rDefault: 'Respuesta del servidor'
+    },
+    responseExamples: {
+      successMessage: 'Operación exitosa',
+      invalidMessage: 'Error en los datos enviados',
+      unauthorizedMessage: 'API Key inválida o faltante'
     },
     descriptions: {
       noteCheckout: 'Importante: la respuesta de 201 Created devuelve la variable checkoutUrl; este es el enlace del checkout',
@@ -120,21 +184,21 @@ export const es = {
     }
   },
   tryItOut: {
-    title: 'Try It Out',
+    title: 'Probar',
     apiKey: 'API Key',
     clear: 'Limpiar',
     help: 'Tu API Key se guarda localmente y nunca se comparte.',
-    requestBody: 'Request Body',
-    send: 'Send Request',
+    requestBody: 'Cuerpo de la petición',
+    send: 'Enviar petición',
     sending: 'Enviando...',
-    response: 'Response',
+    response: 'Respuesta',
     missingApiKey: 'Por favor ingresa tu API Key',
     invalidJson: 'JSON inválido en el body',
     unknownError: 'Error desconocido'
   },
   home: {
     badge: 'API REST · v1.0',
-    titleAccent: 'API Documentation',
+    titleAccent: 'Documentación de la API',
     heroDescription: 'Integra pagos entrantes y salientes de forma segura, ágil y confiable. Procesa transacciones en Latinoamérica con nuestra API REST simple y potente.',
     viewDocs: 'Ver Documentación',
     apiReference: 'API Reference',
@@ -182,7 +246,7 @@ export const es = {
     reliabilityText: '99.9% de uptime con infraestructura redundante y monitoreo 24/7.',
     multitenantTitle: 'Multi-tenant',
     multitenantText: 'Soporte nativo para múltiples países y monedas con aislamiento de datos.',
-    quickStartTitle: 'Quick Start',
+    quickStartTitle: 'Inicio rápido',
     quickStartText: 'Realiza tu primera transacción en 3 simples pasos:',
     step1Title: 'Obtén tu API Key',
     step1Text: 'Accede al Dashboard de JavaCash, navega a tu perfil y copia tu API Key. Este identificador único autenticará todas tus peticiones.',
@@ -224,6 +288,7 @@ export const es = {
     custom: 'Personalizado',
     perContract: 'Según contrato',
     perMinute: 'Por minuto',
+    requestsCount: '{count} peticiones',
     supportTitle: 'Soporte y Recursos',
     liveChat: 'Chat en Vivo',
     liveChatHours: 'Lunes a viernes, 9:00 - 18:00',
@@ -437,6 +502,7 @@ export const es = {
     formatTitle: 'Formato de Respuesta de Error',
     formatText: 'Todos los errores de la API siguen un formato consistente que facilita su manejo:',
     formatExampleTitle: 'Estructura de error estándar',
+    formatExampleError: 'Tipo de error',
     field: 'Campo',
     type: 'Tipo',
     description: 'Descripción',
@@ -542,6 +608,9 @@ export const es = {
         solution: 'Espera unos minutos y reintenta. Verifica el status en status.javacash.finance'
       }
     }
+  },
+  apiReference: {
+    placeholderText: 'Página de referencia de la API. Aquí se mostrará la lista de endpoints.'
   }
 };
 

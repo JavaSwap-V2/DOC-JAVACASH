@@ -112,7 +112,7 @@ export class TryItOutComponent implements OnInit {
       if (err.error) {
         this.response = {
           status: err.status || 0,
-          statusText: err.statusText || 'Error',
+          statusText: err.statusText || this.translationService.translate('tryItOut.unknownError'),
           body: err.error,
           headers: this.extractHeaders(err.headers),
           time: endTime - startTime

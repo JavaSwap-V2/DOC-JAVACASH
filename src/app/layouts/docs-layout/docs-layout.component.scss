@@ -21,12 +21,18 @@
     min-height: calc(100vh - #{$navbar-height});
     max-width: calc(100% - #{$sidebar-width});
     background: $background-white;
+    transition: margin-left $transition-base;
 
     .dark & {
       background: $dark-background;
     }
 
     @include mobile {
+      margin-left: 0;
+      max-width: 100%;
+    }
+
+    &--full {
       margin-left: 0;
       max-width: 100%;
     }
@@ -39,6 +45,18 @@
 
     @include mobile {
       padding: $spacing-6 $spacing-4;
+    }
+  }
+}
+
+// Cuando el sidebar está oculto en desktop (home), se comporta como en móvil
+.sidebar--hidden-desktop {
+  @include desktop {
+    transform: translateX(-100%);
+    box-shadow: $shadow-xl;
+
+    &.sidebar--open {
+      transform: translateX(0);
     }
   }
 }

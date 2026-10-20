@@ -30,6 +30,7 @@ import { TranslatePipe, TranslateHtmlPipe } from './shared/pipes/translate.pipe'
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 
 // Pages - API Reference
+import { ApiReferencePageComponent } from './features/api-reference/pages/api-reference-page/api-reference-page.component';
 import { EndpointDetailPageComponent } from './features/api-reference/pages/endpoint-detail-page/endpoint-detail-page.component';
 
 // Pages - Documentation
@@ -58,6 +59,7 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     TranslateHtmlPipe,
     // Pages
     HomePageComponent,
+    ApiReferencePageComponent,
     EndpointDetailPageComponent,
     IntroductionPageComponent,
     AuthenticationPageComponent,

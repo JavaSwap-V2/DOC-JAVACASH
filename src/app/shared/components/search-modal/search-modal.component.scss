@@ -10,7 +10,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   @include flex-center;
-  z-index: $z-modal;
+  z-index: 2000;
   padding: $spacing-4;
   @include fade-in;
 

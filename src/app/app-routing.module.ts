@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { DocsLayoutComponent } from './layouts/docs-layout/docs-layout.component';
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 import { EndpointDetailPageComponent } from './features/api-reference/pages/endpoint-detail-page/endpoint-detail-page.component';
+import { ApiReferencePageComponent } from './features/api-reference/pages/api-reference-page/api-reference-page.component';
 import { IntroductionPageComponent } from './features/documentation/pages/introduction-page/introduction-page.component';
 import { AuthenticationPageComponent } from './features/documentation/pages/authentication-page/authentication-page.component';
 import { ErrorsPageComponent } from './features/documentation/pages/errors-page/errors-page.component';
@@ -11,7 +12,7 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
 const routes: Routes = [
   {
     path: '',
-    component: MainLayoutComponent,
+    component: DocsLayoutComponent,
     children: [
       {
         path: '',
@@ -46,11 +47,10 @@ const routes: Routes = [
     path: ':country/api',
     component: DocsLayoutComponent,
     children: [
-      {
-        path: '',
-        redirectTo: '/gateway/introduction',
-        pathMatch: 'full'
-      },
+        {
+          path: '',
+          component: ApiReferencePageComponent
+        },
       {
         path: ':category/:endpointId',
         component: EndpointDetailPageComponent

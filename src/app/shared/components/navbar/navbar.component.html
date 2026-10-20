@@ -16,7 +16,7 @@
 
       <a routerLink="/" class="navbar__logo">
         <img class="navbar__logo-icon" src="assets/images/logo.png" alt="JavaCash" style="height: 32px; width: auto;">
-        <span class="navbar__title">API Docs</span>
+        <span class="navbar__title">{{ 'navbar.title' | t }}</span>
       </a>
     </div>
 
@@ -28,9 +28,9 @@
       <a routerLink="/gateway" routerLinkActive="active" class="navbar__link">
         {{ 'navbar.docs' | t }}
       </a>
-      <a [routerLink]="['/', currentCountry.code.toLowerCase(), 'api']" routerLinkActive="active" class="navbar__link">
+      <!-- <a [routerLink]="['/', currentCountry.code.toLowerCase(), 'api']" routerLinkActive="active" class="navbar__link">
         {{ 'navbar.apiReference' | t }}
-      </a>
+      </a> -->
     </div>
 
     <!-- Acciones -->

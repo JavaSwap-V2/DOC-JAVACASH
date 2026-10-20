@@ -93,6 +93,9 @@
   }
 
   &__code {
+    max-width: 100%;
+    overflow-x: auto;
+    
     @include mobile {
       order: -1;
     }

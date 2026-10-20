@@ -4,6 +4,7 @@
 
 :host {
   display: block;
+  max-width: 100%;
 }
 
 .code-block {
@@ -126,6 +127,7 @@
   // Content Area
   &__content {
     overflow-x: auto;
+    max-width: 100%;
     @include custom-scrollbar(6px, $border-gray);
 
     .dark & {
@@ -140,6 +142,10 @@
     font-size: $text-sm;
     line-height: $leading-relaxed;
     color: $code-text-light;
+    min-width: 0;
+    max-width: 100%;
+    white-space: pre;
+    word-break: normal;
 
     .dark & {
       color: $code-text-dark;

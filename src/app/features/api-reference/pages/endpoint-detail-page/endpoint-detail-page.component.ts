@@ -101,9 +101,12 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     const url = this.getFullUrl();
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url).then(() => {
-        this.toastService.success('URL copiada', url);
+        this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
       }).catch(() => {
-        this.toastService.error('Error al copiar', 'No se pudo copiar la URL');
+        this.toastService.error(
+          this.translationService.translate('common.copyErrorTitle'),
+          this.translationService.translate('common.copyUrlErrorMessage')
+        );
       });
     } else {
       const textarea = document.createElement('textarea');
@@ -112,7 +115,7 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      this.toastService.success('URL copiada', url);
+      this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
     }
   }
 }

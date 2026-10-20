@@ -10,9 +10,61 @@ export const zh: TranslationDictionary = {
     copyUrl: '复制 URL',
     loading: '加载中...',
     yes: '是',
-    no: '否'
+    no: '否',
+    dismiss: '关闭',
+    email: '电子邮箱',
+    copiedClipboard: '已复制到剪贴板',
+    copyErrorTitle: '复制失败',
+    copyErrorMessage: '无法复制代码',
+    copiedUrl: 'URL 已复制',
+    copyUrlErrorMessage: '无法复制 URL'
+  },
+  meta: {
+    title: 'JavaCash - API 文档',
+    description: 'JavaCash 官方 API 文档,适用于阿根廷、厄瓜多尔、智利、危地马拉和秘鲁的支付集成.'
+  },
+  country: {
+    accountTypes: {
+      savings: '储蓄账户',
+      checking: '支票账户'
+    },
+    methods: {
+      transfer: {
+        name: '转账',
+        description: '客户通过网上银行向本地账户转账。'
+      },
+      qr: {
+        name: 'QR CobroDigital',
+        description: '客户扫描二维码或在二维码内选择支付方式。'
+      },
+      rapipago: {
+        name: 'Rapipago',
+        description: '客户在 Rapipago 网络生成账单以现金付款。'
+      },
+      mercadopago: {
+        name: 'Mercado Pago',
+        description: '客户在结账时使用 Mercado Pago 钱包付款。'
+      },
+      transferencia: {
+        name: '银行转账',
+        description: '客户通过网上银行向本地账户付款。'
+      },
+      efectivo: {
+        name: '现金支付',
+        description: '客户在授权地点以现金付款。'
+      },
+      tarjeta: {
+        name: '借记卡/信用卡',
+        description: '客户在结账时使用银行卡付款。'
+      },
+      billetera: {
+        name: '数字钱包',
+        description: '客户在结账时使用数字钱包付款。'
+      }
+    }
   },
   navbar: {
+    title: 'API 文档',
     home: '首页',
     docs: '文档',
     apiReference: 'API 参考',
@@ -69,6 +121,12 @@ export const zh: TranslationDictionary = {
     notFoundTitle: '未找到接口',
     notFoundText: '我们找不到你要查找的接口.',
     requestBodyDescription: 'JSON 格式的请求体',
+    groups: {
+      payin: '接收付款接口',
+      payout: '发送资金接口',
+      payinName: 'PayIn',
+      payoutName: 'PayOut'
+    },
     headersDesc: {
       apiKey: '你的身份验证 API Key',
       contentType: '请求的内容类型',
@@ -103,7 +161,13 @@ export const zh: TranslationDictionary = {
       r404: '未找到资源',
       r422: '无法处理的实体 - 验证错误',
       r429: '请求过多 - 超出速率限制',
-      r500: '服务器内部错误'
+      r500: '服务器内部错误',
+      rDefault: '服务器响应'
+    },
+    responseExamples: {
+      successMessage: '操作成功',
+      invalidMessage: '提交的数据有误',
+      unauthorizedMessage: 'API 密钥无效或缺失'
     },
     descriptions: {
       noteCheckout: '重要:201 Created 响应会返回 checkoutUrl 变量,即结账链接',
@@ -223,6 +287,7 @@ export const zh: TranslationDictionary = {
     custom: '自定义',
     perContract: '按合同',
     perMinute: '每分钟',
+    requestsCount: '{count} 次请求',
     supportTitle: '支持与资源',
     liveChat: '在线客服',
     liveChatHours: '周一至周五,9:00 - 18:00',
@@ -436,6 +501,7 @@ export const zh: TranslationDictionary = {
     formatTitle: '错误响应格式',
     formatText: '所有 API 错误都遵循一致的格式,便于处理:',
     formatExampleTitle: '标准错误结构',
+    formatExampleError: '错误类型',
     field: '字段',
     type: '类型',
     description: '描述',
@@ -536,5 +602,8 @@ export const zh: TranslationDictionary = {
         solution: '等待几分钟后重试.在 status.javacash.finance 查看状态'
       }
     }
+  },
+  apiReference: {
+    placeholderText: 'API 参考页面。此处将显示接口列表。'
   }
 };

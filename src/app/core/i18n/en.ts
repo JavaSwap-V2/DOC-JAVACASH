@@ -10,9 +10,61 @@ export const en: TranslationDictionary = {
     copyUrl: 'Copy URL',
     loading: 'Loading...',
     yes: 'Yes',
-    no: 'No'
+    no: 'No',
+    dismiss: 'Dismiss',
+    email: 'Email',
+    copiedClipboard: 'Copied to clipboard',
+    copyErrorTitle: 'Copy error',
+    copyErrorMessage: 'The code could not be copied',
+    copiedUrl: 'URL copied',
+    copyUrlErrorMessage: 'The URL could not be copied'
+  },
+  meta: {
+    title: 'JavaCash - API Documentation',
+    description: 'Official JavaCash API documentation for payment integration in Argentina, Ecuador, Chile, Guatemala and Peru.'
+  },
+  country: {
+    accountTypes: {
+      savings: 'Savings Account',
+      checking: 'Checking Account'
+    },
+    methods: {
+      transfer: {
+        name: 'Transfer',
+        description: 'The customer transfers the amount from their online banking to a local account.'
+      },
+      qr: {
+        name: 'QR CobroDigital',
+        description: 'The customer scans the QR code or chooses a payment method within the QR.'
+      },
+      rapipago: {
+        name: 'Rapipago',
+        description: 'The customer pays in cash by generating their slip on the Rapipago network.'
+      },
+      mercadopago: {
+        name: 'Mercado Pago',
+        description: 'The customer pays with their Mercado Pago wallet within the checkout.'
+      },
+      transferencia: {
+        name: 'Bank Transfer',
+        description: 'The customer pays from their online banking to a local account.'
+      },
+      efectivo: {
+        name: 'Cash Payment',
+        description: 'The customer pays in cash at authorized locations.'
+      },
+      tarjeta: {
+        name: 'Debit / Credit Card',
+        description: 'The customer pays with a card within the checkout.'
+      },
+      billetera: {
+        name: 'Digital Wallet',
+        description: 'The customer pays from their digital wallet within the checkout.'
+      }
+    }
   },
   navbar: {
+    title: 'API Docs',
     home: 'Home',
     docs: 'Documentation',
     apiReference: 'API Reference',
@@ -69,6 +121,12 @@ export const en: TranslationDictionary = {
     notFoundTitle: 'Endpoint not found',
     notFoundText: "We couldn't find the endpoint you are looking for.",
     requestBodyDescription: 'Request body in JSON format',
+    groups: {
+      payin: 'Endpoints to receive payments',
+      payout: 'Endpoints to send funds',
+      payinName: 'PayIn',
+      payoutName: 'PayOut'
+    },
     headersDesc: {
       apiKey: 'Your authentication API Key',
       contentType: 'Content type of the request',
@@ -103,7 +161,13 @@ export const en: TranslationDictionary = {
       r404: 'Resource not found',
       r422: 'Unprocessable Entity - validation error',
       r429: 'Too Many Requests - rate limit exceeded',
-      r500: 'Internal server error'
+      r500: 'Internal server error',
+      rDefault: 'Server response'
+    },
+    responseExamples: {
+      successMessage: 'Operation successful',
+      invalidMessage: 'Error in the submitted data',
+      unauthorizedMessage: 'Invalid or missing API Key'
     },
     descriptions: {
       noteCheckout: 'Important: the 201 Created response returns the checkoutUrl variable; this is the Checkout link',
@@ -223,6 +287,7 @@ export const en: TranslationDictionary = {
     custom: 'Custom',
     perContract: 'Per contract',
     perMinute: 'Per minute',
+    requestsCount: '{count} requests',
     supportTitle: 'Support and Resources',
     liveChat: 'Live Chat',
     liveChatHours: 'Monday to Friday, 9am - 6pm',
@@ -436,6 +501,7 @@ export const en: TranslationDictionary = {
     formatTitle: 'Error Response Format',
     formatText: 'All API errors follow a consistent format that makes them easy to handle:',
     formatExampleTitle: 'Standard error structure',
+    formatExampleError: 'Error type',
     field: 'Field',
     type: 'Type',
     description: 'Description',
@@ -541,5 +607,8 @@ export const en: TranslationDictionary = {
         solution: 'Wait a few minutes and retry. Check the status at status.javacash.finance'
       }
     }
+  },
+  apiReference: {
+    placeholderText: 'API Reference page. The list of endpoints will be displayed here.'
   }
 };

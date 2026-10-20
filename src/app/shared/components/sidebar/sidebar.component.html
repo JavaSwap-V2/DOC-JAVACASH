@@ -1,5 +1,5 @@
 <!-- sidebar.component.html -->
-<aside class="sidebar" [class.sidebar--open]="isOpen">
+<aside class="sidebar" [class.sidebar--open]="isOpen" [class.sidebar--hidden-desktop]="hideOnDesktop">
   <!-- Header con botón de cerrar (mobile) -->
   <div class="sidebar__header hide-desktop">
     <h3 class="sidebar__title">{{ 'sidebar.navigation' | t }}</h3>
@@ -74,7 +74,7 @@
                 <line x1="12" y1="16" x2="12" y2="8"></line>
               </g>
             </svg>
-            <h4 class="sidebar__section-title">{{ group.name }}</h4>
+            <h4 class="sidebar__section-title">{{ group.nameKey ? (group.nameKey | t) : group.name }}</h4>
           </div>
           <svg 
             class="sidebar__chevron" 
@@ -107,9 +107,10 @@
   </div>
 </aside>
 
-<!-- Overlay para mobile -->
+<!-- Overlay -->
 <div 
-  class="sidebar__overlay hide-desktop" 
+  class="sidebar__overlay"
+  [class.hide-desktop]="!hideOnDesktop" 
   *ngIf="isOpen"
   (click)="closeSidebar()">
 </div>

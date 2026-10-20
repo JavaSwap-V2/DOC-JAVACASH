@@ -13,6 +13,7 @@ import { EndpointService } from '@core/services/endpoint.service';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   @Input() isOpen = true;
+  @Input() hideOnDesktop = false;
   @Output() close = new EventEmitter<void>();
 
   endpointGroups$: Observable<EndpointGroup[]>;
