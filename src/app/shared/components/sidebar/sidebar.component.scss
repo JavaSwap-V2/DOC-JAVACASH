@@ -126,6 +126,82 @@
     padding: 0 $spacing-4;
   }
 
+  // ========== SELECTOR DE PAÍS (solo mobile) ==========
+  // En móvil el navbar no tiene espacio para el selector, así que vive aquí.
+  &__country {
+    display: none;
+
+    @include mobile {
+      display: block;
+    }
+  }
+
+  &__country-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: $spacing-2;
+  }
+
+  &__country-item {
+    @include flex-start;
+    width: 100%;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    text-align: left;
+
+    &:hover {
+      background: $background-gray;
+
+      .dark & {
+        background: $dark-surface-elevated;
+      }
+    }
+
+    &.active {
+      background: $primary-blue-lighter;
+
+      .dark & {
+        background: rgba($primary-blue, 0.15);
+      }
+
+      .sidebar__country-name {
+        color: $primary-blue;
+        font-weight: $font-semibold;
+
+        .dark & {
+          color: $primary-blue-light;
+        }
+      }
+    }
+  }
+
+  &__country-name {
+    flex: 1;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    color: #000000; // REGLA: Negro
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__country-currency {
+    font-size: $text-xs;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
   &__section-title {
     font-size: $text-xs;
     font-weight: $font-semibold;

@@ -15,6 +15,24 @@
   <div class="sidebar__content">
     <!-- Navegación principal -->
     <nav class="sidebar__nav">
+      <!-- Selector de País: solo en móvil, donde el navbar no tiene espacio -->
+      <div class="sidebar__section sidebar__country">
+        <h4 class="sidebar__section-title">{{ 'sidebar.country' | t }}</h4>
+        <ul class="sidebar__country-list">
+          <li *ngFor="let country of countries">
+            <button
+              type="button"
+              class="sidebar__country-item"
+              [class.active]="country.code === currentCountry.code"
+              (click)="selectCountry(country)">
+              <app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag>
+              <span class="sidebar__country-name">{{ country.name }}</span>
+              <span class="sidebar__country-currency">{{ country.currency }}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
       <div class="sidebar__section">
         <h4 class="sidebar__section-title">{{ 'sidebar.documentation' | t }}</h4>
         <ul class="sidebar__list">

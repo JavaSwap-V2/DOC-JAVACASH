@@ -86,6 +86,7 @@ export const zh: TranslationDictionary = {
     introduction: '简介',
     authentication: '认证',
     errors: '错误',
+    country: '国家',
     endpoints: {
       register: '注册',
       uploadReceipt: '上传凭证',

@@ -87,6 +87,7 @@ export const es = {
     introduction: 'Introducción',
     authentication: 'Autenticación',
     errors: 'Errores',
+    country: 'País',
     endpoints: {
       register: 'Registrar',
       uploadReceipt: 'Subir comprobante',

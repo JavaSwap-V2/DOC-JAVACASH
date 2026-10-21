@@ -15,7 +15,10 @@
       </button>
 
       <a routerLink="/" class="navbar__logo">
-        <img class="navbar__logo-icon" src="assets/images/logo.png" alt="JavaCash" style="height: 32px; width: auto;">
+        <img
+          class="navbar__logo-icon"
+          [src]="(isDarkMode$ | async) ? 'assets/images/logo.png' : 'assets/images/logo-short.png'"
+          alt="JavaCash">
         <span class="navbar__title">{{ 'navbar.title' | t }}</span>
       </a>
     </div>
@@ -48,8 +51,8 @@
         <kbd class="navbar__kbd hide-mobile">Ctrl K</kbd>
       </button>
 
-      <!-- Selector de País -->
-      <div class="navbar__country-selector">
+      <!-- Selector de País (oculto en móvil: vive en el panel lateral) -->
+      <div class="navbar__country-selector hide-mobile">
         <button 
           class="navbar__country-btn"
           (click)="toggleCountryDropdown()"

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewEncapsul
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { EndpointGroup, Endpoint } from '@core/models/api.models';
+import { EndpointGroup, Endpoint, Country, COUNTRIES, COUNTRY_LIST } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 
 @Component({
@@ -20,6 +20,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   activeEndpointId: string = '';
   expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']);
 
+  currentCountry: Country = COUNTRIES.ARG;
+  countries: Country[] = COUNTRY_LIST.filter(c => c.available);
+
   private destroy$ = new Subject<void>();
 
   navigationItems = [
@@ -36,6 +39,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.endpointService.currentCountry$.subscribe(code => {
+      this.currentCountry = COUNTRIES[code];
+    });
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntil(this.destroy$)
@@ -77,6 +84,23 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.router.navigate([country, 'api', endpoint.category, endpoint.id]);
     
     // Cerrar sidebar en mobile
+    if (window.innerWidth < 768) {
+      this.close.emit();
+    }
+  }
+
+  selectCountry(country: Country): void {
+    this.currentCountry = country;
+    this.endpointService.setCurrentCountry(country.code);
+
+    const segments = this.router.url.split('#')[0].split('?')[0]
+      .split('/').filter(Boolean);
+
+    if (segments[1] === 'api') {
+      segments[0] = country.code.toLowerCase();
+      this.router.navigate(['/', ...segments]);
+    }
+
     if (window.innerWidth < 768) {
       this.close.emit();
     }
