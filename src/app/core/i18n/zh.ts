@@ -60,7 +60,11 @@ export const zh: TranslationDictionary = {
       billetera: {
         name: '数字钱包',
         description: '客户在结账时使用数字钱包付款。'
-      }
+      },
+      pse: {
+        description: '客户通过银行使用在线支付按钮付款。',
+        name: '在线支付 (PSE)',
+      },
     }
   },
   navbar: {
@@ -176,6 +180,7 @@ export const zh: TranslationDictionary = {
       listAllPayin: '获取所有 payin 的接口',
       listPayoutByReference: '按参考号获取 payout 的接口',
       listAllPayout: '获取所有 payout 的接口',
+      registerPayout: '创建 PayOut 的接口',
       payinDetailById: '按 id 获取 payin 的接口',
       payoutDetailById: '按 id 获取 payout 的接口',
       listPayoutByCustomId: '按自定义 id 获取 payout 的接口',
@@ -224,7 +229,8 @@ export const zh: TranslationDictionary = {
     },
     startNow: '立即开始',
     countriesTitle: '可用国家',
-    countriesSubtitle: '访问各国家的 API 文档'
+    countriesSubtitle: '访问各国家的 API 文档',
+    title: 'JavaCash Finance',
   },
   intro: {
     stable: '稳定',
@@ -259,8 +265,6 @@ export const zh: TranslationDictionary = {
     successfulResponse: '成功响应',
     step3NoteHtml: '<code>checkoutUrl</code> 字段包含你与客户共享以完成支付的链接.',
     envTitle: '可用环境',
-    prodApiTitle: '生产 API',
-    dashboardTitle: '仪表板',
     dashboardText: '访问仪表板以管理你的交易并获取你的 API 密钥:',
     sandboxTitle: '沙盒环境(开发/测试)',
     sandboxText: '沙盒是唯一的,所有国家共享.',
@@ -296,10 +300,29 @@ export const zh: TranslationDictionary = {
     status: '状态',
     nextTitle: '后续步骤',
     authNextDesc: '了解如何验证你的请求',
+    apiNextTitle: 'API 参考',
     apiNextDesc: '探索所有可用的接口',
     errorsNextTitle: '错误处理',
     errorsNextDesc: '错误代码及处理方法',
-    authTitle: '认证'
+    accountTypesTableAria: '按国家划分的每种账户类型的当地名称',
+    allEndpoints: '所有端点 <code>/api/*</code>',
+    apisTitle: '生产 API',
+    authNextTitle: '认证',
+    baseUrl: '基础 URL',
+    baseUrlTableAria: '按国家划分的基础 URL 和货币',
+    currency: '货币',
+    dashboardsTitle: '仪表板',
+    identificationTableAria: '按国家划分的货币和身份证明文件',
+    methodsTableAria: '按国家划分的支付方式',
+    minutes: '15 分钟',
+    nextNavAria: '导航至后续部分',
+    rateLimitsFooterText: '这些限制对所有国家都相同，可根据签订的服务计划进行调整。',
+    rateLimitsNoteHtml: '每个响应都包含标准的 <code>RateLimit-Limit</code>、<code>RateLimit-Remaining</code> 和 <code>RateLimit-Reset</code> 请求头，方便你监控用量.该限制在阿根廷、厄瓜多尔、智利、危地马拉和秘鲁均相同.',
+    rateLimitsTableAria: 'API 请求限制',
+    requestsPerIp: '每个 IP 10,000 次请求',
+    sandboxDashboardV1: '<strong>沙箱仪表板 V1：</strong>',
+    scope: '范围',
+    step2NoteHtml: '所有国家的 API 契约均相同。不同的是<strong>基础 URL</strong>和<strong>货币</strong>：',
   },
   auth: {
     title: '认证',
@@ -493,7 +516,20 @@ export const zh: TranslationDictionary = {
     nextExploreTitle: '探索接口',
     nextExploreText: '查看完整的 API 参考',
     nextErrorsTitle: '错误处理',
-    nextErrorsText: '了解如何处理 API 错误'
+    nextErrorsText: '了解如何处理 API 错误',
+    envTableEnv: '环境',
+    envTableProd: '生产',
+    envTableProdSource: '国家仪表板(阿根廷、厄瓜多尔、智利、危地马拉或秘鲁)',
+    envTableProdUse: '使用真实资金的真实交易',
+    envTableTest: '测试',
+    envTableTestSourceHtml: '沙盒仪表板(<code>stagin.javacash.finance</code>)',
+    envTableTestUse: '无实际扣款的测试',
+    envTableUse: '用途',
+    envTableWhere: '获取位置',
+    fBulkTimestamp: '发送日期和时间 (ISO 8601 格式)',
+    fBulkUserId: '批次所有用户的标识符',
+    formatExampleText: '无前缀的十六进制字符串',
+    stProcessed: '交易已发送至供应商，正在处理中',
   },
   errors: {
     title: '错误处理',
@@ -601,7 +637,9 @@ export const zh: TranslationDictionary = {
         causes: ['计划内维护', '系统过载', '正在更新'],
         solution: '等待几分钟后重试.在 status.javacash.finance 查看状态'
       }
-    }
+    },
+    formatExampleMessage: '错误的可读描述',
+    nextApiTitle: 'API 参考',
   },
   apiReference: {
     placeholderText: 'API 参考页面。此处将显示接口列表。'

@@ -60,7 +60,11 @@ export const en: TranslationDictionary = {
       billetera: {
         name: 'Digital Wallet',
         description: 'The customer pays from their digital wallet within the checkout.'
-      }
+      },
+      pse: {
+        description: 'The customer pays from their bank using the online payment button.',
+        name: 'Online Payment (PSE)',
+      },
     }
   },
   navbar: {
@@ -176,6 +180,7 @@ export const en: TranslationDictionary = {
       listAllPayin: 'Endpoint to get all PayIns',
       listPayoutByReference: 'Endpoint to get a PayOut by reference',
       listAllPayout: 'Endpoint to get all PayOuts',
+      registerPayout: 'Endpoint to create a PayOut',
       payinDetailById: 'Endpoint to get a PayIn by its id',
       payoutDetailById: 'Endpoint to get a PayOut by its id',
       listPayoutByCustomId: 'Endpoint to get a PayOut by custom id',
@@ -224,7 +229,8 @@ export const en: TranslationDictionary = {
     },
     startNow: 'Start now',
     countriesTitle: 'Available countries',
-    countriesSubtitle: 'Access the API documentation for each country'
+    countriesSubtitle: 'Access the API documentation for each country',
+    title: 'JavaCash Finance',
   },
   intro: {
     stable: 'Stable',
@@ -259,8 +265,6 @@ export const en: TranslationDictionary = {
     successfulResponse: 'Successful response',
     step3NoteHtml: 'The <code>checkoutUrl</code> field contains the link you must share with your customer so they can complete the payment.',
     envTitle: 'Available Environments',
-    prodApiTitle: 'Production API',
-    dashboardTitle: 'Dashboard',
     dashboardText: 'Access the dashboard to manage your transactions and get your API Key:',
     sandboxTitle: 'Sandbox Environment (development/testing)',
     sandboxText: 'The Sandbox is unique and shared by all countries.',
@@ -296,10 +300,29 @@ export const en: TranslationDictionary = {
     status: 'Status',
     nextTitle: 'Next Steps',
     authNextDesc: 'Learn how to authenticate your requests',
+    apiNextTitle: 'API Reference',
     apiNextDesc: 'Explore all available endpoints',
     errorsNextTitle: 'Error Handling',
     errorsNextDesc: 'Error codes and how to handle them',
-    authTitle: 'Authentication'
+    accountTypesTableAria: 'Local name of each account type by country',
+    allEndpoints: 'All endpoints <code>/api/*</code>',
+    apisTitle: 'Production API',
+    authNextTitle: 'Authentication',
+    baseUrl: 'Base URL',
+    baseUrlTableAria: 'Base URL and currency by country',
+    currency: 'Currency',
+    dashboardsTitle: 'Dashboard',
+    identificationTableAria: 'Currency and identity document by country',
+    methodsTableAria: 'Payment methods by country',
+    minutes: '15 minutes',
+    nextNavAria: 'Navigation to next sections',
+    rateLimitsFooterText: 'These limits apply equally to all countries and may be adjusted according to the contracted service plan.',
+    rateLimitsNoteHtml: 'Every response includes the standard <code>RateLimit-Limit</code>, <code>RateLimit-Remaining</code> and <code>RateLimit-Reset</code> headers so you can monitor your usage. The limit is the same in Argentina, Ecuador, Chile, Guatemala and Peru.',
+    rateLimitsTableAria: 'API request limits',
+    requestsPerIp: '10,000 requests per IP',
+    sandboxDashboardV1: '<strong>Sandbox Dashboard V1:</strong>',
+    scope: 'Scope',
+    step2NoteHtml: 'The API contract is the same in all countries. What changes is the <strong>base URL</strong> and the <strong>currency</strong>:',
   },
   auth: {
     title: 'Authentication',
@@ -493,7 +516,20 @@ export const en: TranslationDictionary = {
     nextExploreTitle: 'Explore Endpoints',
     nextExploreText: 'See the full API reference',
     nextErrorsTitle: 'Error Handling',
-    nextErrorsText: 'Learn how to handle API errors'
+    nextErrorsText: 'Learn how to handle API errors',
+    envTableEnv: 'Environment',
+    envTableProd: 'Production',
+    envTableProdSource: 'Country dashboard (Argentina, Ecuador, Chile, Guatemala or Peru)',
+    envTableProdUse: 'Real transactions with real money',
+    envTableTest: 'Testing',
+    envTableTestSourceHtml: 'Sandbox dashboard (<code>stagin.javacash.finance</code>)',
+    envTableTestUse: 'Testing without real charges',
+    envTableUse: 'Usage',
+    envTableWhere: 'Where to obtain',
+    fBulkTimestamp: 'Date and time of sending in ISO 8601 format',
+    fBulkUserId: 'Identifier of the user who owns the batch',
+    formatExampleText: 'Hexadecimal string without prefix',
+    stProcessed: 'The transaction was sent to the provider and is in processing',
   },
   errors: {
     title: 'Error Handling',
@@ -606,7 +642,9 @@ export const en: TranslationDictionary = {
         causes: ['Scheduled maintenance', 'System overload', 'Update in progress'],
         solution: 'Wait a few minutes and retry. Check the status at status.javacash.finance'
       }
-    }
+    },
+    formatExampleMessage: 'Readable description of the error',
+    nextApiTitle: 'API Reference',
   },
   apiReference: {
     placeholderText: 'API Reference page. The list of endpoints will be displayed here.'

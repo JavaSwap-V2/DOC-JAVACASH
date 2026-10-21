@@ -83,11 +83,13 @@
             {{ 'intro.step1Text' | t }}
           </p>
           <ul>
-            <li *ngFor="let country of countries">
-              <strong>{{ country.name }}:</strong>{{' '}}
-              <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>{{' '}}
-              <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
-            </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong>{{' '}}
+                <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>{{' '}}
+                <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
+              </li>
+            </ng-container>
             <li>
               <strong>{{ 'intro.sandbox' | t }}:</strong>{{' '}}
               <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a>
@@ -108,6 +110,25 @@
             language="curl"
             [title]="'intro.createPayin' | t">
           </app-code-block>
+          <p [innerHTML]="'intro.step2NoteHtml' | tHtml"></p>
+          <table class="doc-table" role="table" [attr.aria-label]="'intro.baseUrlTableAria' | t">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'intro.country' | t }}</th>
+                <th scope="col">{{ 'intro.currency' | t }}</th>
+                <th scope="col">{{ 'intro.baseUrl' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td><code>{{ country.currency }}</code></td>
+                <td><code>{{ country.baseUrl }}</code></td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -138,22 +159,26 @@
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>{{ 'intro.prodApiTitle' | t }}</h4>
+        <h4>{{ 'intro.apisTitle' | t }}</h4>
         <ul>
-          <li *ngFor="let country of countries">
-            <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
-            <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
-          </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
+                <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
+              </li>
+            </ng-container>
         </ul>
         <br>
-        <h4>{{ 'intro.dashboardTitle' | t }}</h4>
+        <h4>{{ 'intro.dashboardsTitle' | t }}</h4>
         <p>{{ 'intro.dashboardText' | t }}</p>
         <ul>
-          <li *ngFor="let country of countries">
-            <strong>{{ country.name }}:</strong>
-            <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
-            <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
-          </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong>
+                <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
+                <em *ngIf="!country.available"> {{ 'intro.soon' | t }}</em>
+              </li>
+            </ng-container>
         </ul>
         <br>
         <h4>{{ 'intro.sandboxTitle' | t }}</h4>
@@ -173,7 +198,7 @@
     <h2 id="country-params">{{ 'intro.countryParamsTitle' | t }}</h2>
     <p [innerHTML]="'intro.countryParamsTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" [attr.aria-label]="'intro.countryParamsTitle' | t">
+    <table class="doc-table" role="table" [attr.aria-label]="'intro.identificationTableAria' | t">
       <thead>
         <tr>
           <th scope="col">{{ 'intro.country' | t }}</th>
@@ -183,19 +208,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td><code>{{ country.currency }}</code></td>
-          <td>{{ country.identification.label }}</td>
-          <td><code>{{ country.identification.example }}</code></td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td><code>{{ country.currency }}</code></td>
+                <td>{{ country.identification.label }}</td>
+                <td><code>{{ country.identification.example }}</code></td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
 
     <h3>{{ 'intro.accountTypesTitle' | t }}</h3>
     <p [innerHTML]="'intro.accountTypesTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" [attr.aria-label]="'intro.accountTypesTitle' | t">
+    <table class="doc-table" role="table" [attr.aria-label]="'intro.accountTypesTableAria' | t">
       <thead>
         <tr>
           <th scope="col">{{ 'intro.country' | t }}</th>
@@ -204,11 +231,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td>{{ country.accountTypes.savings | t }}</td>
-          <td>{{ country.accountTypes.checking | t }}</td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td>{{ country.accountTypes.savings | t }}</td>
+                <td>{{ country.accountTypes.checking | t }}</td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
   </section>
@@ -217,7 +246,7 @@
     <h2 id="payment-methods">{{ 'intro.methodsTitle' | t }}</h2>
     <p [innerHTML]="'intro.methodsTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" [attr.aria-label]="'intro.methodsTitle' | t">
+    <table class="doc-table" role="table" [attr.aria-label]="'intro.methodsTableAria' | t">
       <thead>
         <tr>
           <th scope="col">{{ 'intro.country' | t }}</th>
@@ -225,17 +254,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td>
-            <ul class="method-list">
-              <li *ngFor="let method of country.methods">
-                <strong>{{ method.name_method | t }}</strong>
-                <span>{{ method.description | t }}</span>
-              </li>
-            </ul>
-          </td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td>
+                  <ul class="method-list">
+                    <li *ngFor="let method of country.methods">
+                      <strong>{{ method.name_method | t }}</strong>
+                      <span>{{ method.description | t }}</span>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
   </section>
@@ -245,6 +276,28 @@
     <p>
       {{ 'intro.rateLimitsText' | t }}
     </p>
+    <p class="text-muted" [innerHTML]="'intro.rateLimitsNoteHtml' | tHtml"></p>
+
+    <table class="doc-table" role="table" [attr.aria-label]="'intro.rateLimitsTableAria' | t">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'intro.scope' | t }}</th>
+          <th scope="col">{{ 'intro.limit' | t }}</th>
+          <th scope="col">{{ 'intro.period' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td [innerHTML]="'intro.allEndpoints' | tHtml"></td>
+          <td>{{ 'intro.requestsPerIp' | t }}</td>
+          <td>{{ 'intro.minutes' | t }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      {{ 'intro.rateLimitsFooterText' | t }}
+    </p>
+
     <table class="doc-table" role="table" [attr.aria-label]="'intro.rateLimitsTitle' | t">
       <thead>
         <tr>
@@ -322,7 +375,7 @@
 
   <section class="doc-section" aria-labelledby="next-steps">
     <h2 id="next-steps">{{ 'intro.nextTitle' | t }}</h2>
-    <nav class="next-steps" [attr.aria-label]="'intro.nextTitle' | t">
+    <nav class="next-steps" [attr.aria-label]="'intro.nextNavAria' | t">
       <a routerLink="/gateway/authentication" class="next-step-card" aria-describedby="auth-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="7" cy="17" r="3"></circle>
@@ -330,18 +383,19 @@
           <path d="m10.39 10.71 3.54 3.54"></path>
         </svg>
         <div>
-          <h4>{{ 'intro.authTitle' | t }}</h4>
+          <h4>{{ 'intro.authNextTitle' | t }}</h4>
           <p id="auth-desc">{{ 'intro.authNextDesc' | t }}</p>
         </div>
       </a>
 
+      <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
       <!-- <a [routerLink]="['/', selectedCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         <div>
-          <h4>API Reference</h4>
+          <h4>{{ 'intro.apiNextTitle' | t }}</h4>
           <p id="api-desc">{{ 'intro.apiNextDesc' | t }}</p>
         </div>
       </a> -->

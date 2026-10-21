@@ -131,6 +131,7 @@ export class PostmanTransformerService {
       'payin-listar': 'listAllPayin',
       'payin-subir-comprobante': 'uploadReceipt',
       'payin-detalle-por-id': 'payinDetailById',
+      'payout-registrar': 'registerPayout',
       'payout-detalle-por-id': 'payoutDetailById',
       'payout-listar-por-referencia': 'listPayoutByReference',
       'payout-listar-por-cliente': 'listPayoutByCustomId',

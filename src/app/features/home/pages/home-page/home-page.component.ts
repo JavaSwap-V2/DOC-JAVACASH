@@ -83,6 +83,12 @@ console.log(data);`;
     this.router.navigate([code.toLowerCase(), 'api']);
   }
 
+  /** Las tarjetas de país llevan a la introducción, fijando el país para que los ejemplos correspondan. */
+  navigateToIntroduction(countryCode: CountryCode): void {
+    this.endpointService.setCurrentCountry(countryCode);
+    this.router.navigate(['/gateway', 'introduction']);
+  }
+
   navigateToDocs(): void {
     this.router.navigate(['/gateway']);
   }

@@ -286,16 +286,17 @@
         </div>
       </a>
 
-      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
+      <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+      <!-- <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         <div>
-          <h4>{{ 'navbar.apiReference' | t }}</h4>
+          <h4>{{ 'errors.nextApiTitle' | t }}</h4>
           <p>{{ 'errors.nextApiText' | t }}</p>
         </div>
-      </a>
+      </a> -->
     </div>
   </section>
 </article>

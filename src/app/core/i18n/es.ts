@@ -61,7 +61,11 @@ export const es = {
       billetera: {
         name: 'Billetera digital',
         description: 'El cliente paga desde su billetera digital dentro del checkout.'
-      }
+      },
+      pse: {
+        description: 'El cliente paga desde su banco usando el botón de pagos en línea.',
+        name: 'Pago en línea (PSE)',
+      },
     }
   },
   navbar: {
@@ -177,6 +181,7 @@ export const es = {
       listAllPayin: 'Endpoint para obtener todos los PayIn',
       listPayoutByReference: 'Endpoint para obtener un PayOut por referencia',
       listAllPayout: 'Endpoint para obtener todos los PayOut',
+      registerPayout: 'Endpoint para crear un PayOut',
       payinDetailById: 'Endpoint para obtener un PayIn por su id',
       payoutDetailById: 'Endpoint para obtener un PayOut por su id',
       listPayoutByCustomId: 'Endpoint para obtener un PayOut por custom id',
@@ -225,7 +230,8 @@ export const es = {
     },
     startNow: 'Empezar ahora',
     countriesTitle: 'Países disponibles',
-    countriesSubtitle: 'Accede a la documentación de la API por país'
+    countriesSubtitle: 'Accede a la documentación de la API por país',
+    title: 'JavaCash Finance',
   },
   intro: {
     stable: 'Estable',
@@ -260,8 +266,6 @@ export const es = {
     successfulResponse: 'Respuesta exitosa',
     step3NoteHtml: 'El campo <code>checkoutUrl</code> contiene el enlace que debes compartir con tu cliente para que complete el pago.',
     envTitle: 'Entornos Disponibles',
-    prodApiTitle: 'API de Producción',
-    dashboardTitle: 'Dashboard',
     dashboardText: 'Accede al dashboard para gestionar tus transacciones y obtener tu API Key:',
     sandboxTitle: 'Entorno Sandbox (desarrollo/pruebas)',
     sandboxText: 'El Sandbox es único y compartido por todos los países.',
@@ -297,10 +301,29 @@ export const es = {
     status: 'Status',
     nextTitle: 'Próximos Pasos',
     authNextDesc: 'Aprende cómo autenticar tus peticiones',
+    apiNextTitle: 'API Reference',
     apiNextDesc: 'Explora todos los endpoints disponibles',
     errorsNextTitle: 'Manejo de Errores',
     errorsNextDesc: 'Códigos de error y cómo manejarlos',
-    authTitle: 'Autenticación'
+    accountTypesTableAria: 'Nombre local de cada tipo de cuenta por país',
+    allEndpoints: 'Todos los endpoints <code>/api/*</code>',
+    apisTitle: 'API de Producción',
+    authNextTitle: 'Autenticación',
+    baseUrl: 'URL base',
+    baseUrlTableAria: 'URL base y moneda por país',
+    currency: 'Moneda',
+    dashboardsTitle: 'Dashboard',
+    identificationTableAria: 'Moneda y documento de identidad por país',
+    methodsTableAria: 'Métodos de pago por país',
+    minutes: '15 minutos',
+    nextNavAria: 'Navegación a próximas secciones',
+    rateLimitsFooterText: 'Estos límites aplican a todos los países por igual y pueden ajustarse según el plan de servicio contratado.',
+    rateLimitsNoteHtml: 'Cada respuesta incluye las cabeceras estándar <code>RateLimit-Limit</code>, <code>RateLimit-Remaining</code> y <code>RateLimit-Reset</code> para que puedas monitorear tu consumo. El límite es el mismo en Argentina, Ecuador, Chile, Guatemala y Perú.',
+    rateLimitsTableAria: 'Límites de peticiones a la API',
+    requestsPerIp: '10.000 peticiones por IP',
+    sandboxDashboardV1: '<strong>Dashboard Sandbox V1:</strong>',
+    scope: 'Alcance',
+    step2NoteHtml: 'El contrato de la API es el mismo en todos los países. Lo que cambia es la <strong>URL base</strong> y la <strong>moneda</strong>:',
   },
   auth: {
     title: 'Autenticación',
@@ -494,7 +517,20 @@ export const es = {
     nextExploreTitle: 'Explorar Endpoints',
     nextExploreText: 'Ve la referencia completa de la API',
     nextErrorsTitle: 'Manejo de Errores',
-    nextErrorsText: 'Aprende a manejar errores de la API'
+    nextErrorsText: 'Aprende a manejar errores de la API',
+    envTableEnv: 'Entorno',
+    envTableProd: 'Producción',
+    envTableProdSource: 'Dashboard del país (Argentina, Ecuador, Chile, Guatemala o Perú)',
+    envTableProdUse: 'Transacciones reales con dinero real',
+    envTableTest: 'Pruebas',
+    envTableTestSourceHtml: 'Dashboard de Sandbox (<code>stagin.javacash.finance</code>)',
+    envTableTestUse: 'Pruebas sin cargo real',
+    envTableUse: 'Uso',
+    envTableWhere: 'Dónde se obtiene',
+    fBulkTimestamp: 'Fecha y hora del envío en formato ISO 8601',
+    fBulkUserId: 'Identificador del usuario dueño del lote',
+    formatExampleText: 'Cadena hexadecimal sin prefijo',
+    stProcessed: 'La transacción fue enviada al proveedor y está en procesamiento',
   },
   errors: {
     title: 'Manejo de Errores',
@@ -607,7 +643,9 @@ export const es = {
         causes: ['Mantenimiento programado', 'Sobrecarga del sistema', 'Actualización en progreso'],
         solution: 'Espera unos minutos y reintenta. Verifica el status en status.javacash.finance'
       }
-    }
+    },
+    formatExampleMessage: 'Descripción legible del error',
+    nextApiTitle: 'API Reference',
   },
   apiReference: {
     placeholderText: 'Página de referencia de la API. Aquí se mostrará la lista de endpoints.'
