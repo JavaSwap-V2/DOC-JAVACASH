@@ -35,7 +35,7 @@ export const es = {
         description: 'El cliente transfiere el monto desde su banca en línea a una cuenta local.'
       },
       qr: {
-        name: 'QR CobroDigital',
+        name: 'QR',
         description: 'El cliente escanea el código QR o elige un medio de pago dentro del QR.'
       },
       rapipago: {

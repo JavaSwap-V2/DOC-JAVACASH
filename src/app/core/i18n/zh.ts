@@ -34,7 +34,7 @@ export const zh: TranslationDictionary = {
         description: '客户通过网上银行向本地账户转账。'
       },
       qr: {
-        name: 'QR CobroDigital',
+        name: 'QR',
         description: '客户扫描二维码或在二维码内选择支付方式。'
       },
       rapipago: {

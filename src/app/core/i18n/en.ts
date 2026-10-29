@@ -34,7 +34,7 @@ export const en: TranslationDictionary = {
         description: 'The customer transfers the amount from their online banking to a local account.'
       },
       qr: {
-        name: 'QR CobroDigital',
+        name: 'QR',
         description: 'The customer scans the QR code or chooses a payment method within the QR.'
       },
       rapipago: {
