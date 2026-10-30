@@ -27,13 +27,14 @@
           </svg>
           {{ 'home.viewDocs' | t }}
         </button>
-        <button class="btn btn-secondary" (click)="navigateToCountryDocs()">
+        <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+        <!-- <button class="btn btn-secondary" (click)="navigateToCountryDocs()">
           <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="16 18 22 12 16 6"></polyline>
             <polyline points="8 6 2 12 8 18"></polyline>
           </svg>
           {{ 'home.apiReference' | t }}
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -112,22 +113,22 @@
     <p class="section-subtitle">{{ 'home.countriesSubtitle' | t }}</p>
 
     <div class="country-cards">
-      <button
-        class="country-card"
-        *ngFor="let country of countries"
-        [class.country-card--soon]="!country.available"
-        (click)="navigateToCountryDocs(country.code)">
-        <span class="country-card__flag"><app-flag [code]="country.flagCode" [alt]="country.name" size="xl"></app-flag></span>
-        <h3 class="country-card__name">{{ country.name }}</h3>
-        <p class="country-card__currency">{{ country.currency }}</p>
-        <span class="country-card__badge" *ngIf="!country.available">{{ 'common.comingSoon' | t }}</span>
-        <div class="country-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </div>
-      </button>
+      <ng-container *ngFor="let country of countries">
+        <button
+          class="country-card"
+          *ngIf="country.available"
+          (click)="navigateToIntroduction(country.code)">
+          <span class="country-card__flag"><app-flag [code]="country.flagCode" [alt]="country.name" size="xl"></app-flag></span>
+          <h3 class="country-card__name">{{ country.name }}</h3>
+          <p class="country-card__currency">{{ country.currency }}</p>
+          <div class="country-card__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </ng-container>
     </div>
   </section>
 </div>

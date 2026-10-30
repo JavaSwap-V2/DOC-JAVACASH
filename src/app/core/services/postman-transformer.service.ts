@@ -19,11 +19,14 @@ import {
   RequestBodyField,
   HttpMethod
 } from '../models/api.models';
+import { TranslationService } from './translation.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostmanTransformerService {
+
+  constructor(private translationService: TranslationService) {}
 
   /**
    * Transforma una Postman Collection completa en un array de grupos de endpoints
@@ -109,6 +112,7 @@ export class PostmanTransformerService {
       'subir-comprobante': 'uploadReceipt',
       'listar-por-referencia': 'listByReference',
       'listar-por-cliente': 'listByClient',
+      'detalle-por-id': 'detailById',
       'listar': 'list'
     };
     const key = keysBySlug[this.slugify(name)];
@@ -126,7 +130,11 @@ export class PostmanTransformerService {
       'payin-listar-por-cliente': 'listPayinByCustomId',
       'payin-listar': 'listAllPayin',
       'payin-subir-comprobante': 'uploadReceipt',
+      'payin-detalle-por-id': 'payinDetailById',
+      'payout-registrar': 'registerPayout',
+      'payout-detalle-por-id': 'payoutDetailById',
       'payout-listar-por-referencia': 'listPayoutByReference',
+      'payout-listar-por-cliente': 'listPayoutByCustomId',
       'payout-listar': 'listAllPayout'
     };
     const key = keysById[id];
@@ -207,12 +215,13 @@ export class PostmanTransformerService {
    */
   private getHeaderDescription(headerName: string): string {
     const descriptions: Record<string, string> = {
-      'x-api-key': 'Tu API Key de autenticación',
-      'Content-Type': 'Tipo de contenido de la petición',
-      'Accept': 'Tipo de contenido aceptado en la respuesta',
-      'Authorization': 'Token de autorización'
+      'x-api-key': 'endpoint.headersDesc.apiKey',
+      'Content-Type': 'endpoint.headersDesc.contentType',
+      'Accept': 'endpoint.headersDesc.accept',
+      'Authorization': 'endpoint.headersDesc.authorization'
     };
-    return descriptions[headerName] || '';
+    const key = descriptions[headerName];
+    return key ? this.translationService.translate(key) : '';
   }
 
   /**
@@ -244,7 +253,7 @@ export class PostmanTransformerService {
 
     return {
       contentType: 'application/json',
-      description: 'Cuerpo de la petición en formato JSON',
+      description: this.translationService.translate('endpoint.requestBodyDescription'),
       descriptionKey: 'endpoint.requestBodyDescription',
       schema: parsedBody,
       example: parsedBody,
@@ -279,7 +288,7 @@ export class PostmanTransformerService {
         const text = match.match(/\[(.*?)\]/);
         return text ? text[1] : match;
       });
-      const required = cells.length >= 5 ? cells[4].toLowerCase() === 'si' : false;
+      const required = cells.length >= 5 ? ['si', 'sí'].includes(cells[4].toLowerCase()) : false;
 
       return { name, type, example, description: desc, descriptionKey: this.resolveFieldKey(name), required };
     }).filter((field): field is RequestBodyField => field !== null);
@@ -293,7 +302,8 @@ export class PostmanTransformerService {
     const knownFields = [
       'currency', 'amount', 'customId', 'userName', 'userPhone', 'userEmail',
       'userIdentificationNumber', 'dueDate', 'userBank', 'userTypeAccount',
-      'userNumAccount', 'file'
+      'userNumAccount', 'file', 'payment_proof', 'recipient_name',
+      'recipient_email', 'payment_method', 'recipient_document'
     ];
     return knownFields.includes(name) ? `endpoint.fields.${name}` : undefined;
   }
@@ -327,11 +337,12 @@ export class PostmanTransformerService {
   }
 
   /**
-   * Mapea un código HTTP a la clave i18n de su descripción.
+   * Mapea un código HTTP a la clave i18n de su descripción. Los códigos no
+   * documentados usan la clave genérica para que el texto también se traduzca.
    */
   private resolveResponseKey(code: number): string | undefined {
     const knownCodes = [200, 201, 400, 401, 403, 404, 422, 429, 500];
-    return knownCodes.includes(code) ? `endpoint.responsesDesc.r${code}` : undefined;
+    return knownCodes.includes(code) ? `endpoint.responsesDesc.r${code}` : 'endpoint.responsesDesc.rDefault';
   }
 
   /**
@@ -342,25 +353,25 @@ export class PostmanTransformerService {
       {
         status: 200,
         statusText: 'OK',
-        description: 'Petición exitosa',
+        description: this.translationService.translate('endpoint.responsesDesc.r200'),
         descriptionKey: 'endpoint.responsesDesc.r200',
-        body: { success: true, message: 'Operación exitosa' },
+        body: { success: true, message: this.translationService.translate('endpoint.responseExamples.successMessage') },
         isError: false
       },
       {
         status: 400,
         statusText: 'Bad Request',
-        description: 'Petición inválida',
+        description: this.translationService.translate('endpoint.responsesDesc.r400'),
         descriptionKey: 'endpoint.responsesDesc.r400',
-        body: { success: false, message: 'Error en los datos enviados' },
+        body: { success: false, message: this.translationService.translate('endpoint.responseExamples.invalidMessage') },
         isError: true
       },
       {
         status: 401,
         statusText: 'Unauthorized',
-        description: 'No autorizado',
+        description: this.translationService.translate('endpoint.responsesDesc.r401'),
         descriptionKey: 'endpoint.responsesDesc.r401',
-        body: { success: false, message: 'API Key inválida o faltante' },
+        body: { success: false, message: this.translationService.translate('endpoint.responseExamples.unauthorizedMessage') },
         isError: true
       }
     ];
@@ -370,18 +381,11 @@ export class PostmanTransformerService {
    * Obtiene descripción para códigos de respuesta
    */
   private getResponseDescription(code: number): string {
-    const descriptions: Record<number, string> = {
-      200: 'La petición fue exitosa',
-      201: 'Recurso creado exitosamente',
-      400: 'La petición contiene datos inválidos',
-      401: 'No autorizado - API Key inválida o faltante',
-      403: 'Acceso prohibido',
-      404: 'Recurso no encontrado',
-      422: 'Entidad no procesable - Error de validación',
-      429: 'Demasiadas peticiones - Rate limit excedido',
-      500: 'Error interno del servidor'
-    };
-    return descriptions[code] || 'Respuesta del servidor';
+    const knownCodes = [200, 201, 400, 401, 403, 404, 422, 429, 500];
+    if (knownCodes.includes(code)) {
+      return this.translationService.translate(`endpoint.responsesDesc.r${code}`);
+    }
+    return this.translationService.translate('endpoint.responsesDesc.rDefault');
   }
 
   /**
@@ -391,8 +395,19 @@ export class PostmanTransformerService {
     const examples: CodeExample[] = [];
     const path = this.extractPath(request.url);
     const fullUrl = `${baseUrl}${path}`;
-    const body = request.body?.raw ? JSON.parse(request.body.raw) : null;
+    let body: any = null;
+    if (request.body?.raw) {
+      try {
+        body = JSON.parse(request.body.raw);
+      } catch {
+        body = null;
+      }
+    }
     const apiKey = 'YOUR_API_KEY';
+
+    if (path === '/api/manual-payments' && body && typeof body === 'object') {
+      return this.generateMultipartExamples(fullUrl, apiKey, body);
+    }
 
     // cURL
     examples.push({
@@ -419,6 +434,86 @@ export class PostmanTransformerService {
     });
 
     return examples;
+  }
+
+  /**
+   * Genera ejemplos multipart/form-data para endpoints que reciben un archivo
+   * (por ejemplo, /api/manual-payments con el campo payment_proof).
+   */
+  private generateMultipartExamples(url: string, apiKey: string, body: Record<string, any>): CodeExample[] {
+    const fileKey = 'payment_proof';
+    const fileValue = body[fileKey] ?? 'comprobante.jpg';
+    const fields = Object.keys(body).filter(key => key !== fileKey);
+
+    // cURL
+    let curl = `curl -X POST "${url}" \\\n`;
+    curl += `  -H "x-api-key: ${apiKey}" \\\n`;
+    curl += `  -F "${fileKey}=@${fileValue}"`;
+    for (const key of fields) {
+      curl += ` \\\n  -F "${key}=${body[key]}"`;
+    }
+
+    // JavaScript (Fetch)
+    let js = `const form = new FormData();\n`;
+    js += `form.append("${fileKey}", file);\n`;
+    for (const key of fields) {
+      js += `form.append("${key}", "${body[key]}");\n`;
+    }
+    js += `\nconst response = await fetch("${url}", {\n`;
+    js += `  method: "POST",\n`;
+    js += `  headers: {\n`;
+    js += `    "x-api-key": "${apiKey}"\n`;
+    js += `  },\n`;
+    js += `  body: form\n`;
+    js += `});\n\n`;
+    js += `const data = await response.json();\n`;
+    js += `console.log(data);`;
+
+    // Python
+    let python = `import requests\n\n`;
+    python += `url = "${url}"\n`;
+    python += `headers = {\n`;
+    python += `    "x-api-key": "${apiKey}"\n`;
+    python += `}\n`;
+    python += `data = {\n`;
+    for (const key of fields) {
+      python += `    "${key}": "${body[key]}",\n`;
+    }
+    python += `}\n`;
+    python += `files = {\n`;
+    python += `    "${fileKey}": open("${fileValue}", "rb")\n`;
+    python += `}\n\n`;
+    python += `response = requests.post(url, headers=headers, data=data, files=files)\n`;
+    python += `print(response.json())`;
+
+    // PHP
+    let php = `<?php\n\n`;
+    php += `$url = "${url}";\n`;
+    php += `$headers = [\n`;
+    php += `    "x-api-key: ${apiKey}"\n`;
+    php += `];\n`;
+    php += `$data = [\n`;
+    php += `    "${fileKey}" => new CURLFile("${fileValue}"),\n`;
+    for (const key of fields) {
+      php += `    "${key}" => "${body[key]}",\n`;
+    }
+    php += `];\n\n`;
+    php += `$ch = curl_init($url);\n`;
+    php += `curl_setopt($ch, CURLOPT_POST, true);\n`;
+    php += `curl_setopt($ch, CURLOPT_POSTFIELDS, $data);\n`;
+    php += `curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);\n`;
+    php += `curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n`;
+    php += `$response = curl_exec($ch);\n`;
+    php += `curl_close($ch);\n\n`;
+    php += `echo $response;\n`;
+    php += `?>`;
+
+    return [
+      { language: 'curl', code: curl },
+      { language: 'javascript', code: js },
+      { language: 'python', code: python },
+      { language: 'php', code: php }
+    ];
   }
 
   /**

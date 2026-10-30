@@ -14,13 +14,7 @@
     </p>
 
     <app-code-block
-      code='{
-  "success": false,
-  "message": "Descripción legible del error",
-  "code": 400,
-  "error": "Tipo de error",
-  "errors": [...] // Detalles adicionales (opcional)
-}'
+      [code]="errorFormatExample"
       language="javascript"
       [title]="'errors.formatExampleTitle' | t">
     </app-code-block>
@@ -261,7 +255,7 @@
           <polyline points="22,6 12,13 2,6"></polyline>
         </svg>
         <div>
-          <h4>Email</h4>
+          <h4>{{ 'common.email' | t }}</h4>
           <a href="mailto:soporte@javacash.finance">soporte&#64;javacash.finance</a>
         </div>
       </div>
@@ -292,16 +286,17 @@
         </div>
       </a>
 
-      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
+      <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+      <!-- <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         <div>
-          <h4>API Reference</h4>
+          <h4>{{ 'errors.nextApiTitle' | t }}</h4>
           <p>{{ 'errors.nextApiText' | t }}</p>
         </div>
-      </a>
+      </a> -->
     </div>
   </section>
 </article>

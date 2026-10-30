@@ -3,9 +3,11 @@
 @import '../../../../styles/mixins';
 
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: $z-sticky;
+  left: 0;
+  right: 0;
+  z-index: $z-popover;
   height: $navbar-height;
   background: $background-white;
   border-bottom: 1px solid $border-gray;
@@ -45,6 +47,8 @@
     color: #000000; // REGLA: Negro en modo claro
     cursor: pointer;
     transition: background $transition-fast;
+    position: relative;
+    z-index: 1070;
 
     .dark & {
       color: $dark-text-primary;
@@ -69,6 +73,7 @@
     @include flex-center;
     gap: $spacing-3;
     text-decoration: none;
+    object-fit: contain;
   }
 
   &__logo-icon {

@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Endpoint, CodeLanguage } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 import { TranslationService } from '@core/services/translation.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-endpoint-detail-page',
@@ -23,7 +24,8 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private endpointService: EndpointService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +99,23 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
 
   copyUrl(): void {
     const url = this.getFullUrl();
-    navigator.clipboard.writeText(url);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
+      }).catch(() => {
+        this.toastService.error(
+          this.translationService.translate('common.copyErrorTitle'),
+          this.translationService.translate('common.copyUrlErrorMessage')
+        );
+      });
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
+    }
   }
 }

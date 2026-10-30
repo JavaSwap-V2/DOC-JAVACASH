@@ -13,6 +13,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -127,6 +128,7 @@ code {
   max-width: $max-content-width;
   margin: 0 auto;
   padding: 0 $spacing-6;
+  overflow-x: hidden;
   
   @include mobile {
     padding: 0 $spacing-4;

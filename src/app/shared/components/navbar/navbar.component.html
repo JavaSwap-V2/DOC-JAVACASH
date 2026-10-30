@@ -15,8 +15,11 @@
       </button>
 
       <a routerLink="/" class="navbar__logo">
-        <img class="navbar__logo-icon" src="assets/images/logo.png" alt="JavaCash" style="height: 32px; width: auto;">
-        <span class="navbar__title">API Docs</span>
+        <img
+          class="navbar__logo-icon"
+          [src]="(isDarkMode$ | async) ? 'assets/images/logo.png' : 'assets/images/logo-short.png'"
+          alt="JavaCash">
+        <span class="navbar__title">{{ 'navbar.title' | t }}</span>
       </a>
     </div>
 
@@ -28,9 +31,9 @@
       <a routerLink="/gateway" routerLinkActive="active" class="navbar__link">
         {{ 'navbar.docs' | t }}
       </a>
-      <a [routerLink]="['/', currentCountry.code.toLowerCase(), 'api']" routerLinkActive="active" class="navbar__link">
+      <!-- <a [routerLink]="['/', currentCountry.code.toLowerCase(), 'api']" routerLinkActive="active" class="navbar__link">
         {{ 'navbar.apiReference' | t }}
-      </a>
+      </a> -->
     </div>
 
     <!-- Acciones -->
@@ -48,8 +51,8 @@
         <kbd class="navbar__kbd hide-mobile">Ctrl K</kbd>
       </button>
 
-      <!-- Selector de País -->
-      <div class="navbar__country-selector">
+      <!-- Selector de País (oculto en móvil: vive en el panel lateral) -->
+      <div class="navbar__country-selector hide-mobile">
         <button 
           class="navbar__country-btn"
           (click)="toggleCountryDropdown()"

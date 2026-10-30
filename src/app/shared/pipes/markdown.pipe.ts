@@ -16,7 +16,8 @@ export class MarkdownPipe implements PipeTransform {
   }
 
   private render(markdown: string): string {
-    const lines = this.escape(markdown.trim()).split(/\r?\n/);
+    const processedMarkdown = markdown.replace(/\\n/g, '\n');
+    const lines = this.escape(processedMarkdown.trim()).split(/\r?\n/);
     const html: string[] = [];
     let paragraph: string[] = [];
     let listOpen = false;

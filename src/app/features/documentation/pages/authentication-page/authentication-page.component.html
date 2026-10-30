@@ -118,6 +118,29 @@
       language="bash"
       [title]="'auth.formatExampleTitle' | t">
     </app-code-block>
+    <p>{{ 'auth.formatExampleText' | t }}</p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>{{ 'auth.envTableEnv' | t }}</th>
+          <th>{{ 'auth.envTableWhere' | t }}</th>
+          <th>{{ 'auth.envTableUse' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'auth.envTableProd' | t }}</td>
+          <td>{{ 'auth.envTableProdSource' | t }}</td>
+          <td>{{ 'auth.envTableProdUse' | t }}</td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.envTableTest' | t }}</td>
+          <td [innerHTML]="'auth.envTableTestSourceHtml' | tHtml"></td>
+          <td>{{ 'auth.envTableTestUse' | t }}</td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="info-box info-box--info">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -393,9 +416,9 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td>{{ 'auth.fTxId' | t }}</td>
         </tr>
         <tr>
-          <td><code>reference</code></td>
-          <td>string</td>
-          <td>{{ 'auth.fRef' | t }}</td>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fUserId' | t }}</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
@@ -416,6 +439,11 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>customId</code></td>
           <td>string</td>
           <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td><code>amountReceived</code></td>
+          <td>string</td>
+          <td>{{ 'auth.fAmountReceived' | t }}</td>
         </tr>
       </tbody>
     </table>
@@ -453,6 +481,11 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>transactionId</code></td>
           <td>number</td>
           <td>{{ 'auth.fTxId' | t }}</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fUserId' | t }}</td>
         </tr>
         <tr>
           <td><code>reference</code></td>
@@ -515,6 +548,16 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <td><code>type</code></td>
           <td>string</td>
           <td [innerHTML]="'auth.fTypePayoutsHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>{{ 'auth.fBulkUserId' | t }}</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>{{ 'auth.fBulkTimestamp' | t }}</td>
         </tr>
         <tr>
           <td><code>totalTransactions</code></td>
@@ -891,7 +934,8 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
   <section class="doc-section">
     <h2>{{ 'auth.nextTitle' | t }}</h2>
     <div class="next-steps">
-      <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
+      <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+      <!-- <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
@@ -900,7 +944,7 @@ const baseUrl = process.env.JAVACASH_BASE_URL;"
           <h4>{{ 'auth.nextExploreTitle' | t }}</h4>
           <p>{{ 'auth.nextExploreText' | t }}</p>
         </div>
-      </a>
+      </a> -->
 
       <a routerLink="/gateway/errors" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">

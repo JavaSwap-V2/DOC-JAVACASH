@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { COUNTRIES } from '@core/models/api.models';
+import { TranslationService } from '@core/services/translation.service';
 
 interface ErrorCode {
   code: number;
@@ -19,6 +20,20 @@ interface ErrorCode {
 export class ErrorsPageComponent {
   /** País por defecto de los enlaces a la referencia de la API. */
   readonly defaultCountry = COUNTRIES.ARG;
+
+  constructor(private readonly translationService: TranslationService) {}
+
+  /** Ejemplo de formato de error, traducido en cada ciclo de detección de cambios. */
+  get errorFormatExample(): string {
+    const t = (key: string) => this.translationService.translate(key);
+    return `{
+  "success": false,
+  "message": "${t('errors.fMessage')}",
+  "code": 400,
+  "error": "${t('errors.formatExampleError')}",
+  "errors": [...] // ${t('errors.fErrors')}
+}`;
+  }
 
   errorCodes: ErrorCode[] = [
     {
@@ -113,7 +128,7 @@ export class ErrorsPageComponent {
       solutionKey: 'errors.codes.422.solution',
       example: `{
   "success": false,
-  "message": "Ya tienes una transacción similar en revisión",
+  "message": "You already have a similar transaction under review",
   "code": 422,
   "error": "Unprocessable Entity"
 }`
@@ -176,7 +191,7 @@ export class ErrorsPageComponent {
   retryExample = `const maxRetries = 3;
 let retries = 0;
 
-async function makeRequestWithRetry() {
+async function makeRequestWithRetry(url, options) {
   while (retries < maxRetries) {
     try {
       const response = await fetch(url, options);

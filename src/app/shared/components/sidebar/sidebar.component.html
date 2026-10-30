@@ -1,5 +1,5 @@
 <!-- sidebar.component.html -->
-<aside class="sidebar" [class.sidebar--open]="isOpen">
+<aside class="sidebar" [class.sidebar--open]="isOpen" [class.sidebar--hidden-desktop]="hideOnDesktop">
   <!-- Header con botón de cerrar (mobile) -->
   <div class="sidebar__header hide-desktop">
     <h3 class="sidebar__title">{{ 'sidebar.navigation' | t }}</h3>
@@ -15,6 +15,24 @@
   <div class="sidebar__content">
     <!-- Navegación principal -->
     <nav class="sidebar__nav">
+      <!-- Selector de País: solo en móvil, donde el navbar no tiene espacio -->
+      <div class="sidebar__section sidebar__country">
+        <h4 class="sidebar__section-title">{{ 'sidebar.country' | t }}</h4>
+        <ul class="sidebar__country-list">
+          <li *ngFor="let country of countries">
+            <button
+              type="button"
+              class="sidebar__country-item"
+              [class.active]="country.code === currentCountry.code"
+              (click)="selectCountry(country)">
+              <app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag>
+              <span class="sidebar__country-name">{{ country.name }}</span>
+              <span class="sidebar__country-currency">{{ country.currency }}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
       <div class="sidebar__section">
         <h4 class="sidebar__section-title">{{ 'sidebar.documentation' | t }}</h4>
         <ul class="sidebar__list">
@@ -74,7 +92,7 @@
                 <line x1="12" y1="16" x2="12" y2="8"></line>
               </g>
             </svg>
-            <h4 class="sidebar__section-title">{{ group.name }}</h4>
+            <h4 class="sidebar__section-title">{{ group.nameKey ? (group.nameKey | t) : group.name }}</h4>
           </div>
           <svg 
             class="sidebar__chevron" 
@@ -107,9 +125,10 @@
   </div>
 </aside>
 
-<!-- Overlay para mobile -->
+<!-- Overlay -->
 <div 
-  class="sidebar__overlay hide-desktop" 
+  class="sidebar__overlay"
+  [class.hide-desktop]="!hideOnDesktop" 
   *ngIf="isOpen"
   (click)="closeSidebar()">
 </div>

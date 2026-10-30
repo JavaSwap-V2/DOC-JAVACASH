@@ -116,6 +116,11 @@ export class TranslationService {
   private applyDocumentLanguage(language: Language): void {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = language;
+      document.title = this.translate('meta.title');
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', this.translate('meta.description'));
+      }
     }
   }
 }

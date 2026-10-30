@@ -10,9 +10,65 @@ export const en: TranslationDictionary = {
     copyUrl: 'Copy URL',
     loading: 'Loading...',
     yes: 'Yes',
-    no: 'No'
+    no: 'No',
+    dismiss: 'Dismiss',
+    email: 'Email',
+    copiedClipboard: 'Copied to clipboard',
+    copyErrorTitle: 'Copy error',
+    copyErrorMessage: 'The code could not be copied',
+    copiedUrl: 'URL copied',
+    copyUrlErrorMessage: 'The URL could not be copied'
+  },
+  meta: {
+    title: 'JavaCash - API Documentation',
+    description: 'Official JavaCash API documentation for payment integration in Argentina, Ecuador, Chile, Guatemala and Peru.'
+  },
+  country: {
+    accountTypes: {
+      savings: 'Savings Account',
+      checking: 'Checking Account'
+    },
+    methods: {
+      transfer: {
+        name: 'Transfer',
+        description: 'The customer transfers the amount from their online banking to a local account.'
+      },
+      qr: {
+        name: 'QR',
+        description: 'The customer scans the QR code or chooses a payment method within the QR.'
+      },
+      rapipago: {
+        name: 'Rapipago',
+        description: 'The customer pays in cash by generating their slip on the Rapipago network.'
+      },
+      mercadopago: {
+        name: 'Mercado Pago',
+        description: 'The customer pays with their Mercado Pago wallet within the checkout.'
+      },
+      transferencia: {
+        name: 'Bank Transfer',
+        description: 'The customer pays from their online banking to a local account.'
+      },
+      efectivo: {
+        name: 'Cash Payment',
+        description: 'The customer pays in cash at authorized locations.'
+      },
+      tarjeta: {
+        name: 'Debit / Credit Card',
+        description: 'The customer pays with a card within the checkout.'
+      },
+      billetera: {
+        name: 'Digital Wallet',
+        description: 'The customer pays from their digital wallet within the checkout.'
+      },
+      pse: {
+        description: 'The customer pays from their bank using the online payment button.',
+        name: 'Online Payment (PSE)',
+      },
+    }
   },
   navbar: {
+    title: 'API Docs',
     home: 'Home',
     docs: 'Documentation',
     apiReference: 'API Reference',
@@ -30,11 +86,13 @@ export const en: TranslationDictionary = {
     introduction: 'Introduction',
     authentication: 'Authentication',
     errors: 'Errors',
+    country: 'Country',
     endpoints: {
       register: 'Register',
       uploadReceipt: 'Upload receipt',
       listByReference: 'List by reference',
       listByClient: 'List by customer',
+      detailById: 'Detail by id',
       list: 'List'
     }
   },
@@ -68,6 +126,12 @@ export const en: TranslationDictionary = {
     notFoundTitle: 'Endpoint not found',
     notFoundText: "We couldn't find the endpoint you are looking for.",
     requestBodyDescription: 'Request body in JSON format',
+    groups: {
+      payin: 'Endpoints to receive payments',
+      payout: 'Endpoints to send funds',
+      payinName: 'PayIn',
+      payoutName: 'PayOut'
+    },
     headersDesc: {
       apiKey: 'Your authentication API Key',
       contentType: 'Content type of the request',
@@ -86,7 +150,12 @@ export const en: TranslationDictionary = {
       userBank: 'Bank name',
       userTypeAccount: 'Bank account type: `savings` (savings account) or `checking` (checking account)',
       userNumAccount: 'Bank account number',
-      file: 'Payment receipt image (JPG or PNG, max 5 MB)'
+      file: 'Payment receipt image (JPG or PNG, max 5 MB)',
+      payment_proof: 'Payment proof image (JPG or PNG, max 5 MB)',
+      recipient_name: 'Recipient name',
+      recipient_email: 'Recipient email address',
+      payment_method: 'Payment method used (e.g. bank transfer)',
+      recipient_document: 'Recipient identity document number'
     },
     responsesDesc: {
       r200: 'The request was successful',
@@ -95,18 +164,28 @@ export const en: TranslationDictionary = {
       r401: 'Unauthorized - invalid or missing API Key',
       r403: 'Forbidden access',
       r404: 'Resource not found',
-      r422: 'Unprocessable entity - Validation error',
-      r429: 'Too many requests - Rate limit exceeded',
-      r500: 'Internal server error'
+      r422: 'Unprocessable Entity - validation error',
+      r429: 'Too Many Requests - rate limit exceeded',
+      r500: 'Internal server error',
+      rDefault: 'Server response'
+    },
+    responseExamples: {
+      successMessage: 'Operation successful',
+      invalidMessage: 'Error in the submitted data',
+      unauthorizedMessage: 'Invalid or missing API Key'
     },
     descriptions: {
       noteCheckout: 'Important: the 201 Created response returns the checkoutUrl variable; this is the Checkout link',
-      listPayinByReference: 'Endpoint to get a payin by reference',
-      listPayinByCustomId: 'Endpoint to get a payin by custom id',
-      listAllPayin: 'Endpoint to get all payins',
-      listPayoutByReference: 'Endpoint to get a payout by reference',
-      listAllPayout: 'Endpoint to get all payouts',
-      uploadReceipt: 'Upload the (image) receipt of the payin with the given reference to the manual payments service, which reads it with OCR, creates the manual payment and leaves the transaction in `processing`.\n\n## Route\n\nThe payin reference travels in the URL as the route parameter `reference` (numeric, 1 to 18 digits).\n\n## Authentication\n\nSend **x-api-key** in the **headers** with the **API key of a merchant** (user or provider) registered in `api_keys`. The checkout public key will not work.\n\n**Authorization responses**\n\n- No token or API key, or invalid or disabled API key: **401**.\n- Valid API key but no associated merchant, or inactive merchant: **403**.\n\n## Request format\n\nAlthough the example is shown as JSON, the endpoint receives **multipart/form-data** with the file in the `file` field (real JPG or PNG, max 5 MB). `amount` and `currency` are optional; if sent, they must match the payin or it responds **422**.'
+      listPayinByReference: 'Endpoint to get a PayIn by reference',
+      listPayinByCustomId: 'Endpoint to get a PayIn by custom id',
+      listAllPayin: 'Endpoint to get all PayIns',
+      listPayoutByReference: 'Endpoint to get a PayOut by reference',
+      listAllPayout: 'Endpoint to get all PayOuts',
+      registerPayout: 'Endpoint to create a PayOut',
+      payinDetailById: 'Endpoint to get a PayIn by its id',
+      payoutDetailById: 'Endpoint to get a PayOut by its id',
+      listPayoutByCustomId: 'Endpoint to get a PayOut by custom id',
+      uploadReceipt: 'Upload the payment receipt (image) to the manual payments service, which reads it with OCR, creates the manual payment and leaves the transaction in `processing`.\n\n## Authentication\n\nSend **x-api-key** in the **headers** with the **API Key of a merchant** (user or provider) registered in `api_keys`. The checkout public key will not work.\n\n**Authorization responses**\n\n- No token or API Key, or invalid or disabled API Key: **401**.\n- Valid API Key but without the `manual_payments:create` permission: **403**.\n\n## Request format\n\nThe endpoint receives **multipart/form-data** with the file in the `payment_proof` field (real JPG or PNG, max 5 MB). The example is shown as JSON for convenience, but the real request is `multipart/form-data`.'
     }
   },
   tryItOut: {
@@ -151,7 +230,8 @@ export const en: TranslationDictionary = {
     },
     startNow: 'Start now',
     countriesTitle: 'Available countries',
-    countriesSubtitle: 'Access the API documentation for each country'
+    countriesSubtitle: 'Access the API documentation for each country',
+    title: 'JavaCash Finance',
   },
   intro: {
     stable: 'Stable',
@@ -186,8 +266,6 @@ export const en: TranslationDictionary = {
     successfulResponse: 'Successful response',
     step3NoteHtml: 'The <code>checkoutUrl</code> field contains the link you must share with your customer so they can complete the payment.',
     envTitle: 'Available Environments',
-    prodApiTitle: 'Production API',
-    dashboardTitle: 'Dashboard',
     dashboardText: 'Access the dashboard to manage your transactions and get your API Key:',
     sandboxTitle: 'Sandbox Environment (development/testing)',
     sandboxText: 'The Sandbox is unique and shared by all countries.',
@@ -214,6 +292,7 @@ export const en: TranslationDictionary = {
     custom: 'Custom',
     perContract: 'Per contract',
     perMinute: 'Per minute',
+    requestsCount: '{count} requests',
     supportTitle: 'Support and Resources',
     liveChat: 'Live Chat',
     liveChatHours: 'Monday to Friday, 9am - 6pm',
@@ -222,10 +301,29 @@ export const en: TranslationDictionary = {
     status: 'Status',
     nextTitle: 'Next Steps',
     authNextDesc: 'Learn how to authenticate your requests',
+    apiNextTitle: 'API Reference',
     apiNextDesc: 'Explore all available endpoints',
     errorsNextTitle: 'Error Handling',
     errorsNextDesc: 'Error codes and how to handle them',
-    authTitle: 'Authentication'
+    accountTypesTableAria: 'Local name of each account type by country',
+    allEndpoints: 'All endpoints <code>/api/*</code>',
+    apisTitle: 'Production API',
+    authNextTitle: 'Authentication',
+    baseUrl: 'Base URL',
+    baseUrlTableAria: 'Base URL and currency by country',
+    currency: 'Currency',
+    dashboardsTitle: 'Dashboard',
+    identificationTableAria: 'Currency and identity document by country',
+    methodsTableAria: 'Payment methods by country',
+    minutes: '15 minutes',
+    nextNavAria: 'Navigation to next sections',
+    rateLimitsFooterText: 'These limits apply equally to all countries and may be adjusted according to the contracted service plan.',
+    rateLimitsNoteHtml: 'Every response includes the standard <code>RateLimit-Limit</code>, <code>RateLimit-Remaining</code> and <code>RateLimit-Reset</code> headers so you can monitor your usage. The limit is the same in Argentina, Ecuador, Chile, Guatemala and Peru.',
+    rateLimitsTableAria: 'API request limits',
+    requestsPerIp: '10,000 requests per IP',
+    sandboxDashboardV1: '<strong>Sandbox Dashboard V1:</strong>',
+    scope: 'Scope',
+    step2NoteHtml: 'The API contract is the same in all countries. What changes is the <strong>base URL</strong> and the <strong>currency</strong>:',
   },
   auth: {
     title: 'Authentication',
@@ -310,9 +408,11 @@ export const en: TranslationDictionary = {
     fTypePayoutHtml: 'Always <code>"pay-out"</code> for outgoing payments',
     fTypePayoutsHtml: 'Always <code>"pay-outs"</code> for bulk batches',
     fTxId: 'Unique transaction identifier',
+    fUserId: 'Merchant (user) identifier that receives the notification',
     fRef: 'Transaction reference',
     fAmountRequested: 'Requested transaction amount',
     fAmount: 'Transaction amount',
+    fAmountReceived: 'Amount actually received (pay-in only)',
     fStatus: 'Current transaction status',
     fTimestamp: 'Date and time in ISO 8601 format',
     fCustomIdHtml: 'Custom identifier you sent when creating the transaction. It is numeric (digits only) and arrives as a string, for example <code>"1001"</code>',
@@ -336,7 +436,7 @@ export const en: TranslationDictionary = {
     finalOkTitle: 'Successful final state',
     payinFinalOkTextHtml: 'The <code>paid</code> state indicates that the payment was completed successfully. Use this state to confirm the operation in your system.',
     payoutFinalOkTextHtml: 'The <code>completed</code> state indicates that the outgoing payment was completed successfully. Use this state to confirm the operation in your system.',
-    stPending: 'The transaction was created and is waiting for the customer payment',
+    stPending: 'The transaction was created and is waiting for the customer\'s payment',
     stApproved: 'The payment was detected and is being verified',
     stPaid: 'The payment was confirmed successfully',
     stRejected: 'The transaction was rejected',
@@ -371,7 +471,7 @@ export const en: TranslationDictionary = {
     sigCapPayin: '1. Received request (PayIn)',
     sigCapPayout: '1. Received request (PayOut)',
     sigStep2Title: 'Take the body exactly as it arrived',
-    sigStep2TextHtml: 'The message to sign is the complete body, unmodified: the same 168 bytes of the PayIn (146 of the PayOut), in the same order, with no added spaces and without the timestamp in front. It matches the <code>Content-Length</code> header.',
+    sigStep2TextHtml: 'The message to sign is the complete body, unmodified: the same 170 bytes of the PayIn (169 of the PayOut), in the same order, with no added spaces and without the timestamp in front. It matches the <code>Content-Length</code> header.',
     sigStep3Title: 'Compute the HMAC-SHA256 with your API Key',
     sigStep3Text: 'Use your API Key as the key and convert the result to hexadecimal.',
     sigStep4Title: 'Compare with X-JavaCash-Signature',
@@ -417,7 +517,20 @@ export const en: TranslationDictionary = {
     nextExploreTitle: 'Explore Endpoints',
     nextExploreText: 'See the full API reference',
     nextErrorsTitle: 'Error Handling',
-    nextErrorsText: 'Learn how to handle API errors'
+    nextErrorsText: 'Learn how to handle API errors',
+    envTableEnv: 'Environment',
+    envTableProd: 'Production',
+    envTableProdSource: 'Country dashboard (Argentina, Ecuador, Chile, Guatemala or Peru)',
+    envTableProdUse: 'Real transactions with real money',
+    envTableTest: 'Testing',
+    envTableTestSourceHtml: 'Sandbox dashboard (<code>stagin.javacash.finance</code>)',
+    envTableTestUse: 'Testing without real charges',
+    envTableUse: 'Usage',
+    envTableWhere: 'Where to obtain',
+    fBulkTimestamp: 'Date and time of sending in ISO 8601 format',
+    fBulkUserId: 'Identifier of the user who owns the batch',
+    formatExampleText: 'Hexadecimal string without prefix',
+    stProcessed: 'The transaction was sent to the provider and is in processing',
   },
   errors: {
     title: 'Error Handling',
@@ -425,6 +538,7 @@ export const en: TranslationDictionary = {
     formatTitle: 'Error Response Format',
     formatText: 'All API errors follow a consistent format that makes them easy to handle:',
     formatExampleTitle: 'Standard error structure',
+    formatExampleError: 'Error type',
     field: 'Field',
     type: 'Type',
     description: 'Description',
@@ -529,6 +643,11 @@ export const en: TranslationDictionary = {
         causes: ['Scheduled maintenance', 'System overload', 'Update in progress'],
         solution: 'Wait a few minutes and retry. Check the status at status.javacash.finance'
       }
-    }
+    },
+    formatExampleMessage: 'Readable description of the error',
+    nextApiTitle: 'API Reference',
+  },
+  apiReference: {
+    placeholderText: 'API Reference page. The list of endpoints will be displayed here.'
   }
 };

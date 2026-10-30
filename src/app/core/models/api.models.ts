@@ -97,6 +97,8 @@ export type CodeLanguage = 'curl' | 'javascript' | 'python' | 'php' | 'java' | '
 
 export interface EndpointGroup {
   name: string;
+  /** Clave i18n del nombre; si existe, el template la traduce y `name` queda como fallback. */
+  nameKey?: string;
   description: string;
   endpoints: Endpoint[];
   icon?: string;
@@ -211,35 +213,35 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'CUIT/CUIL del comprador, 11 dígitos sin guiones'
     },
     accountTypes: {
-      savings: 'Caja de Ahorro',
-      checking: 'Cuenta Corriente'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco Galicia',
     examplePhone: '1123456789',
     methods: [
       {
         id: 'transfer',
-        name_method: 'Transferencia',
+        name_method: 'country.methods.transfer.name',
         logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063566030-logo_banco_verde.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180606Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=12e68bf43a4f64d8ef599369a2a12edc93c4c32c330a756b2fc0e91a0ec95358',
-        description: 'El cliente transfiere el monto desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transfer.description'
       },
       {
         id: 'qr',
-        name_method: 'QR CobroDigital',
+        name_method: 'country.methods.qr.name',
         logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063585063-logo_qr_verde.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180625Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ceeb897b1bf472ecc4da7acfd5fffb4aeaef9f3462bbff0e7450b6360baf0cbf',
-        description: 'El cliente escanea el código QR o elige un medio de pago dentro del QR.'
+        description: 'country.methods.qr.description'
       },
       {
         id: 'rapipago',
-        name_method: 'Rapipago',
+        name_method: 'country.methods.rapipago.name',
         logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063627933-rapipago%20%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180708Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ef6f9d8b8b847e35f3da21e1436d17e5b06b7501060772772df64ee333d92d86',
-        description: 'El cliente paga en efectivo generando su boleta en la red Rapipago.'
+        description: 'country.methods.rapipago.description'
       },
       {
         id: 'mercadopago',
-        name_method: 'Mercado Pago',
+        name_method: 'country.methods.mercadopago.name',
         logo: 'https://bucket-production-af14.up.railway.app/payment-method-logos/1789063694367-mercadopago.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=v60rgOv73SAnOBRyDg2sChtVNjqBExqE%2F20260910%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260910T180815Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=80b454eae43736d52bf74f8afc0dcee16f529751a25c3dddbe8dd093a694ba62',
-        description: 'El cliente paga con su billetera de Mercado Pago dentro del checkout.'
+        description: 'country.methods.mercadopago.description'
       }
     ]
   },
@@ -262,23 +264,23 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'Cédula de 10 dígitos o RUC de 13 dígitos, sin guiones'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorros',
-      checking: 'Cuenta Corriente'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco Pichincha',
     examplePhone: '987654321',
     methods: [
       {
         id: 'transfer',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'efectivo',
-        name_method: 'Pago en efectivo',
+        name_method: 'country.methods.efectivo.name',
         logo: null,
-        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+        description: 'country.methods.efectivo.description'
       }
     ]
   },
@@ -301,23 +303,23 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'RUT del comprador sin puntos ni guion, incluyendo el dígito verificador'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorro',
-      checking: 'Cuenta Corriente / Cuenta Vista'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco de Chile',
     examplePhone: '912345678',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'tarjeta',
-        name_method: 'Tarjeta de débito / crédito',
+        name_method: 'country.methods.tarjeta.name',
         logo: null,
-        description: 'El cliente paga con tarjeta dentro del checkout.'
+        description: 'country.methods.tarjeta.description'
       }
     ]
   },
@@ -333,30 +335,30 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     dashboardUrl: 'https://guatemala.javacash.finance',
     locale: 'es-GT',
     timezone: 'America/Guatemala',
-    available: false,
+    available: true,
     identification: {
       label: 'DPI / NIT',
       example: '1234567890101',
       hint: 'DPI (CUI) de 13 dígitos o NIT, sin guiones'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorro',
-      checking: 'Cuenta Monetaria'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco Industrial',
     examplePhone: '51234567',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'efectivo',
-        name_method: 'Pago en efectivo',
+        name_method: 'country.methods.efectivo.name',
         logo: null,
-        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+        description: 'country.methods.efectivo.description'
       }
     ]
   },
@@ -379,23 +381,23 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'DNI de 8 dígitos o RUC de 11 dígitos, sin guiones'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorros',
-      checking: 'Cuenta Corriente'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco de Crédito del Perú (BCP)',
     examplePhone: '912345678',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'billetera',
-        name_method: 'Billetera digital',
+        name_method: 'country.methods.billetera.name',
         logo: null,
-        description: 'El cliente paga desde su billetera digital dentro del checkout.'
+        description: 'country.methods.billetera.description'
       }
     ]
   }
