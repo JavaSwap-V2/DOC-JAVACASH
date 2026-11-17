@@ -8,6 +8,7 @@ import { ApiReferencePageComponent } from './features/api-reference/pages/api-re
 import { IntroductionPageComponent } from './features/documentation/pages/introduction-page/introduction-page.component';
 import { AuthenticationPageComponent } from './features/documentation/pages/authentication-page/authentication-page.component';
 import { ErrorsPageComponent } from './features/documentation/pages/errors-page/errors-page.component';
+import { DatesPageComponent } from './features/documentation/pages/dates-page/dates-page.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'errors',
         component: ErrorsPageComponent
+      },
+      {
+        path: 'dates',
+        component: DatesPageComponent
       }
     ]
   },

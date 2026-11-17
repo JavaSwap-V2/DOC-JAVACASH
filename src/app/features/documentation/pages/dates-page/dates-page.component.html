@@ -1,0 +1,151 @@
+<!-- dates-page.component.html -->
+<article class="doc-page">
+  <header class="doc-header">
+    <h1>{{ 'dates.title' | t }}</h1>
+    <p class="doc-lead">
+      {{ 'dates.lead' | t }}
+    </p>
+  </header>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.summaryTitle' | t }}</h2>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>{{ 'dates.summaryWhere' | t }}</th>
+          <th>{{ 'dates.summaryFormat' | t }}</th>
+          <th>{{ 'dates.summaryExample' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'dates.summaryResponses' | t }}</td>
+          <td>{{ 'dates.summaryResponsesFormat' | t }}</td>
+          <td><code>2026-11-10T20:30:00.000-06:00</code></td>
+        </tr>
+        <tr>
+          <td [innerHTML]="'dates.summaryFiltersHtml' | tHtml"></td>
+          <td>{{ 'dates.summaryFiltersFormat' | t }}</td>
+          <td><code>2026-11-10</code></td>
+        </tr>
+        <tr>
+          <td [innerHTML]="'dates.summaryWebhookBodyHtml' | tHtml"></td>
+          <td>{{ 'dates.summaryResponsesFormat' | t }}</td>
+          <td><code>2026-09-16T09:36:48.411-06:00</code></td>
+        </tr>
+        <tr>
+          <td [innerHTML]="'dates.summaryWebhookHeaderHtml' | tHtml"></td>
+          <td>{{ 'dates.summaryUtcFormat' | t }}</td>
+          <td><code>2026-09-16T15:36:48.411Z</code></td>
+        </tr>
+        <tr>
+          <td [innerHTML]="'dates.summaryDueDateHtml' | tHtml"></td>
+          <td>{{ 'dates.summaryDueDateFormat' | t }}</td>
+          <td><code>2027/12/30</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.responsesTitle' | t }}</h2>
+    <p [innerHTML]="'dates.responsesTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="responseExample"
+      language="javascript"
+      [title]="'dates.responsesExampleTitle' | t">
+    </app-code-block>
+
+    <p>{{ 'dates.sameInstantText' | t }}</p>
+
+    <app-code-block
+      [code]="sameInstantExample"
+      language="javascript"
+      [title]="'dates.sameInstantTitle' | t">
+    </app-code-block>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>{{ 'dates.parseTitle' | t }}</h4>
+        <p [innerHTML]="'dates.parseTextHtml' | tHtml"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.filtersTitle' | t }}</h2>
+    <p [innerHTML]="'dates.filtersTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="filterExample"
+      language="javascript"
+      [title]="'dates.filterExampleTitle' | t">
+    </app-code-block>
+
+    <ul>
+      <li [innerHTML]="'dates.filtersInclusiveHtml' | tHtml"></li>
+      <li [innerHTML]="'dates.filtersEveningHtml' | tHtml"></li>
+      <li [innerHTML]="'dates.filtersInstantHtml' | tHtml"></li>
+    </ul>
+  </section>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.webhooksTitle' | t }}</h2>
+    <p [innerHTML]="'dates.webhooksTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="webhookExample"
+      language="bash"
+      [title]="'dates.webhookExampleTitle' | t">
+    </app-code-block>
+
+    <ul>
+      <li [innerHTML]="'dates.webhooksSignatureHtml' | tHtml"></li>
+      <li [innerHTML]="'dates.webhooksHeaderHtml' | tHtml"></li>
+      <li [innerHTML]="'dates.webhooksReplayHtml' | tHtml"></li>
+    </ul>
+
+    <p>
+      <a routerLink="/gateway/authentication">{{ 'dates.webhooksLink' | t }}</a>
+    </p>
+  </section>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.dueDateTitle' | t }}</h2>
+    <p [innerHTML]="'dates.dueDateTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="dueDateExample"
+      language="javascript"
+      [title]="'dates.dueDateExampleTitle' | t">
+    </app-code-block>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>{{ 'dates.dueDateTipTitle' | t }}</h4>
+        <p [innerHTML]="'dates.dueDateTipHtml' | tHtml"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>{{ 'dates.practicesTitle' | t }}</h2>
+    <ul>
+      <li>{{ 'dates.practiceParse' | t }}</li>
+      <li>{{ 'dates.practiceFilter' | t }}</li>
+      <li>{{ 'dates.practiceStore' | t }}</li>
+      <li>{{ 'dates.practiceOffset' | t }}</li>
+    </ul>
+  </section>
+</article>
