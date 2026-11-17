@@ -28,7 +28,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   navigationItems = [
     { label: 'sidebar.introduction', icon: 'book', path: '/gateway/introduction' },
     { label: 'sidebar.authentication', icon: 'key', path: '/gateway/authentication' },
-    { label: 'sidebar.errors', icon: 'alert-circle', path: '/gateway/errors' }
+    { label: 'sidebar.errors', icon: 'alert-circle', path: '/gateway/errors' },
+    { label: 'sidebar.dates', icon: 'clock', path: '/gateway/dates' }
   ];
 
   constructor(
