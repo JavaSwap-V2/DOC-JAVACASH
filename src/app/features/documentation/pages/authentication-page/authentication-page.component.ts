@@ -122,7 +122,7 @@ response = requests.post(
 Content-Type: application/json
 Content-Length: 175
 X-JavaCash-Signature: 88e58feda7b82053fb77628a7351d8c887013c35a67f9c3bd2c29d8c5e59e301
-X-JavaCash-Timestamp: 2026-09-16T15:36:48.411Z
+X-JavaCash-Timestamp: 2026-09-16T09:36:48.411-06:00
 
 {"type":"pay-in","transactionId":149,"userId":42,"amount":"120.00","status":"paid","timestamp":"2026-09-16T09:36:48.411-06:00","customId":"20260917","amountReceived":"120.00"}`;
 
@@ -130,7 +130,7 @@ X-JavaCash-Timestamp: 2026-09-16T15:36:48.411Z
 Content-Type: application/json
 Content-Length: 174
 X-JavaCash-Signature: bb64e741017b77319d0e6c847376bafeae6163b20c66d9200d24c5eab03ec67a
-X-JavaCash-Timestamp: 2026-09-16T15:29:08.774Z
+X-JavaCash-Timestamp: 2026-09-16T09:29:08.774-06:00
 
 {"type":"pay-out","transactionId":148,"userId":42,"reference":"REF-002","amount":"15.00","status":"pending","timestamp":"2026-09-16T09:29:08.774-06:00","customId":"20260916"}`;
 
