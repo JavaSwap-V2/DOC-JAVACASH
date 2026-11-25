@@ -128,6 +128,7 @@ export const es = {
     notFoundTitle: 'Endpoint no encontrado',
     notFoundText: 'No pudimos encontrar el endpoint que buscas.',
     requestBodyDescription: 'Cuerpo de la petición en formato JSON',
+    requestBodyMultipartDescription: 'Cuerpo de la petición en formato multipart/form-data',
     groups: {
       payin: 'Endpoints para recibir pagos',
       payout: 'Endpoints para enviar fondos',
@@ -152,12 +153,7 @@ export const es = {
       userBank: 'Nombre del banco',
       userTypeAccount: 'Tipo de cuenta bancaria: `savings` (Caja de Ahorro) o `checking` (Cuenta Corriente)',
       userNumAccount: 'Número de cuenta bancaria',
-      file: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)',
-      payment_proof: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)',
-      recipient_name: 'Nombre del destinatario',
-      recipient_email: 'Correo electrónico del destinatario',
-      payment_method: 'Método de pago utilizado (por ejemplo, transferencia bancaria)',
-      recipient_document: 'Documento de identidad del destinatario'
+      file: 'Imagen del comprobante de pago (JPG o PNG, máximo 5 MB)'
     },
     responsesDesc: {
       r200: 'La petición fue exitosa',
@@ -166,9 +162,12 @@ export const es = {
       r401: 'No autorizado - API Key inválida o faltante',
       r403: 'Acceso prohibido',
       r404: 'Recurso no encontrado',
+      r409: 'Conflicto con el estado actual del recurso',
       r422: 'Entidad no procesable - Error de validación',
       r429: 'Demasiadas peticiones - Rate limit excedido',
       r500: 'Error interno del servidor',
+      r503: 'Servicio no disponible temporalmente',
+      r504: 'Tiempo de espera agotado',
       rDefault: 'Respuesta del servidor'
     },
     responseExamples: {
@@ -187,7 +186,7 @@ export const es = {
       payinDetailById: 'Endpoint para obtener un PayIn por su id',
       payoutDetailById: 'Endpoint para obtener un PayOut por su id',
       listPayoutByCustomId: 'Endpoint para obtener un PayOut por custom id',
-      uploadReceipt: 'Sube el comprobante (imagen) del pago al servicio de pagos manuales, que lo lee con OCR, crea el pago manual y deja la transacción en `processing`.\n\n## Autenticación\n\nEnvía **x-api-key** en los **headers** con la **API Key de un comercio** (usuario o proveedor) registrada en `api_keys`. La clave pública del checkout no sirve.\n\n**Respuestas de autorización**\n\n- Sin token ni API Key, o API Key inválida o desactivada: **401**.\n- API Key válida pero sin el permiso `manual_payments:create`: **403**.\n\n## Formato del request\n\nEl endpoint recibe **multipart/form-data** con el archivo en el campo `payment_proof` (JPG o PNG real, máximo 5 MB). El ejemplo se muestra como JSON por comodidad, pero el envío real es `multipart/form-data`.'
+      uploadReceipt: 'Envía la imagen del comprobante de pago: el sistema la reconoce automáticamente, registra el pago y te notifica el resultado por Webhook.\n\n## Flujo\n\n- **1. Crear el Payin:** `POST /api/payin/register` devuelve la `reference` (por ejemplo, `39001303`).\n- **2. Subir el comprobante:** `POST /api/payin/upload-receipt/{reference}`, con la `reference` en la URL y la imagen en el campo `file`.\n- **3. Revisión:** el sistema reconoce el comprobante, el Payin pasa a `processing` y recibirás el Webhook con `paid` o `rejected`.\n\n## Request\n\n- **Header:** `x-api-key` con la API key de tu comercio.\n- **Formato:** `multipart/form-data`.\n- **Campo `file`:** JPG o PNG, máximo 5 MB.\n- **Opcionales:** `amount` y `currency` (`{currency}`).\n\n## Respuestas principales\n\n- **201:** Recibido. El Payin pasa a `processing`; no lo envíes de nuevo.\n- **400:** Falta el archivo, no es JPG o PNG, supera 5 MB o la `reference` no es numérica.\n- **404:** La `reference` no existe o no pertenece a tu comercio.\n- **409:** Esa `reference` ya tiene comprobante o ya fue pagada.\n- **422:** La cuenta de destino no es una cuenta nuestra, o la imagen no se pudo reconocer. También si el comprobante ya fue usado o si el `amount` o la `currency` enviados no coinciden con el Payin.\n- **503 / 504:** Reintenta más tarde; si recibes 504, consulta primero el estado del Payin.\n\n## Notas\n\n- Cada `reference` admite un solo comprobante.\n- Llama al endpoint solo desde tu servidor y por HTTPS; nunca expongas la API key.\n- Timeout recomendado: 100 segundos.'
     }
   },
   tryItOut: {

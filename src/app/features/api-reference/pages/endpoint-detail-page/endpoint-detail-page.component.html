@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="request-body">
+    <div class="request-body" *ngIf="endpoint.requestBody.example !== undefined">
       <app-code-block
         [code]="endpoint.requestBody.example | json"
         language="javascript"

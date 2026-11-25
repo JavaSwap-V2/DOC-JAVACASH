@@ -93,7 +93,7 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   getDescription(): string {
     if (!this.endpoint) return '';
     return this.endpoint.descriptionKey
-      ? this.translationService.translate(this.endpoint.descriptionKey)
+      ? this.translationService.translate(this.endpoint.descriptionKey, this.endpoint.descriptionParams)
       : this.endpoint.description;
   }
 

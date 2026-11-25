@@ -79,7 +79,7 @@ export class SearchService {
 
     // Búsqueda en descripción (peso: 5)
     const displayDescription = endpoint.descriptionKey
-      ? this.translationService.translate(endpoint.descriptionKey)
+      ? this.translationService.translate(endpoint.descriptionKey, endpoint.descriptionParams)
       : endpoint.description;
     if (displayDescription.toLowerCase().includes(searchTerm)) {
       relevance += 5;

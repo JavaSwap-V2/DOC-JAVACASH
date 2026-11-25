@@ -127,6 +127,7 @@ export const en: TranslationDictionary = {
     notFoundTitle: 'Endpoint not found',
     notFoundText: "We couldn't find the endpoint you are looking for.",
     requestBodyDescription: 'Request body in JSON format',
+    requestBodyMultipartDescription: 'Request body in multipart/form-data format',
     groups: {
       payin: 'Endpoints to receive payments',
       payout: 'Endpoints to send funds',
@@ -151,12 +152,7 @@ export const en: TranslationDictionary = {
       userBank: 'Bank name',
       userTypeAccount: 'Bank account type: `savings` (savings account) or `checking` (checking account)',
       userNumAccount: 'Bank account number',
-      file: 'Payment receipt image (JPG or PNG, max 5 MB)',
-      payment_proof: 'Payment proof image (JPG or PNG, max 5 MB)',
-      recipient_name: 'Recipient name',
-      recipient_email: 'Recipient email address',
-      payment_method: 'Payment method used (e.g. bank transfer)',
-      recipient_document: 'Recipient identity document number'
+      file: 'Payment receipt image (JPG or PNG, max 5 MB)'
     },
     responsesDesc: {
       r200: 'The request was successful',
@@ -165,9 +161,12 @@ export const en: TranslationDictionary = {
       r401: 'Unauthorized - invalid or missing API Key',
       r403: 'Forbidden access',
       r404: 'Resource not found',
+      r409: 'Conflict with the current state of the resource',
       r422: 'Unprocessable Entity - validation error',
       r429: 'Too Many Requests - rate limit exceeded',
       r500: 'Internal server error',
+      r503: 'Service temporarily unavailable',
+      r504: 'Gateway timeout',
       rDefault: 'Server response'
     },
     responseExamples: {
@@ -186,7 +185,7 @@ export const en: TranslationDictionary = {
       payinDetailById: 'Endpoint to get a PayIn by its id',
       payoutDetailById: 'Endpoint to get a PayOut by its id',
       listPayoutByCustomId: 'Endpoint to get a PayOut by custom id',
-      uploadReceipt: 'Upload the payment receipt (image) to the manual payments service, which reads it with OCR, creates the manual payment and leaves the transaction in `processing`.\n\n## Authentication\n\nSend **x-api-key** in the **headers** with the **API Key of a merchant** (user or provider) registered in `api_keys`. The checkout public key will not work.\n\n**Authorization responses**\n\n- No token or API Key, or invalid or disabled API Key: **401**.\n- Valid API Key but without the `manual_payments:create` permission: **403**.\n\n## Request format\n\nThe endpoint receives **multipart/form-data** with the file in the `payment_proof` field (real JPG or PNG, max 5 MB). The example is shown as JSON for convenience, but the real request is `multipart/form-data`.'
+      uploadReceipt: 'Send the image of the payment receipt: the system reads it automatically, records the payment and notifies you of the result via Webhook.\n\n## Flow\n\n- **1. Create the Payin:** `POST /api/payin/register` returns the `reference` (for example, `39001303`).\n- **2. Upload the receipt:** `POST /api/payin/upload-receipt/{reference}`, with the `reference` in the URL and the image in the `file` field.\n- **3. Review:** the system reads the receipt, the Payin moves to `processing` and you will receive the Webhook with `paid` or `rejected`.\n\n## Request\n\n- **Header:** `x-api-key` with your merchant API key.\n- **Format:** `multipart/form-data`.\n- **`file` field:** JPG or PNG, max 5 MB.\n- **Optional:** `amount` and `currency` (`{currency}`).\n\n## Main responses\n\n- **201:** Received. The Payin moves to `processing`; do not send it again.\n- **400:** The file is missing, is not JPG or PNG, exceeds 5 MB, or the `reference` is not numeric.\n- **404:** The `reference` does not exist or does not belong to your merchant account.\n- **409:** That `reference` already has a receipt or has already been paid.\n- **422:** The destination account is not one of our accounts, or the image could not be read. Also when the receipt was already used or the `amount` or `currency` sent do not match the Payin.\n- **503 / 504:** Retry later; if you get 504, check the Payin status first.\n\n## Notes\n\n- Each `reference` accepts a single receipt.\n- Call the endpoint only from your server and over HTTPS; never expose the API key.\n- Recommended timeout: 100 seconds.'
     }
   },
   tryItOut: {
