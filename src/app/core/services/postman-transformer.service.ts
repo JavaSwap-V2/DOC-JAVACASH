@@ -9,6 +9,7 @@ import {
   EndpointGroup,
   PostmanCollection,
   PostmanItem,
+  PostmanBody,
   PostmanRequest,
   PostmanResponse,
   Parameter,
@@ -17,7 +18,8 @@ import {
   Header,
   RequestBody,
   RequestBodyField,
-  HttpMethod
+  HttpMethod,
+  COUNTRIES
 } from '../models/api.models';
 import { TranslationService } from './translation.service';
 
@@ -75,6 +77,7 @@ export class PostmanTransformerService {
       baseUrl: this.extractBaseUrl(collectionName),
       description: this.cleanDescription(request.description || item.description || ''),
       descriptionKey: this.resolveDescriptionKey(id),
+      descriptionParams: { currency: this.extractCurrency(collectionName) },
       category,
       headers: this.transformHeaders(request.header),
       requestBody: this.transformRequestBody(request.body, request.description || item.description || ''),
@@ -184,6 +187,19 @@ export class PostmanTransformerService {
   }
 
   /**
+   * Moneda (`currency`) del país de la colección, tomada de `COUNTRIES`, para
+   * las descripciones compartidas entre países que la mencionan (ej. "Subir
+   * comprobante" lista `currency` como opcional). Compara sin tildes porque
+   * la colección se llama "Peru - PayIn" y el país "Perú".
+   */
+  private extractCurrency(collectionName: string): string {
+    const normalize = (text: string) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const name = normalize(collectionName);
+    const country = Object.values(COUNTRIES).find(c => name.includes(normalize(c.name)));
+    return country?.currency ?? COUNTRIES.ARG.currency;
+  }
+
+  /**
    * Limpia y formatea la descripción
    */
   private cleanDescription(description: string): string {
@@ -242,6 +258,19 @@ export class PostmanTransformerService {
    * Transforma el cuerpo de la petición
    */
   private transformRequestBody(body: any, description: string): RequestBody | undefined {
+    // multipart/form-data (ej. subir un archivo): no hay JSON de ejemplo, solo
+    // la tabla de campos de la descripción.
+    if (body?.mode === 'formdata') {
+      return {
+        contentType: 'multipart/form-data',
+        description: this.translationService.translate('endpoint.requestBodyMultipartDescription'),
+        descriptionKey: 'endpoint.requestBodyMultipartDescription',
+        schema: undefined,
+        required: true,
+        fields: this.parseFieldsFromDescription(description)
+      };
+    }
+
     if (!body || !body.raw) return undefined;
 
     let parsedBody: any;
@@ -302,8 +331,7 @@ export class PostmanTransformerService {
     const knownFields = [
       'currency', 'amount', 'customId', 'userName', 'userPhone', 'userEmail',
       'userIdentificationNumber', 'dueDate', 'userBank', 'userTypeAccount',
-      'userNumAccount', 'file', 'payment_proof', 'recipient_name',
-      'recipient_email', 'payment_method', 'recipient_document'
+      'userNumAccount', 'file'
     ];
     return knownFields.includes(name) ? `endpoint.fields.${name}` : undefined;
   }
@@ -341,7 +369,7 @@ export class PostmanTransformerService {
    * documentados usan la clave genérica para que el texto también se traduzca.
    */
   private resolveResponseKey(code: number): string | undefined {
-    const knownCodes = [200, 201, 400, 401, 403, 404, 422, 429, 500];
+    const knownCodes = [200, 201, 400, 401, 403, 404, 409, 422, 429, 500, 503, 504];
     return knownCodes.includes(code) ? `endpoint.responsesDesc.r${code}` : 'endpoint.responsesDesc.rDefault';
   }
 
@@ -381,7 +409,7 @@ export class PostmanTransformerService {
    * Obtiene descripción para códigos de respuesta
    */
   private getResponseDescription(code: number): string {
-    const knownCodes = [200, 201, 400, 401, 403, 404, 422, 429, 500];
+    const knownCodes = [200, 201, 400, 401, 403, 404, 409, 422, 429, 500, 503, 504];
     if (knownCodes.includes(code)) {
       return this.translationService.translate(`endpoint.responsesDesc.r${code}`);
     }
@@ -405,8 +433,8 @@ export class PostmanTransformerService {
     }
     const apiKey = 'YOUR_API_KEY';
 
-    if (path === '/api/manual-payments' && body && typeof body === 'object') {
-      return this.generateMultipartExamples(fullUrl, apiKey, body);
+    if (request.body?.mode === 'formdata') {
+      return this.generateMultipartExamples(this.fillPathVariables(fullUrl, request.url), apiKey, request.body.formdata || []);
     }
 
     // cURL
@@ -437,13 +465,29 @@ export class PostmanTransformerService {
   }
 
   /**
-   * Genera ejemplos multipart/form-data para endpoints que reciben un archivo
-   * (por ejemplo, /api/manual-payments con el campo payment_proof).
+   * Reemplaza las variables de ruta de Postman (`:reference`) por su valor de
+   * ejemplo, para que el código copiado apunte a una URL concreta.
    */
-  private generateMultipartExamples(url: string, apiKey: string, body: Record<string, any>): CodeExample[] {
-    const fileKey = 'payment_proof';
-    const fileValue = body[fileKey] ?? 'comprobante.jpg';
-    const fields = Object.keys(body).filter(key => key !== fileKey);
+  private fillPathVariables(url: string, postmanUrl: PostmanRequest['url']): string {
+    const variables = typeof postmanUrl === 'string' ? [] : postmanUrl.variable || [];
+    return variables.reduce((acc, v) => acc.replace(`:${v.key}`, v.value), url);
+  }
+
+  /**
+   * Genera ejemplos multipart/form-data para endpoints que reciben un archivo
+   * (por ejemplo, /api/payin/upload-receipt/{reference} con el campo file).
+   * Solo incluye los campos activos del formdata: los opcionales van
+   * desactivados en la colección y no aparecen en el ejemplo.
+   */
+  private generateMultipartExamples(url: string, apiKey: string, formdata: NonNullable<PostmanBody['formdata']>): CodeExample[] {
+    const fileEntry = formdata.find(entry => entry.type === 'file');
+    const fileKey = fileEntry?.key ?? 'file';
+    const fileValue = fileEntry?.src ?? 'receipt.jpg';
+    const body: Record<string, string> = {};
+    formdata
+      .filter(entry => entry.type !== 'file' && !entry.disabled)
+      .forEach(entry => { body[entry.key] = entry.value ?? ''; });
+    const fields = Object.keys(body);
 
     // cURL
     let curl = `curl -X POST "${url}" \\\n`;

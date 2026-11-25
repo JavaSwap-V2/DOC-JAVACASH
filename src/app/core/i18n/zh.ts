@@ -127,6 +127,7 @@ export const zh: TranslationDictionary = {
     notFoundTitle: '未找到接口',
     notFoundText: '我们找不到你要查找的接口.',
     requestBodyDescription: 'JSON 格式的请求体',
+    requestBodyMultipartDescription: 'multipart/form-data 格式的请求体',
     groups: {
       payin: '接收付款接口',
       payout: '发送资金接口',
@@ -151,12 +152,7 @@ export const zh: TranslationDictionary = {
       userBank: '银行名称',
       userTypeAccount: '银行账户类型:`savings` (储蓄账户) 或 `checking` (支票账户)',
       userNumAccount: '银行账号',
-      file: '付款凭证图片 (JPG 或 PNG, 最大 5 MB)',
-      payment_proof: '付款凭证图片 (JPG 或 PNG, 最大 5 MB)',
-      recipient_name: '收款人姓名',
-      recipient_email: '收款人电子邮箱',
-      payment_method: '使用的付款方式 (例如银行转账)',
-      recipient_document: '收款人身份证件号码'
+      file: '付款凭证图片 (JPG 或 PNG, 最大 5 MB)'
     },
     responsesDesc: {
       r200: '请求成功',
@@ -165,9 +161,12 @@ export const zh: TranslationDictionary = {
       r401: '未授权 - API Key 无效或缺失',
       r403: '禁止访问',
       r404: '未找到资源',
+      r409: '与资源当前状态冲突',
       r422: '无法处理的实体 - 验证错误',
       r429: '请求过多 - 超出速率限制',
       r500: '服务器内部错误',
+      r503: '服务暂时不可用',
+      r504: '网关超时',
       rDefault: '服务器响应'
     },
     responseExamples: {
@@ -186,7 +185,7 @@ export const zh: TranslationDictionary = {
       payinDetailById: '按 id 获取 payin 的接口',
       payoutDetailById: '按 id 获取 payout 的接口',
       listPayoutByCustomId: '按自定义 id 获取 payout 的接口',
-      uploadReceipt: '将付款的 (图片) 凭证上传到人工支付服务,该服务通过 OCR 读取凭证、创建人工支付并将交易状态置为 `processing`.\n\n## 认证\n\n在 **headers** 中发送 **x-api-key**,其值为在 `api_keys` 中注册的**商户** (用户或提供商) 的 **API Key**.结账页面的公钥无效.\n\n**授权响应**\n\n- 无令牌或 API Key, 或 API Key 无效或已停用:**401**.\n- API Key 有效但缺少 `manual_payments:create` 权限:**403**.\n\n## 请求格式\n\n该接口接收 **multipart/form-data**,文件放在 `payment_proof` 字段中 (真实 JPG 或 PNG, 最大 5 MB).示例以便于阅读的方式显示为 JSON, 但真实请求为 `multipart/form-data`.'
+      uploadReceipt: '发送付款凭证图片:系统会自动识别凭证、登记付款, 并通过 Webhook 通知你结果.\n\n## 流程\n\n- **1. 创建 Payin:** `POST /api/payin/register` 返回 `reference` (例如 `39001303`).\n- **2. 上传凭证:** `POST /api/payin/upload-receipt/{reference}`, `reference` 放在 URL 中, 图片放在 `file` 字段中.\n- **3. 审核:** 系统识别凭证后, Payin 状态变为 `processing`, 你将收到状态为 `paid` 或 `rejected` 的 Webhook.\n\n## 请求\n\n- **Header:** `x-api-key`, 值为你的商户 API key.\n- **格式:** `multipart/form-data`.\n- **`file` 字段:** JPG 或 PNG, 最大 5 MB.\n- **可选:** `amount` 和 `currency` (`{currency}`).\n\n## 主要响应\n\n- **201:** 已接收.Payin 状态变为 `processing`;请勿重复发送.\n- **400:** 缺少文件、文件不是 JPG 或 PNG、超过 5 MB, 或 `reference` 不是数字.\n- **404:** 该 `reference` 不存在或不属于你的商户.\n- **409:** 该 `reference` 已有凭证或已付款.\n- **422:** 收款账户不是我们的账户, 或图片无法识别.凭证已被使用, 或发送的 `amount` 或 `currency` 与 Payin 不一致时也会返回.\n- **503 / 504:** 请稍后重试;如果收到 504, 请先查询 Payin 状态.\n\n## 备注\n\n- 每个 `reference` 只接受一张凭证.\n- 只能从你的服务器通过 HTTPS 调用该接口;切勿暴露 API key.\n- 建议超时时间:100 秒.'
     }
   },
   tryItOut: {

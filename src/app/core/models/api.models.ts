@@ -20,6 +20,8 @@ export interface Endpoint {
   description: string;
   /** Clave i18n de la descripción (prosa); si falta, se usa `description`. */
   descriptionKey?: string;
+  /** Valores del país que se interpolan en la descripción traducida (ej. `{currency}`). */
+  descriptionParams?: Record<string, string>;
   category: 'payin' | 'payout';
   headers: Header[];
   pathParameters?: Parameter[];
@@ -462,7 +464,7 @@ export interface PostmanBody {
   raw?: string;
   options?: any;
   urlencoded?: Array<{ key: string; value: string; type?: string }>;
-  formdata?: Array<{ key: string; value: string; type?: string }>;
+  formdata?: Array<{ key: string; value?: string; type?: string; src?: string; disabled?: boolean; description?: string }>;
 }
 
 export interface PostmanUrl {
