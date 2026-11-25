@@ -52,14 +52,14 @@ new Date("2026-11-11T02:30:00.000Z").getTime()
   readonly webhookExample = `POST /su-ruta-webhook HTTP/1.1
 Content-Type: application/json
 X-JavaCash-Signature: 88e58feda7b82053fb77628a7351d8c887013c35a67f9c3bd2c29d8c5e59e301
-X-JavaCash-Timestamp: 2026-09-16T15:36:48.411Z
+X-JavaCash-Timestamp: 2026-09-16T09:36:48.411-06:00
 
 {"type":"pay-in","transactionId":149,"userId":42,"amount":"120.00","status":"paid","timestamp":"2026-09-16T09:36:48.411-06:00","customId":"20260917","amountReceived":"120.00"}`;
 
   get dueDateExample(): string {
     return `// ${this.t('dates.dueDateExampleDay')}
 "dueDate": "2027/12/30"
-// -> 2027-12-30T00:00:00.000Z = 2027-12-29T18:00:00.000-06:00
+// -> 2027-12-30T23:59:59.999-06:00 (Guatemala)
 
 // ${this.t('dates.dueDateExampleInstant')}
 "dueDate": "2027-12-30T23:59:59-06:00"`;
