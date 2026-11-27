@@ -46,7 +46,7 @@
                                 "register"
                             ]
                         },
-                        "description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | GTQ | Código de la moneda | Sí |\n| `amount` | **String** | 100 | Monto de la transacción | Sí |\n| `customId` | **number** | 123 | Identificador personalizado **numérico**: solo dígitos, sin letras, guiones ni espacios (ej. 123). Si el número es muy largo, envíalo como string (\"123456789012345678\") | Sí |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 51234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | prueba@email.com | Correo electrónico del comprador | Sí |\n| `userIdentificationNumber` | **String** | 1234567890101 | DPI (CUI) de 13 dígitos o NIT, sin guiones | Sí |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | Sí |\n\nImportante: la respuesta de 201 Created devuelve la variable checkoutUrl, este es el enlace del checkout"
+                        "description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | GTQ | Código de la moneda | Sí |\n| `amount` | **String** | 100 | Monto de la transacción | Sí |\n| `customId` | **number** | 123 | Identificador personalizado **numérico**: solo dígitos, sin letras, guiones ni espacios (ej. 123). Si el número es muy largo, envíalo como string (\"123456789012345678\"). **Es único por comercio** (idempotencia): no se repite aunque el payin anterior esté vencido o rechazado | Sí |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 51234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | prueba@email.com | Correo electrónico del comprador | Sí |\n| `userIdentificationNumber` | **String** | 1234567890101 | DPI (CUI) de 13 dígitos o NIT, sin guiones | Sí |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | Sí |\n\nImportante: la respuesta de 201 Created devuelve la variable checkoutUrl, este es el enlace del checkout\n\n**customId como idempotencia**\n\n- Si reenvías un `customId` que ya usaste con el **mismo monto y moneda** (por ejemplo, un reintento por timeout), no se crea otro payin: se devuelve el payin original con **HTTP 200**, el header `Idempotent-Replayed: true` y `\"idempotentReplay\": true`. No se vuelve a enviar el webhook de creación. El `status` es el estado actual del payin original.\n- Si lo reenvías con **otro monto o moneda**, responde **HTTP 409** `CUSTOM_ID_CONFLICT` con la `reference` del payin que ya tiene ese `customId`.\n- Para un cobro nuevo usa siempre un `customId` nuevo.\n- Formato permitido: hasta 100 caracteres, solo letras, números y `. _ - : / #` (sin espacios ni comillas). Si no cumple, responde **HTTP 403**."
                     },
                     "response": [
                         {
@@ -75,7 +75,67 @@
                                 }
                             ],
                             "cookie": [],
-                            "body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
+                            "body": "{\n    \"success\": false,\n    \"message\": \"You already have a similar transaction under review. Please wait while it is validated.\",\n    \"code\": 400\n}"
+                        },
+                        {
+                            "name": "Bad Request - Currency",
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": false,\n    \"message\": \"Currency \\\"USD\\\" is not allowed. Please use a valid currency.\",\n    \"code\": 400\n}"
+                        },
+                        {
+                            "name": "Idempotent Replay",
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                },
+                                {
+                                    "key": "Idempotent-Replayed",
+                                    "value": "true"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Transaction already exists for this customId\",\n    \"code\": 200,\n    \"idempotentReplay\": true,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://guatemala.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"GTQ\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://guatemala.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",\n                \"name_method\": \"Transferencia bancaria\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://guatemala.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/efectivo\",\n                \"name_method\": \"Pago en efectivo\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
+                        },
+                        {
+                            "name": "Conflict",
+                            "status": "Conflict",
+                            "code": 409,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": false,\n    \"message\": \"customId \\\"1\\\" was already used in another payin with a different amount or currency.\",\n    \"code\": 409,\n    \"error\": \"CUSTOM_ID_CONFLICT\",\n    \"reference\": \"39001303\"\n}"
+                        },
+                        {
+                            "name": "Malformed Request",
+                            "status": "Forbidden",
+                            "code": 403,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"value\": \"1' OR '1'='1\",\n            \"msg\": \"customId may only contain letters, numbers and . _ - : / #\",\n            \"path\": \"customId\",\n            \"location\": \"body\"\n        }\n    ]\n}"
                         }
                     ]
                 },
