@@ -76,11 +76,11 @@ export class PostmanTransformerService {
       path: this.extractPath(request.url),
       baseUrl: this.extractBaseUrl(collectionName),
       description: this.cleanDescription(request.description || item.description || ''),
-      descriptionKey: this.resolveDescriptionKey(id),
+      descriptionKey: this.resolveDescriptionKey(id, collectionName),
       descriptionParams: { currency: this.extractCurrency(collectionName) },
       category,
       headers: this.transformHeaders(request.header),
-      requestBody: this.transformRequestBody(request.body, request.description || item.description || ''),
+      requestBody: this.transformRequestBody(request.body, request.description || item.description || '', collectionName),
       responses: this.transformResponses(item.response || []),
       examples: this.generateCodeExamples(request, this.extractBaseUrl(collectionName)),
       tags: [category, request.method.toLowerCase()]
@@ -126,7 +126,10 @@ export class PostmanTransformerService {
    * Mapea la descripción en prosa del endpoint (por id, que ya incluye la
    * categoría) a su clave i18n. Devuelve `undefined` si no está mapeada.
    */
-  private resolveDescriptionKey(id: string): string | undefined {
+  private resolveDescriptionKey(id: string, collectionName: string): string | undefined {
+    const countryKey = this.countryDescriptionKeys[this.countryOf(collectionName) ?? '']?.[id];
+    if (countryKey) return `endpoint.descriptions.${countryKey}`;
+
     const keysById: Record<string, string> = {
       'payin-registrar': 'noteCheckout',
       'payin-listar-por-referencia': 'listPayinByReference',
@@ -177,6 +180,25 @@ export class PostmanTransformerService {
     guatemala: 'https://api-gt.javacash.finance',
     peru: 'https://api-pe.javacash.finance'
   };
+
+  /**
+   * Textos propios de un país que reemplazan a los compartidos. En Guatemala
+   * el customId de payin y payout es una llave de idempotencia por comercio
+   * (todavía no rige en los demás países).
+   */
+  private readonly countryDescriptionKeys: Record<string, Record<string, string>> = {
+    guatemala: { 'payin-registrar': 'registerPayinGt', 'payout-registrar': 'registerPayoutGt' }
+  };
+
+  private readonly countryFieldKeys: Record<string, Record<string, string>> = {
+    guatemala: { customId: 'customIdGt' }
+  };
+
+  /** País de la colección (clave de `countryBaseUrls`), o `undefined`. */
+  private countryOf(collectionName: string): string | undefined {
+    const name = collectionName.toLowerCase();
+    return Object.keys(this.countryBaseUrls).find(key => name.includes(key));
+  }
 
   private extractBaseUrl(collectionName: string): string {
     const name = collectionName.toLowerCase();
@@ -257,7 +279,7 @@ export class PostmanTransformerService {
   /**
    * Transforma el cuerpo de la petición
    */
-  private transformRequestBody(body: any, description: string): RequestBody | undefined {
+  private transformRequestBody(body: any, description: string, collectionName: string): RequestBody | undefined {
     // multipart/form-data (ej. subir un archivo): no hay JSON de ejemplo, solo
     // la tabla de campos de la descripción.
     if (body?.mode === 'formdata') {
@@ -267,7 +289,7 @@ export class PostmanTransformerService {
         descriptionKey: 'endpoint.requestBodyMultipartDescription',
         schema: undefined,
         required: true,
-        fields: this.parseFieldsFromDescription(description)
+        fields: this.parseFieldsFromDescription(description, collectionName)
       };
     }
 
@@ -287,14 +309,14 @@ export class PostmanTransformerService {
       schema: parsedBody,
       example: parsedBody,
       required: true,
-      fields: this.parseFieldsFromDescription(description)
+      fields: this.parseFieldsFromDescription(description, collectionName)
     };
   }
 
   /**
    * Parsea la tabla markdown de campos desde la descripción del endpoint
    */
-  private parseFieldsFromDescription(description: string): RequestBodyField[] {
+  private parseFieldsFromDescription(description: string, collectionName: string): RequestBodyField[] {
     if (!description) return [];
 
     const lines = description.split('\n').filter(line => line.trim().startsWith('|'));
@@ -319,7 +341,7 @@ export class PostmanTransformerService {
       });
       const required = cells.length >= 5 ? ['si', 'sí'].includes(cells[4].toLowerCase()) : false;
 
-      return { name, type, example, description: desc, descriptionKey: this.resolveFieldKey(name), required };
+      return { name, type, example, description: desc, descriptionKey: this.resolveFieldKey(name, collectionName), required };
     }).filter((field): field is RequestBodyField => field !== null);
   }
 
@@ -327,7 +349,10 @@ export class PostmanTransformerService {
    * Mapea el nombre de un campo del body a la clave i18n de su descripción.
    * Solo cubre campos conocidos; el resto conserva la descripción original.
    */
-  private resolveFieldKey(name: string): string | undefined {
+  private resolveFieldKey(name: string, collectionName: string): string | undefined {
+    const countryKey = this.countryFieldKeys[this.countryOf(collectionName) ?? '']?.[name];
+    if (countryKey) return `endpoint.fields.${countryKey}`;
+
     const knownFields = [
       'currency', 'amount', 'customId', 'userName', 'userPhone', 'userEmail',
       'userIdentificationNumber', 'dueDate', 'userBank', 'userTypeAccount',
