@@ -142,6 +142,74 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userName\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userPhone\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"userEmail\",\n            \"location\": \"body\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Idempotent Replay",
+							"labelKey": "idempotentReplay",
+							"descriptionKey": "idempotentReplay",
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Idempotent-Replayed",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": 37,\n    \"success\": true,\n    \"message\": \"Transaction already exists for this customId\",\n    \"code\": 200,\n    \"idempotentReplay\": true,\n    \"status\": \"pending\",\n    \"reference\": \"88534138\",\n    \"customId\": \"1\",\n    \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\"\n}"
+						},
+						{
+							"name": "Bad Request - Currency",
+							"labelKey": "currencyNotAllowed",
+							"descriptionKey": "currencyNotAllowed",
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Currency \\\"USD\\\" is not allowed. Please use a valid currency.\",\n    \"code\": 400\n}"
+						},
+						{
+							"name": "Conflict",
+							"labelKey": "customIdConflict",
+							"descriptionKey": "customIdConflict",
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"customId \\\"1\\\" was already used in another payout with a different amount or currency.\",\n    \"code\": 409,\n    \"error\": \"CUSTOM_ID_CONFLICT\",\n    \"reference\": \"88534138\"\n}"
+						},
+						{
+							"name": "Malformed Request - customId",
+							"labelKey": "customIdFormat",
+							"descriptionKey": "customIdFormat",
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"value\": \"1' OR '1'='1\",\n            \"msg\": \"customId may only contain letters, numbers and . _ - : / #\",\n            \"path\": \"customId\",\n            \"location\": \"body\"\n        }\n    ]\n}"
 						}
 					]
 				},

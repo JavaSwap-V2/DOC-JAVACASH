@@ -182,16 +182,20 @@ export class PostmanTransformerService {
   };
 
   /**
-   * Textos propios de un país que reemplazan a los compartidos. En Guatemala
-   * el customId de payin y payout es una llave de idempotencia por comercio
-   * (todavía no rige en los demás países).
+   * Textos propios de un país que reemplazan a los compartidos. En Guatemala,
+   * Ecuador y Argentina el customId de payin y payout es una llave de
+   * idempotencia por comercio (todavía no rige en Chile ni Perú).
    */
   private readonly countryDescriptionKeys: Record<string, Record<string, string>> = {
-    guatemala: { 'payin-registrar': 'registerPayinGt', 'payout-registrar': 'registerPayoutGt' }
+    guatemala: { 'payin-registrar': 'registerPayinCustomId', 'payout-registrar': 'registerPayoutCustomId' },
+    ecuador: { 'payin-registrar': 'registerPayinCustomId', 'payout-registrar': 'registerPayoutCustomId' },
+    argentina: { 'payin-registrar': 'registerPayinCustomId', 'payout-registrar': 'registerPayoutCustomId' }
   };
 
   private readonly countryFieldKeys: Record<string, Record<string, string>> = {
-    guatemala: { customId: 'customIdGt' }
+    guatemala: { customId: 'customIdUnique' },
+    ecuador: { customId: 'customIdUnique' },
+    argentina: { customId: 'customIdUnique' }
   };
 
   /** País de la colección (clave de `countryBaseUrls`), o `undefined`. */

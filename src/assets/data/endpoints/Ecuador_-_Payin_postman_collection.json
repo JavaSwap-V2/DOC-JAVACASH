@@ -103,6 +103,8 @@
 						},
 						{
 							"name": "Bad Request",
+							"labelKey": "similarPending",
+							"descriptionKey": "similarPending",
 							"originalRequest": {
 								"method": "POST",
 								"header": [
@@ -146,7 +148,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": false,\n    \"message\": \"Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.\",\n    \"code\": 400\n}"
+							"body": "{\n    \"success\": false,\n    \"message\": \"You already have a similar transaction under review. Please wait while it is validated.\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Malformed Request",
@@ -191,6 +193,74 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        },\n        {\n            \"type\": \"field\",\n            \"msg\": \"Invalid value\",\n            \"path\": \"amount\",\n            \"location\": \"body\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Bad Request - Currency",
+							"labelKey": "currencyNotAllowed",
+							"descriptionKey": "currencyNotAllowed",
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Currency \\\"EUR\\\" is not allowed. Please use a valid currency.\",\n    \"code\": 400\n}"
+						},
+						{
+							"name": "Idempotent Replay",
+							"labelKey": "idempotentReplay",
+							"descriptionKey": "idempotentReplay",
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Idempotent-Replayed",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction already exists for this customId\",\n    \"code\": 200,\n    \"idempotentReplay\": true,\n    \"data\": {\n        \"id\": \"65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"status\": \"pending\",\n        \"reference\": \"39001303\",\n        \"checkoutUrl\": \"https://ecuador.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160\",\n        \"currency\": \"USD\",\n        \"amount\": \"100.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://ecuador.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/transfer\",\n                \"name_method\": \"Transferencia bancaria\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://ecuador.javacash.finance/checkout/65baf429-9e41-44c5-bb16-5785aa087160/efectivo\",\n                \"name_method\": \"Pago en efectivo\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
+						},
+						{
+							"name": "Conflict",
+							"labelKey": "customIdConflict",
+							"descriptionKey": "customIdConflict",
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"customId \\\"1\\\" was already used in another payin with a different amount or currency.\",\n    \"code\": 409,\n    \"error\": \"CUSTOM_ID_CONFLICT\",\n    \"reference\": \"39001303\"\n}"
+						},
+						{
+							"name": "Malformed Request - customId",
+							"labelKey": "customIdFormat",
+							"descriptionKey": "customIdFormat",
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"value\": \"1' OR '1'='1\",\n            \"msg\": \"customId may only contain letters, numbers and . _ - : / #\",\n            \"path\": \"customId\",\n            \"location\": \"body\"\n        }\n    ]\n}"
 						}
 					]
 				},
