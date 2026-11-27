@@ -31,6 +31,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Idempotency-Key",
+								"value": "ORDER-1001",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -48,7 +53,7 @@
 								"register"
 							]
 						},
-						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | Identificador personalizado **numérico**: solo dígitos, sin letras, guiones ni espacios (ej. 123). Si el número es muy largo, envíalo como string (\"123456789012345678\"). **Es único por comercio** (idempotencia): no se repite aunque el payout anterior esté vencido o rechazado | Sí |\n| `currency` | **String** | GTQ | Código de la moneda | Sí |\n| `amount` | **String** | 100 | Monto de la transacción | Sí |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 51234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | [prueba@email.com](mailto:prueba@email.com) | Correo electrónico del comprador | Sí |\n| `userBank` | **String** | Banco Industrial | Nombre del banco | Sí |\n| `userTypeAccount` | **String** | savings | Tipo de cuenta bancaria: `savings` (Cuenta de Ahorro) o `checking` (Cuenta Monetaria) | Sí |\n| `userNumAccount` | **String** | 123456789 | Número de cuenta bancaria | Sí |\n| `userIdentificationNumber` | **String** | 1234567890101 | DPI (CUI) de 13 dígitos o NIT, sin guiones | Sí |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento | Sí |"
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | Identificador personalizado **numérico**: solo dígitos, sin letras, guiones ni espacios (ej. 123). Si el número es muy largo, envíalo como string (\"123456789012345678\") | Sí |\n| `currency` | **String** | GTQ | Código de la moneda | Sí |\n| `amount` | **String** | 100 | Monto de la transacción | Sí |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 51234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | [prueba@email.com](mailto:prueba@email.com) | Correo electrónico del comprador | Sí |\n| `userBank` | **String** | Banco Industrial | Nombre del banco | Sí |\n| `userTypeAccount` | **String** | savings | Tipo de cuenta bancaria: `savings` (Cuenta de Ahorro) o `checking` (Cuenta Monetaria) | Sí |\n| `userNumAccount` | **String** | 123456789 | Número de cuenta bancaria | Sí |\n| `userIdentificationNumber` | **String** | 1234567890101 | DPI (CUI) de 13 dígitos o NIT, sin guiones | Sí |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento | Sí |"
 					},
 					"response": [
 						{
@@ -160,7 +165,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"transactionId\": 37,\n    \"success\": true,\n    \"message\": \"Transaction already exists for this customId\",\n    \"code\": 200,\n    \"idempotentReplay\": true,\n    \"status\": \"pending\",\n    \"reference\": \"88534138\",\n    \"customId\": \"1\",\n    \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\"\n}"
+							"body": "{\n    \"transactionId\": 37,\n    \"success\": true,\n    \"message\": \"Transaction already exists for this Idempotency-Key\",\n    \"code\": 200,\n    \"idempotentReplay\": true,\n    \"status\": \"pending\",\n    \"reference\": \"88534138\",\n    \"customId\": \"1\",\n    \"uuid\": \"b5a1a4ba-5ef2-4b79-b599-6e7925c1e5f4\"\n}"
 						},
 						{
 							"name": "Bad Request - Currency",
@@ -180,8 +185,8 @@
 						},
 						{
 							"name": "Conflict",
-							"labelKey": "customIdConflict",
-							"descriptionKey": "customIdConflict",
+							"labelKey": "idempotencyKeyConflict",
+							"descriptionKey": "idempotencyKeyConflict",
 							"status": "Conflict",
 							"code": 409,
 							"_postman_previewlanguage": "json",
@@ -192,7 +197,23 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": false,\n    \"message\": \"customId \\\"1\\\" was already used in another payout with a different amount or currency.\",\n    \"code\": 409,\n    \"error\": \"CUSTOM_ID_CONFLICT\",\n    \"reference\": \"88534138\"\n}"
+							"body": "{\n    \"success\": false,\n    \"message\": \"Idempotency-Key \\\"ORDER-1001\\\" was already used in another payout with a different amount or currency.\",\n    \"code\": 409,\n    \"error\": \"IDEMPOTENCY_KEY_CONFLICT\",\n    \"reference\": \"88534138\"\n}"
+						},
+						{
+							"name": "Malformed Request - Idempotency-Key",
+							"labelKey": "idempotencyKeyFormat",
+							"descriptionKey": "idempotencyKeyFormat",
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        {\n            \"type\": \"field\",\n            \"value\": \"ORDER 1001\",\n            \"msg\": \"Idempotency-Key may only contain letters, numbers and . _ - : / #\",\n            \"path\": \"idempotency-key\",\n            \"location\": \"headers\"\n        }\n    ]\n}"
 						}
 					]
 				},

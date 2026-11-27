@@ -182,17 +182,17 @@ export class PostmanTransformerService {
   };
 
   /**
-   * Textos propios de un país que reemplazan a los compartidos. En Guatemala
-   * el customId de payin y payout es una llave de idempotencia por comercio
-   * (todavía no rige en los demás países).
+   * Textos propios de un país que reemplazan a los compartidos. En Guatemala,
+   * Ecuador y Argentina el alta de payin y payout acepta el header opcional
+   * Idempotency-Key (todavía no rige en Chile ni Perú).
    */
   private readonly countryDescriptionKeys: Record<string, Record<string, string>> = {
-    guatemala: { 'payin-registrar': 'registerPayinGt', 'payout-registrar': 'registerPayoutGt' }
+    guatemala: { 'payin-registrar': 'registerPayinIdempotency', 'payout-registrar': 'registerPayoutIdempotency' },
+    ecuador: { 'payin-registrar': 'registerPayinIdempotency', 'payout-registrar': 'registerPayoutIdempotency' },
+    argentina: { 'payin-registrar': 'registerPayinIdempotency', 'payout-registrar': 'registerPayoutIdempotency' }
   };
 
-  private readonly countryFieldKeys: Record<string, Record<string, string>> = {
-    guatemala: { customId: 'customIdGt' }
-  };
+  private readonly countryFieldKeys: Record<string, Record<string, string>> = {};
 
   /** País de la colección (clave de `countryBaseUrls`), o `undefined`. */
   private countryOf(collectionName: string): string | undefined {
@@ -256,7 +256,8 @@ export class PostmanTransformerService {
       'x-api-key': 'endpoint.headersDesc.apiKey',
       'Content-Type': 'endpoint.headersDesc.contentType',
       'Accept': 'endpoint.headersDesc.accept',
-      'Authorization': 'endpoint.headersDesc.authorization'
+      'Authorization': 'endpoint.headersDesc.authorization',
+      'Idempotency-Key': 'endpoint.headersDesc.idempotencyKey'
     };
     const key = descriptions[headerName];
     return key ? this.translationService.translate(key) : '';
@@ -270,7 +271,8 @@ export class PostmanTransformerService {
       'x-api-key': 'apiKey',
       'Content-Type': 'contentType',
       'Accept': 'accept',
-      'Authorization': 'authorization'
+      'Authorization': 'authorization',
+      'Idempotency-Key': 'idempotencyKey'
     };
     const key = keysByName[headerName];
     return key ? `endpoint.headersDesc.${key}` : undefined;
