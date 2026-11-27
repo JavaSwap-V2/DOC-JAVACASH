@@ -168,7 +168,19 @@ export const en: TranslationDictionary = {
       r500: 'Internal server error',
       r503: 'Service temporarily unavailable',
       r504: 'Gateway timeout',
-      rDefault: 'Server response'
+      rDefault: 'Server response',
+      idempotentReplay: 'Retry with a customId already used, with the same amount and currency: returns the original transaction (header Idempotent-Replayed: true) without creating a new one or resending the Webhook',
+      customIdConflict: 'The customId was already used in another transaction of the merchant with a different amount or currency; reference is the transaction that already has it',
+      customIdFormat: 'Invalid customId format: more than 100 characters or characters other than letters, numbers and . _ - : / #. Other possible msg values: "customId must be at most 100 characters" and "customId must be a string or a number"',
+      similarPending: 'There is already a pending PayIn with the same amount, currency, buyer data and due date, created in the last 3 hours',
+      currencyNotAllowed: 'The currency sent is not enabled'
+    },
+    responseLabels: {
+      idempotentReplay: 'Retry (customId)',
+      customIdConflict: 'Repeated customId',
+      customIdFormat: 'Invalid customId',
+      similarPending: 'Similar transaction',
+      currencyNotAllowed: 'Currency not allowed'
     },
     responseExamples: {
       successMessage: 'Operation successful',

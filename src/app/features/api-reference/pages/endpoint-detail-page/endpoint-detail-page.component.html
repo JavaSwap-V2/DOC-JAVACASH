@@ -122,14 +122,14 @@
     <!-- Response Tabs -->
     <div class="response-tabs">
       <button
-        *ngFor="let response of endpoint.responses"
+        *ngFor="let response of endpoint.responses; let i = index"
         class="response-tab"
-        [class.active]="selectedResponseStatus === response.status"
+        [class.active]="selectedResponseIndex === i"
         [class.success]="response.status >= 200 && response.status < 300"
         [class.error]="response.status >= 400"
-        (click)="selectResponseStatus(response.status)">
+        (click)="selectResponse(i)">
         <span class="response-tab__status">{{ response.status }}</span>
-        <span class="response-tab__text">{{ response.statusText }}</span>
+        <span class="response-tab__text">{{ response.labelKey ? (response.labelKey | t) : response.statusText }}</span>
       </button>
     </div>
 

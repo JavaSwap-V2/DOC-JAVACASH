@@ -16,7 +16,8 @@ import { ToastService } from '@core/services/toast.service';
 export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   endpoint?: Endpoint;
   selectedLanguage: CodeLanguage = 'curl';
-  selectedResponseStatus: number = 200;
+  /** Índice de la respuesta elegida: un mismo código puede repetirse (ej. dos 400). */
+  selectedResponseIndex = 0;
   loading = true;
 
   private destroy$ = new Subject<void>();
@@ -60,9 +61,7 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     ).subscribe(endpoint => {
       this.endpoint = endpoint;
 
-      if (endpoint?.responses && endpoint.responses.length > 0) {
-        this.selectedResponseStatus = endpoint.responses[0].status;
-      }
+      this.selectedResponseIndex = 0;
     });
   }
 
@@ -70,8 +69,8 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     this.selectedLanguage = language;
   }
 
-  selectResponseStatus(status: number): void {
-    this.selectedResponseStatus = status;
+  selectResponse(index: number): void {
+    this.selectedResponseIndex = index;
   }
 
   getSelectedExample() {
@@ -79,7 +78,7 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   }
 
   getSelectedResponse() {
-    return this.endpoint?.responses.find(r => r.status === this.selectedResponseStatus);
+    return this.endpoint?.responses[this.selectedResponseIndex];
   }
 
   getFullUrl(): string {

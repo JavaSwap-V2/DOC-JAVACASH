@@ -65,6 +65,8 @@
                         },
                         {
                             "name": "Bad Request",
+                            "labelKey": "similarPending",
+                            "descriptionKey": "similarPending",
                             "status": "Bad Request",
                             "code": 400,
                             "_postman_previewlanguage": "json",
@@ -79,6 +81,8 @@
                         },
                         {
                             "name": "Bad Request - Currency",
+                            "labelKey": "currencyNotAllowed",
+                            "descriptionKey": "currencyNotAllowed",
                             "status": "Bad Request",
                             "code": 400,
                             "_postman_previewlanguage": "json",
@@ -93,6 +97,8 @@
                         },
                         {
                             "name": "Idempotent Replay",
+                            "labelKey": "idempotentReplay",
+                            "descriptionKey": "idempotentReplay",
                             "status": "OK",
                             "code": 200,
                             "_postman_previewlanguage": "json",
@@ -111,6 +117,8 @@
                         },
                         {
                             "name": "Conflict",
+                            "labelKey": "customIdConflict",
+                            "descriptionKey": "customIdConflict",
                             "status": "Conflict",
                             "code": 409,
                             "_postman_previewlanguage": "json",
@@ -125,6 +133,8 @@
                         },
                         {
                             "name": "Malformed Request",
+                            "labelKey": "customIdFormat",
+                            "descriptionKey": "customIdFormat",
                             "status": "Forbidden",
                             "code": 403,
                             "_postman_previewlanguage": "json",

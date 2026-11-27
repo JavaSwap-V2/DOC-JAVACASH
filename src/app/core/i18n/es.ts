@@ -169,7 +169,19 @@ export const es = {
       r500: 'Error interno del servidor',
       r503: 'Servicio no disponible temporalmente',
       r504: 'Tiempo de espera agotado',
-      rDefault: 'Respuesta del servidor'
+      rDefault: 'Respuesta del servidor',
+      idempotentReplay: 'Reintento con un customId ya usado, con el mismo monto y moneda: devuelve la transacción original (header Idempotent-Replayed: true), sin crear otra ni reenviar el Webhook',
+      customIdConflict: 'El customId ya se usó en otra transacción del comercio con distinto monto o moneda; reference es la transacción que ya lo tiene',
+      customIdFormat: 'customId con formato inválido: más de 100 caracteres o caracteres fuera de letras, números y . _ - : / #. Otros msg posibles: "customId must be at most 100 characters" y "customId must be a string or a number"',
+      similarPending: 'Ya hay un PayIn pendiente con el mismo monto, moneda, datos del comprador y vencimiento, creado en las últimas 3 horas',
+      currencyNotAllowed: 'La moneda enviada no está habilitada'
+    },
+    responseLabels: {
+      idempotentReplay: 'Reintento (customId)',
+      customIdConflict: 'customId repetido',
+      customIdFormat: 'customId inválido',
+      similarPending: 'Transacción similar',
+      currencyNotAllowed: 'Moneda no permitida'
     },
     responseExamples: {
       successMessage: 'Operación exitosa',
