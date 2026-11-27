@@ -381,7 +381,12 @@ export class PostmanTransformerService {
         status: response.code,
         statusText: response.status,
         description: this.getResponseDescription(response.code),
-        descriptionKey: this.resolveResponseKey(response.code),
+        // Un mismo código puede tener varios casos (ej. dos 400): la colección
+        // puede traer su propia descripción y etiqueta por respuesta.
+        descriptionKey: response.descriptionKey
+          ? `endpoint.responsesDesc.${response.descriptionKey}`
+          : this.resolveResponseKey(response.code),
+        labelKey: response.labelKey ? `endpoint.responseLabels.${response.labelKey}` : undefined,
         body: parsedBody,
         headers: this.transformHeaders(response.header),
         isError: response.code >= 400

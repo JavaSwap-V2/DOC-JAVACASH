@@ -84,6 +84,8 @@ export interface ApiResponse {
   description: string;
   /** Clave i18n de la descripción; si falta, se usa `description`. */
   descriptionKey?: string;
+  /** Clave i18n de la etiqueta de la pestaña; si falta, se usa `statusText`. */
+  labelKey?: string;
   body: any;
   headers?: Header[];
   isError: boolean;
@@ -485,6 +487,10 @@ export interface PostmanResponse {
   header: PostmanHeader[];
   cookie?: any[];
   body: string;
+  /** Extensión propia (no Postman): clave bajo `endpoint.responsesDesc` que describe el caso. */
+  descriptionKey?: string;
+  /** Extensión propia (no Postman): clave bajo `endpoint.responseLabels` para la pestaña. */
+  labelKey?: string;
 }
 
 export interface PostmanAuth {

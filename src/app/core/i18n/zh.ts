@@ -168,7 +168,19 @@ export const zh: TranslationDictionary = {
       r500: '服务器内部错误',
       r503: '服务暂时不可用',
       r504: '网关超时',
-      rDefault: '服务器响应'
+      rDefault: '服务器响应',
+      idempotentReplay: '使用已用过的 customId 且金额和币种相同的重试:返回原交易 (头 Idempotent-Replayed: true),不会创建新交易,也不会重新发送 Webhook',
+      customIdConflict: '该 customId 已在该商户的另一笔金额或币种不同的交易中使用;reference 为已使用该 customId 的交易',
+      customIdFormat: 'customId 格式无效:超过 100 个字符或包含字母、数字和 . _ - : / # 以外的字符。其他可能的 msg:"customId must be at most 100 characters" 和 "customId must be a string or a number"',
+      similarPending: '过去 3 小时内已存在金额、币种、付款人信息和到期日相同的待处理 PayIn',
+      currencyNotAllowed: '所发送的币种未启用'
+    },
+    responseLabels: {
+      idempotentReplay: '重试 (customId)',
+      customIdConflict: 'customId 重复',
+      customIdFormat: 'customId 无效',
+      similarPending: '类似交易',
+      currencyNotAllowed: '币种不允许'
     },
     responseExamples: {
       successMessage: '操作成功',
